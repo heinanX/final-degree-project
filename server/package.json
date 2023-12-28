@@ -1,0 +1,13 @@
+{
+  "name": "videoshack-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "nodemon dist/server.js",
+    "build": "npx tsc -w"
+  },
+  "keywords": [],
+  "author": "Linda Eskilsson/heinanX",
+  "license": "ISC"
+}

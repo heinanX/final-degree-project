@@ -5,13 +5,14 @@ const customerSchema = new Schema(
   {
     mail: { type: String, require: true },
     password: { type: String, require: true },
-    joinDate: { type: String, require: true },
-    isAdmin: { type: String, require: true },
+    joinDate: { type: Date, default: Date.now()},
+    isAdmin: { type: Boolean, require: true, default: false},
     address: [
       {
-        street: { type: String },
-        zip: { type: String },
-        county: { type: String },
+        _id: String,
+        street: String,
+        zip: String,
+        county: String,
       },
     ],
     orders: [{ type: Schema.Types.ObjectId, ref: "customers" }],

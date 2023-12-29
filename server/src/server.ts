@@ -5,7 +5,7 @@ const connect = async () => {
   try {
     mongoose.set("strictQuery", true);
     await mongoose.connect(
-      "mongodb+srv://heinan:vcMs4TfvvgC1rgp6@videoshack.0itjtom.mongodb.net/"
+      "mongodb+srv://heinan:vcMs4TfvvgC1rgp6@videoshack.0itjtom.mongodb.net/videoshack?retryWrites=true&w=majority"
     );
     mongoose.connection.on("error", () => {
       console.error("error");

@@ -16,10 +16,14 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const app_1 = require("./app");
+const credentials = process.env.CREDENTIALS;
+if (!credentials) {
+    throw new Error('The CREDENTIALS environment variable is not defined.');
+}
 const connect = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         mongoose_1.default.set("strictQuery", true);
-        yield mongoose_1.default.connect("mongodb+srv://heinan:vcMs4TfvvgC1rgp6@videoshack.0itjtom.mongodb.net/videoshack?retryWrites=true&w=majority");
+        yield mongoose_1.default.connect(`mongodb+srv://${credentials}@videoshack.0itjtom.mongodb.net/videoshack?retryWrites=true&w=majority`);
         mongoose_1.default.connection.on("error", () => {
             console.error("error");
         });

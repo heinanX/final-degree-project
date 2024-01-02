@@ -2,6 +2,7 @@ const session = require('express-session');
 import express from 'express';
 import cors from 'cors';
 import { customerRouter } from './resources/customers/customersRouter';
+import { categoryRouter } from './resources/categories/categoriesRouter';
 
 
 export const app = express();
@@ -21,3 +22,4 @@ app.use(session({
 
 
 app.use('/api/customers', customerRouter);
+app.use('/api/categories', categoryRouter);

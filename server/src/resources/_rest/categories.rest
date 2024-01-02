@@ -1,0 +1,18 @@
+GET http://localhost:3000/api/categories
+
+###
+
+GET http://localhost:3000/api/categories/652509e897a9c2ea6fae0d97
+
+###
+
+POST http://localhost:3000/api/categories/create
+Content-Type: application/json
+
+{
+    "category": "Romcom"
+}
+
+###
+
+DELETE http://localhost:3000/api/categories/652509e897a9c2ea6fae0d97

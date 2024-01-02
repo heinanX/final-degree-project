@@ -3,11 +3,16 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { app } from './app'
 
+const credentials = process.env.CREDENTIALS
+if (!credentials) {
+    throw new Error('The CREDENTIALS environment variable is not defined.');
+}
+
 const connect = async () => {
   try {
     mongoose.set("strictQuery", true);
     await mongoose.connect(
-      "mongodb+srv://heinan:vcMs4TfvvgC1rgp6@videoshack.0itjtom.mongodb.net/videoshack?retryWrites=true&w=majority"
+      `mongodb+srv://${credentials}@videoshack.0itjtom.mongodb.net/videoshack?retryWrites=true&w=majority`
     );
     mongoose.connection.on("error", () => {
       console.error("error");

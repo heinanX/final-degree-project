@@ -3,12 +3,13 @@ import { createCustomer, deleteCustomer, editCustomer, getCustomer, getCustomers
 import { isAdmin } from '../_middlewares/isAdmin';
 import { validate } from '../_middlewares/validateSchema';
 import { customerJoiSchema } from './customersModel';
+import { formatData } from '../_middlewares/formatData';
 
 export const customerRouter = Router();
 
 customerRouter.get('/', getCustomers);
 customerRouter.get('/:id', getCustomer);
-customerRouter.post('/create', validate(customerJoiSchema), createCustomer);
+customerRouter.post('/create', validate(customerJoiSchema), formatData, createCustomer);
 customerRouter.post('/login', login);
 customerRouter.post('/logout', logout);
 customerRouter.post('/edit-customer/:id', validate(customerJoiSchema), editCustomer);

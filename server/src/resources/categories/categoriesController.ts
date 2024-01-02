@@ -27,7 +27,7 @@ export const getCat = async (
   }
 };
 
-export const createCategory = async (
+export const createCat = async (
   req: Request,
   res: Response,
   next: NextFunction

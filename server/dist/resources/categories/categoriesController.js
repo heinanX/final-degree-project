@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCat = exports.createCategory = exports.getCat = exports.getCats = void 0;
+exports.deleteCat = exports.createCat = exports.getCat = exports.getCats = void 0;
 const categoriesModel_1 = require("./categoriesModel");
 const getCats = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -31,7 +31,7 @@ const getCat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.getCat = getCat;
-const createCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const createCat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const checkCat = yield categoriesModel_1.CategoryModel.findOne(req.body);
         if (!checkCat) {
@@ -46,7 +46,7 @@ const createCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         next(error);
     }
 });
-exports.createCategory = createCategory;
+exports.createCat = createCat;
 const deleteCat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield categoriesModel_1.CategoryModel.findByIdAndDelete({ _id: req.params.id });

@@ -48,7 +48,7 @@ const createCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             yield customer.save();
             const jsonCust = customer.toJSON();
             delete jsonCust.password;
-            // req.session = jsonUser;
+            // req.session.customer = jsonUser;
             res.status(201).json(jsonCust);
         }
     }
@@ -102,7 +102,6 @@ const editCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                 !((_k = (_j = req.session) === null || _j === void 0 ? void 0 : _j.customer) === null || _k === void 0 ? void 0 : _k.isAdmin)) {
             return res.status(404).json({ message: 'Access denied' });
         }
-        // const customer = await CustomerModel.findOne({ _id: req.session?.customer?._id });
         const updatedCustomer = yield customersModel_1.CustomerModel.findByIdAndUpdate(customer, incomingData, { new: true, runValidators: true });
         if (!updatedCustomer) {
             return res.status(404).json({ message: 'Customer not found' });

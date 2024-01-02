@@ -1,0 +1,32 @@
+GET http://localhost:3000/api/products
+
+###
+
+GET http://localhost:3000/api/products/652509e897a9c2ea6fae0d97
+
+###
+
+POST http://localhost:3000/api/products/create
+Content-Type: application/json
+
+{
+    "title": "new movie about something",
+    "description": "its a very new movie",
+    "category": ["6593ee75ad4bf20a16e96bc1"],
+    "tags": ["659424b2d79e7cd5a3489d7f"],
+    "year": 1990,
+    "vhs": {
+        "price": 39,
+        "available": true,
+        "quantity": 10,
+        "inStock": 7
+    },
+    "digital": {
+        "price": 49,
+        "available": true
+    }
+}
+
+###
+
+DELETE http://localhost:3000/api/products/delete/65942e4f9edbfa8f46d70d25

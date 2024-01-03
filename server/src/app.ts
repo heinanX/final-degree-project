@@ -5,6 +5,7 @@ import { customerRouter } from './resources/customers/customersRouter';
 import { categoryRouter } from './resources/categories/categoriesRouter';
 import { productRouter } from './resources/products/productRouter';
 import { tagRouter } from './resources/tags/tagsRouter';
+import { orderRouter } from './resources/orders/ordersRouter';
 
 
 export const app = express();
@@ -27,3 +28,4 @@ app.use('/api/customers', customerRouter);
 app.use('/api/tags', tagRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/products', productRouter);
+app.use('/api/orders', orderRouter);

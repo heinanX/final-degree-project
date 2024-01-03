@@ -3,49 +3,47 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductModel = exports.productJoiSchema = void 0;
+exports.OrderModel = exports.orderJoiSchema = exports.markOrderJoiSchema = void 0;
 const mongoose_1 = require("mongoose");
 const joi_1 = __importDefault(require("joi"));
-const productSchema = new mongoose_1.Schema({
-    title: { type: String, require: true },
-    description: { type: String, require: true },
-    category: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "categories" }],
-    tags: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "tags" }],
-    content_rating: { type: String, default: "tba" },
-    rating: { type: Number, default: 0 },
-    year: { type: Number, require: true },
-    image: { type: String, default: "image" },
-    vhs: {
-        price: Number,
-        available: Boolean,
-        quantity: Number,
-        inStock: Number
+const subOrderSchema = new mongoose_1.Schema({
+    product: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "products",
+        require: true,
     },
-    digital: {
-        price: Number,
-        available: Boolean
-    }
+    quantity: Number,
+}, { _id: false });
+const orderSchema = new mongoose_1.Schema({
+    customer: { type: mongoose_1.Schema.Types.ObjectId, ref: "customers", require: true },
+    order: [subOrderSchema],
+    total_price: { type: Number, default: 0, require: true },
+    discount: { type: Number, default: 0 },
+    date: { type: Date, default: Date.now() },
+    shipped: { type: Boolean, default: "false" },
+    returned: { type: Boolean, default: "false" },
+    payment_status: { type: String, default: "pending" },
+    order_status: { type: String, default: "active" },
 }, { versionKey: false });
-const vhsJoiSchema = joi_1.default.object({
-    price: joi_1.default.number().required(),
-    available: joi_1.default.boolean().required(),
-    quantity: joi_1.default.number().required(),
-    inStock: joi_1.default.number().required()
+exports.markOrderJoiSchema = joi_1.default.object({
+    shipped: joi_1.default.boolean(),
+    returned: joi_1.default.boolean(),
+    payment_status: joi_1.default.string(),
+    order_status: joi_1.default.string(),
 });
-const digitalJoiSchema = joi_1.default.object({
-    price: joi_1.default.number().required(),
-    available: joi_1.default.boolean().required()
+const subOrderJoiSchema = joi_1.default.object({
+    product: joi_1.default.string(),
+    quantity: joi_1.default.number(),
 });
-exports.productJoiSchema = joi_1.default.object({
-    title: joi_1.default.string().required(),
-    description: joi_1.default.string().required(),
-    category: joi_1.default.array().items(joi_1.default.string()).required().min(1),
-    tags: joi_1.default.array().items(joi_1.default.string()).required().min(1),
-    content_rating: joi_1.default.string(),
-    rating: joi_1.default.number(),
-    year: joi_1.default.number().required(),
-    image: joi_1.default.string(),
-    vhs: vhsJoiSchema.required(),
-    digital: digitalJoiSchema.required()
+exports.orderJoiSchema = joi_1.default.object({
+    customer: joi_1.default.string().required(),
+    order: joi_1.default.array().items(subOrderJoiSchema).required(),
+    total_price: joi_1.default.number().required(),
+    discount: joi_1.default.number(),
+    date: joi_1.default.date(),
+    shipped: joi_1.default.boolean(),
+    returned: joi_1.default.boolean(),
+    payment_status: joi_1.default.string(),
+    order_status: joi_1.default.string(),
 });
-exports.ProductModel = mongoose_1.models.products || (0, mongoose_1.model)("products", productSchema);
+exports.OrderModel = mongoose_1.models.orders || (0, mongoose_1.model)("orders", orderSchema);

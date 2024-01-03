@@ -11,6 +11,7 @@ const customersRouter_1 = require("./resources/customers/customersRouter");
 const categoriesRouter_1 = require("./resources/categories/categoriesRouter");
 const productRouter_1 = require("./resources/products/productRouter");
 const tagsRouter_1 = require("./resources/tags/tagsRouter");
+const ordersRouter_1 = require("./resources/orders/ordersRouter");
 exports.app = (0, express_1.default)();
 const cookieSecret = process.env.COOKIE_SESSION_KEY;
 if (!cookieSecret) {
@@ -27,3 +28,4 @@ exports.app.use('/api/customers', customersRouter_1.customerRouter);
 exports.app.use('/api/tags', tagsRouter_1.tagRouter);
 exports.app.use('/api/categories', categoriesRouter_1.categoryRouter);
 exports.app.use('/api/products', productRouter_1.productRouter);
+exports.app.use('/api/orders', ordersRouter_1.orderRouter);

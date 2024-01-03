@@ -1,0 +1,30 @@
+GET http://localhost:3000/api/orders
+
+###
+
+GET http://localhost:3000/api/orders/
+
+###
+
+POST http://localhost:3000/api/orders/create
+Content-Type: application/json
+
+{
+    "customer": "6593f10e96c5a10f07128130",
+    "order": [{ "product": "65942fe6164884dad74d321f", "quantity": 1}, { "product": "65943006164884dad74d3222", "quantity": 1} ],
+    "total_price": 29,
+    "discount": 10
+}
+
+###
+
+PUT http://localhost:3000/api/orders/manage-order/659560fb456094ab0f8e8e2c
+Content-Type: application/json
+
+{
+    "payment_status": "pending"
+}
+
+###
+
+DELETE http://localhost:3000/api/orders/delete/65942e4f9edbfa8f46d70d25

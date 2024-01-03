@@ -52,29 +52,14 @@ export const editProduct = async (
 ) => {
   try {
     const incomingData = req.body;
-    const customer: string = req.params.id;
+    const product: string = req.params.id;
 
-    console.log("Session Customer ID:", req.session?.customer?._id);
-    console.log("Request Param Customer ID:", customer);
-    if (
-      req.session?.customer?._id === undefined ||
-      (customer !== req.session?.customer?._id &&
-        !req.session?.customer?.isAdmin)
-    ) {
-      return res.status(404).json({ message: "Access denied" });
-    }
-
-    const updatedCustomer = await ProductModel.findByIdAndUpdate(
-      customer,
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      product,
       incomingData,
-      { new: true, runValidators: true }
+      { new: true }
     );
-
-    if (!updatedCustomer) {
-      return res.status(404).json({ message: "Customer not found" });
-    }
-
-    res.status(200).json(updatedCustomer);
+    res.status(200).json(updatedProduct);
   } catch (error) {
     next(error);
   }

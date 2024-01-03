@@ -29,4 +29,27 @@ Content-Type: application/json
 
 ###
 
+POST http://localhost:3000/api/products/edit-product/65943006164884dad74d3222
+Content-Type: application/json
+
+{
+    "title": "new movie about something",
+    "description": "its a very new movie",
+    "category": ["6593ee75ad4bf20a16e96bc1"],
+    "tags": ["659424b2d79e7cd5a3489d7f"],
+    "year": 1990,
+    "vhs": {
+        "price": 29,
+        "available": true,
+        "quantity": 10,
+        "inStock": 5
+    },
+    "digital": {
+        "price": 49,
+        "available": true
+    }
+}
+
+###
+
 DELETE http://localhost:3000/api/products/delete/65942e4f9edbfa8f46d70d25

@@ -48,22 +48,11 @@ const createProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, func
 });
 exports.createProduct = createProduct;
 const editProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d, _e, _f, _g, _h;
     try {
         const incomingData = req.body;
-        const customer = req.params.id;
-        console.log("Session Customer ID:", (_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b._id);
-        console.log("Request Param Customer ID:", customer);
-        if (((_d = (_c = req.session) === null || _c === void 0 ? void 0 : _c.customer) === null || _d === void 0 ? void 0 : _d._id) === undefined ||
-            (customer !== ((_f = (_e = req.session) === null || _e === void 0 ? void 0 : _e.customer) === null || _f === void 0 ? void 0 : _f._id) &&
-                !((_h = (_g = req.session) === null || _g === void 0 ? void 0 : _g.customer) === null || _h === void 0 ? void 0 : _h.isAdmin))) {
-            return res.status(404).json({ message: "Access denied" });
-        }
-        const updatedCustomer = yield productModel_1.ProductModel.findByIdAndUpdate(customer, incomingData, { new: true, runValidators: true });
-        if (!updatedCustomer) {
-            return res.status(404).json({ message: "Customer not found" });
-        }
-        res.status(200).json(updatedCustomer);
+        const product = req.params.id;
+        const updatedProduct = yield productModel_1.ProductModel.findByIdAndUpdate(product, incomingData, { new: true });
+        res.status(200).json(updatedProduct);
     }
     catch (error) {
         next(error);

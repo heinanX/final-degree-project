@@ -1,0 +1,18 @@
+GET http://localhost:3000/api/tags
+
+###
+
+GET http://localhost:3000/api/tags/652509e897a9c2ea6fae0d97
+
+###
+
+POST http://localhost:3000/api/tags/create
+Content-Type: application/json
+
+{
+    "tag": "michael j. fox"
+}
+
+###
+
+DELETE http://localhost:3000/api/tags/652509e897a9c2ea6fae0d97

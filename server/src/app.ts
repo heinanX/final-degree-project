@@ -3,6 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import { customerRouter } from './resources/customers/customersRouter';
 import { categoryRouter } from './resources/categories/categoriesRouter';
+import { productRouter } from './resources/products/productRouter';
+import { tagRouter } from './resources/tags/tagsRouter';
 
 
 export const app = express();
@@ -22,4 +24,6 @@ app.use(session({
 
 
 app.use('/api/customers', customerRouter);
+app.use('/api/tags', tagRouter);
 app.use('/api/categories', categoryRouter);
+app.use('/api/products', productRouter);

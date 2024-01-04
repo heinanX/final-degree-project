@@ -4,12 +4,13 @@ import { isAdmin } from '../_middlewares/isAdmin';
 import { validate } from '../_middlewares/validateSchema';
 import { customerJoiSchema } from './customersModel';
 import { formatData } from '../_middlewares/formatData';
+import { createStripeCus } from '../_middlewares/createUserStripe';
 
 export const customerRouter = Router();
 
 customerRouter.get('/', getCustomers);
 customerRouter.get('/:id', getCustomer);
-customerRouter.post('/create', validate(customerJoiSchema), formatData, createCustomer);
+customerRouter.post('/create', validate(customerJoiSchema), formatData, createStripeCus, createCustomer);
 customerRouter.post('/login', login);
 customerRouter.post('/logout', logout);
 customerRouter.post('/edit-customer/:id', validate(customerJoiSchema), editCustomer);

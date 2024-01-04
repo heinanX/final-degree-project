@@ -11,7 +11,7 @@ POST http://localhost:3000/api/customers/create
 Content-Type: application/json
 
 {
-    "mail": "delete4@user.com",
+    "mail": "yeol@user.com",
     "password": "12345"
 }
 

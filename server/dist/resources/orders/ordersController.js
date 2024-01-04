@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrder = exports.manageOrder = exports.createOrderDB = exports.getOrder = exports.getOrders = void 0;
+exports.deleteOrder = exports.manageOrder = exports.createOrderDB = exports.createOrder = exports.getOrder = exports.getOrders = void 0;
 const ordersModel_1 = require("./ordersModel");
+const stripe = require('stripe')(process.env.STRIPE_SECRETKEY);
 const getOrders = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const orders = yield ordersModel_1.OrderModel.find();
@@ -31,6 +32,23 @@ const getOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getOrder = getOrder;
+const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //  if (!req.session.customer?._id) { return res.status(404).json({ message: 'you need to be logged in' }) }
+    const session = yield stripe.checkout.sessions.create({
+        success_url: 'http://localhost:5173/success?id={CHECKOUT_SESSION_ID}',
+        cancel_url: 'http://localhost:5173/failed',
+        payment_method_types: ['card'],
+        mode: 'payment',
+        currency: 'sek',
+        allow_promotion_codes: true,
+        customer: req.body.userId,
+        line_items: req.body.order
+    });
+    res.status(200).json({
+        url: session.url,
+    });
+});
+exports.createOrder = createOrder;
 const createOrderDB = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newProduct = yield ordersModel_1.OrderModel.create(req.body);

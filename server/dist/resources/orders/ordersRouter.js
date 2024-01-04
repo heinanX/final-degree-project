@@ -11,5 +11,6 @@ exports.orderRouter = (0, express_1.Router)();
 exports.orderRouter.get('/', ordersController_1.getOrders);
 exports.orderRouter.get('/:id', ordersController_1.getOrder);
 exports.orderRouter.post('/create', (0, validateSchema_1.validate)(ordersModel_1.orderJoiSchema), formatData_1.formatData, ordersController_1.createOrderDB);
+exports.orderRouter.post('/create-checkout-session', ordersController_1.createOrder);
 exports.orderRouter.put('/manage-order/:id', (0, validateSchema_1.validate)(ordersModel_1.markOrderJoiSchema), formatData_1.formatData, ordersController_1.manageOrder);
 exports.orderRouter.delete('/delete/:id', isAdmin_1.isAdmin, ordersController_1.deleteOrder);

@@ -16,6 +16,7 @@ const customerSchema = new Schema(
       },
     ],
     orders: [{ type: Schema.Types.ObjectId, ref: "customers" }],
+    stripe_id: String
   },
   { versionKey: false }
 );
@@ -28,6 +29,7 @@ export const customerJoiSchema = Joi.object({
   isAdmin: Joi.boolean(),
   address: Joi.array(),
   orders: Joi.array(),
+  stripe_id: Joi.string()
 });
 
 export const CustomerModel =

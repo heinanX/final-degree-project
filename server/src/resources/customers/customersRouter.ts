@@ -4,7 +4,7 @@ import { isAdmin } from '../_middlewares/isAdmin';
 import { validate } from '../_middlewares/validateSchema';
 import { customerJoiSchema } from './customersModel';
 import { formatData } from '../_middlewares/formatData';
-import { createStripeCus } from '../_middlewares/createUserStripe';
+import { createStripeCus } from '../_middlewares/stripe/createUser';
 
 export const customerRouter = Router();
 

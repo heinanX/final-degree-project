@@ -26,32 +26,60 @@ const createStripeProduct = (req, res, next) => __awaiter(void 0, void 0, void 0
             if (req.body.vhs.price) {
                 const stripeProduct = yield stripe.products.create({
                     name: req.body.title,
-                });
-                /* LOGIC THAT CREATES A PRICE FOR THE VHS PRODUCT CREATED IN STRIPE */
-                const priceID = yield stripe.prices.create({
-                    product: stripeProduct.id,
-                    unit_amount: req.body.vhs.price * 100,
-                    currency: "sek",
+                    default_price_data: {
+                        currency: "sek",
+                        unit_amount_decimal: req.body.vhs.price * 100
+                    },
+                    expand: ['default_price']
                 });
                 /* IDS OF PRODUCT AND PRICE ARE SAVED IN VARIABLES */
                 req.body.vhs.stripe_prod_id = stripeProduct.id;
-                req.body.vhs.stripe_price_id = yield priceID.id;
+                req.body.vhs.stripe_price_id = stripeProduct.default_price.id;
             }
             /* LOGIC THAT CREATES A DIGITAL PRODUCT IN STRIPE */
             if (req.body.digital.price) {
                 const stripeProduct = yield stripe.products.create({
                     name: req.body.title + " - digital",
-                });
-                /* LOGIC THAT CREATES A PRICE FOR THE PRODUCT CREATED IN STRIPE */
-                const priceID = yield stripe.prices.create({
-                    product: stripeProduct.id,
-                    unit_amount: req.body.digital.price * 100,
-                    currency: "sek",
+                    default_price_data: {
+                        currency: "sek",
+                        unit_amount_decimal: req.body.digital.price * 100
+                    },
+                    expand: ['default_price']
                 });
                 /* IDS OF PRODUCT AND PRICE ARE SAVED IN VARIABLES */
                 req.body.digital.stripe_prod_id = stripeProduct.id;
-                req.body.digital.stripe_price_id = priceID.id;
+                req.body.digital.stripe_price_id = stripeProduct.default_price.id;
             }
+            // /* LOGIC THAT CREATES A VHS PRODUCT IN STRIPE */
+            // if (req.body.vhs.price) {
+            //   const stripeProduct = await stripe.products.create({
+            //     name: req.body.title,
+            //   });
+            //   /* LOGIC THAT CREATES A PRICE FOR THE VHS PRODUCT CREATED IN STRIPE */
+            //   const priceID = await stripe.prices.create({
+            //     product: stripeProduct.id,
+            //     unit_amount: req.body.vhs.price * 100,
+            //     currency: "sek",
+            //   });
+            //   /* IDS OF PRODUCT AND PRICE ARE SAVED IN VARIABLES */
+            //   req.body.vhs.stripe_prod_id = stripeProduct.id;
+            //   req.body.vhs.stripe_price_id = await priceID.id;
+            // }
+            // /* LOGIC THAT CREATES A DIGITAL PRODUCT IN STRIPE */
+            // if (req.body.digital.price) {
+            //   const stripeProduct = await stripe.products.create({
+            //     name: req.body.title + " - digital",
+            //   });
+            //   /* LOGIC THAT CREATES A PRICE FOR THE PRODUCT CREATED IN STRIPE */
+            //   const priceID = await stripe.prices.create({
+            //     product: stripeProduct.id,
+            //     unit_amount: req.body.digital.price * 100,
+            //     currency: "sek",
+            //   });
+            //   /* IDS OF PRODUCT AND PRICE ARE SAVED IN VARIABLES */
+            //   req.body.digital.stripe_prod_id = stripeProduct.id;
+            //   req.body.digital.stripe_price_id = priceID.id;
+            // }
             next();
         }
     }

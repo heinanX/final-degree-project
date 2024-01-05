@@ -2,7 +2,7 @@ GET http://localhost:3000/api/products
 
 ###
 
-GET http://localhost:3000/api/products/652509e897a9c2ea6fae0d97
+GET http://localhost:3000/api/products/65982b6bf5a6f314600b4779
 
 ###
 
@@ -10,7 +10,7 @@ POST http://localhost:3000/api/products/create
 Content-Type: application/json
 
 {
-    "title": "See Spot Run",
+    "title": "June",
     "description": "A dog on the loose is the Postman's worst nightmare ",
     "category": ["6593ee75ad4bf20a16e96bc1"],
     "tags": ["659424b2d79e7cd5a3489d7f"],
@@ -52,4 +52,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/api/products/delete/65942e4f9edbfa8f46d70d25
+DELETE http://localhost:3000/api/products/delete/65982b6bf5a6f314600b4779

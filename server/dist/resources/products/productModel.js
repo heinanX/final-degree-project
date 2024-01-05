@@ -19,22 +19,26 @@ const productSchema = new mongoose_1.Schema({
         price: Number,
         available: Boolean,
         quantity: Number,
-        inStock: Number
+        inStock: Number,
+        stripe_price_id: String
     },
     digital: {
         price: Number,
-        available: Boolean
+        available: Boolean,
+        stripe_price_id: String
     }
 }, { versionKey: false });
 const vhsJoiSchema = joi_1.default.object({
     price: joi_1.default.number().required(),
     available: joi_1.default.boolean().required(),
     quantity: joi_1.default.number().required(),
-    inStock: joi_1.default.number().required()
+    inStock: joi_1.default.number().required(),
+    stripe_price_id: joi_1.default.string()
 });
 const digitalJoiSchema = joi_1.default.object({
     price: joi_1.default.number().required(),
-    available: joi_1.default.boolean().required()
+    available: joi_1.default.boolean().required(),
+    stripe_price_id: joi_1.default.string()
 });
 exports.productJoiSchema = joi_1.default.object({
     title: joi_1.default.string().required(),

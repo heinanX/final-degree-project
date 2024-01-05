@@ -20,12 +20,14 @@ const productSchema = new mongoose_1.Schema({
         available: Boolean,
         quantity: Number,
         inStock: Number,
-        stripe_price_id: String
+        stripe_price_id: String,
+        stripe_prod_id: String
     },
     digital: {
         price: Number,
         available: Boolean,
-        stripe_price_id: String
+        stripe_price_id: String,
+        stripe_prod_id: String
     }
 }, { versionKey: false });
 const vhsJoiSchema = joi_1.default.object({
@@ -33,12 +35,14 @@ const vhsJoiSchema = joi_1.default.object({
     available: joi_1.default.boolean().required(),
     quantity: joi_1.default.number().required(),
     inStock: joi_1.default.number().required(),
-    stripe_price_id: joi_1.default.string()
+    stripe_price_id: joi_1.default.string(),
+    stripe_prod_id: String
 });
 const digitalJoiSchema = joi_1.default.object({
     price: joi_1.default.number().required(),
     available: joi_1.default.boolean().required(),
-    stripe_price_id: joi_1.default.string()
+    stripe_price_id: joi_1.default.string(),
+    stripe_prod_id: String
 });
 exports.productJoiSchema = joi_1.default.object({
     title: joi_1.default.string().required(),

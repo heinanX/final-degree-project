@@ -15,12 +15,14 @@ const productSchema = new Schema({
     available: Boolean,
     quantity: Number,
     inStock: Number,
-    stripe_price_id: String
+    stripe_price_id: String,
+    stripe_prod_id: String
   },
   digital: {
     price: Number,
     available: Boolean,
-    stripe_price_id: String
+    stripe_price_id: String,
+    stripe_prod_id: String
   }
 }, { versionKey: false });
 
@@ -29,13 +31,15 @@ const vhsJoiSchema = Joi.object({
   available: Joi.boolean().required(),
   quantity: Joi.number().required(),
   inStock: Joi.number().required(),
-  stripe_price_id: Joi.string()
+  stripe_price_id: Joi.string(),
+  stripe_prod_id: String
 });
 
 const digitalJoiSchema = Joi.object({
   price: Joi.number().required(),
   available: Joi.boolean().required(),
-  stripe_price_id: Joi.string()
+  stripe_price_id: Joi.string(),
+  stripe_prod_id: String
 });
 
 export const productJoiSchema = Joi.object({

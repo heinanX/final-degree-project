@@ -10,19 +10,19 @@ POST http://localhost:3000/api/products/create
 Content-Type: application/json
 
 {
-    "title": "new movie about something",
-    "description": "its a very new movie",
+    "title": "See Spot Run",
+    "description": "A dog on the loose is the Postman's worst nightmare ",
     "category": ["6593ee75ad4bf20a16e96bc1"],
     "tags": ["659424b2d79e7cd5a3489d7f"],
     "year": 1990,
     "vhs": {
-        "price": 39,
+        "price": 29,
         "available": true,
-        "quantity": 10,
-        "inStock": 7
+        "quantity": 5,
+        "inStock": 5
     },
     "digital": {
-        "price": 49,
+        "price": 39,
         "available": true
     }
 }

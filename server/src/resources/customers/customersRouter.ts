@@ -4,7 +4,8 @@ import { isAdmin } from '../_middlewares/isAdmin';
 import { validate } from '../_middlewares/validateSchema';
 import { customerJoiSchema } from './customersModel';
 import { formatData } from '../_middlewares/formatData';
-import { createStripeCus } from '../_middlewares/stripe/createUser';
+import { createStripeCus } from '../_middlewares/stripe/customer/createCustomer';
+import { deleteStripeCus } from '../_middlewares/stripe/customer/deleteCustomer';
 
 export const customerRouter = Router();
 
@@ -14,4 +15,4 @@ customerRouter.post('/create', validate(customerJoiSchema), formatData, createSt
 customerRouter.post('/login', login);
 customerRouter.post('/logout', logout);
 customerRouter.post('/edit-customer/:id', validate(customerJoiSchema), editCustomer);
-customerRouter.delete('/delete/:id', isAdmin, deleteCustomer);
+customerRouter.delete('/delete/:id', isAdmin, deleteStripeCus, deleteCustomer);

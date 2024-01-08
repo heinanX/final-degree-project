@@ -4,8 +4,8 @@ import { isAdmin } from '../_middlewares/isAdmin';
 import { validate } from '../_middlewares/validateSchema';
 import { productJoiSchema } from './productModel';
 import { formatData } from '../_middlewares/formatData';
-import { createStripeProduct } from '../_middlewares/stripe/createProduct';
-import { archiveStripeProduct } from '../_middlewares/stripe/archiveProduct';
+import { createStripeProduct } from '../_middlewares/stripe/product/createProduct';
+import { archiveStripeProduct } from '../_middlewares/stripe/product/archiveProduct';
 
 export const productRouter = Router();
 

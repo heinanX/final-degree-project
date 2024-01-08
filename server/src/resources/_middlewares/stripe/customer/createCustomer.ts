@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { CustomerModel } from "../../customers/customersModel";
+import { CustomerModel } from "../../../customers/customersModel";
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 
 /* A middleware that checks for pre-existing customer in database,

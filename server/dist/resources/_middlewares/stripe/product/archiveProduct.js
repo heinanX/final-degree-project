@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.archiveStripeProduct = void 0;
-const productModel_1 = require("../../products/productModel");
+const productModel_1 = require("../../../products/productModel");
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 /* A middleware that checks for a product in database.
 If found, the product is archived (i.e. inactivated) in stripe, it then passes to the next function. */

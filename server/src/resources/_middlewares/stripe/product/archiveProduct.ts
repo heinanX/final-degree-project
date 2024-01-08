@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ProductModel } from "../../products/productModel";
+import { ProductModel } from "../../../products/productModel";
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 
 /* A middleware that checks for a product in database.
@@ -16,7 +16,6 @@ export const archiveStripeProduct = async (
     if (!existingProduct) {
       return res.status(409).json("Product not found");
     } else {
-        console.log(existingProduct.vhs.stripe_prod_id);
         
       /* LOGIC THAT ARCHIVES A VHS PRODUCT IN STRIPE */
       if (existingProduct.vhs.stripe_prod_id) {
@@ -26,7 +25,6 @@ export const archiveStripeProduct = async (
                 active: false
             }
         );
-
       }
 
       /* LOGIC THAT ARCHIVES A DIGITAL PRODUCT IN STRIPE */

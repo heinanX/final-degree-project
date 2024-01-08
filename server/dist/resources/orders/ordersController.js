@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrder = exports.manageOrder = exports.createOrderDB = exports.createOrder = exports.getOrder = exports.getOrders = void 0;
+exports.deleteOrder = exports.manageOrder = exports.createOrderDB = exports.createOrder = exports.getOrder = exports.getUserOrders = exports.getOrders = void 0;
 const ordersModel_1 = require("./ordersModel");
 const stripe = require('stripe')(process.env.STRIPE_SECRETKEY);
 const getOrders = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,10 +22,27 @@ const getOrders = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.getOrders = getOrders;
+const getUserOrders = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    try {
+        const orders = yield ordersModel_1.OrderModel.find({ customer: (_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b._id });
+        res.status(200).json(orders);
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.getUserOrders = getUserOrders;
 const getOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c, _d, _e, _f;
     try {
         const order = yield ordersModel_1.OrderModel.findOne({ _id: req.params.id });
-        res.status(200).json(order);
+        if (order.customer === ((_d = (_c = req.session) === null || _c === void 0 ? void 0 : _c.customer) === null || _d === void 0 ? void 0 : _d._id) || ((_f = (_e = req.session) === null || _e === void 0 ? void 0 : _e.customer) === null || _f === void 0 ? void 0 : _f.isAdmin)) {
+            return res.status(200).json(order);
+        }
+        else {
+            return res.status(200).json('unable to fetch order. Check permission status');
+        }
     }
     catch (error) {
         next(error);
@@ -33,7 +50,6 @@ const getOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.getOrder = getOrder;
 const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //  if (!req.session.customer?._id) { return res.status(404).json({ message: 'you need to be logged in' }) }
     const session = yield stripe.checkout.sessions.create({
         success_url: 'http://localhost:5173/success?id={CHECKOUT_SESSION_ID}',
         cancel_url: 'http://localhost:5173/failed',

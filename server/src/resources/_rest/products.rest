@@ -10,7 +10,7 @@ POST http://localhost:3000/api/products/create
 Content-Type: application/json
 
 {
-    "title": "June",
+    "title": "Tarzan",
     "description": "A dog on the loose is the Postman's worst nightmare ",
     "category": ["6593ee75ad4bf20a16e96bc1"],
     "tags": ["659424b2d79e7cd5a3489d7f"],

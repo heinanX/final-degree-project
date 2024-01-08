@@ -25,7 +25,7 @@ POST http://localhost:3000/api/customers/login
 Content-Type: application/json
 
 {
-"mail": "user@user.com",
+"mail": "lilo@disney.com",
 "password": "12345"
 }
 

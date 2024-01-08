@@ -10,11 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isAdmin = void 0;
-// declare module "express-session" {
-//   interface SessionData {
-//     isAdmin?: boolean;
-//   }
-// }
 const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     if ((_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b.isAdmin) {

@@ -14,8 +14,7 @@ export const deleteStripeCus = async (
     const customer = await CustomerModel.findOne({ _id: req.params.id });
 
     if (customer) {
-      await stripe.customers.del("customer.stripe_id");
-      next();
+      await stripe.customers.del(customer.stripe_id);
     } else {
       return res.status(409).json("customer not found");
     }

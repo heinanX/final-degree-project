@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCustomer = exports.editCustomer = exports.logout = exports.login = exports.createCustomer = exports.getCustomer = exports.getCustomers = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const customersModel_1 = require("./customersModel");
-//const stripe = require('stripe')(process.env.STRIPE_SECRETKEY);
 const getCustomers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const customers = yield customersModel_1.CustomerModel.find();
@@ -29,6 +28,7 @@ exports.getCustomers = getCustomers;
 const getCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const customer = yield customersModel_1.CustomerModel.findOne({ _id: req.params.id });
+        customer.password = 'hidden';
         res.status(200).json(customer);
     }
     catch (error) {
@@ -43,6 +43,7 @@ const createCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         yield customer.save();
         const jsonCust = customer.toJSON();
         delete jsonCust.password;
+        console.log(req.session.customer);
         req.session.customer = jsonCust;
         res.status(201).json(jsonCust);
     }
@@ -85,14 +86,9 @@ const logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.logout = logout;
 const editCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c, _d, _e, _f;
     try {
         const incomingData = req.body;
         const customer = req.params.id;
-        if (((_d = (_c = req.session) === null || _c === void 0 ? void 0 : _c.customer) === null || _d === void 0 ? void 0 : _d._id) === undefined ||
-            customer !== ((_f = (_e = req.session) === null || _e === void 0 ? void 0 : _e.customer) === null || _f === void 0 ? void 0 : _f._id)) {
-            return res.status(404).json({ message: "Access denied" });
-        }
         const updatedCustomer = yield customersModel_1.CustomerModel.findByIdAndUpdate(customer, incomingData, { new: true });
         res.status(200).json(updatedCustomer);
     }
@@ -103,10 +99,6 @@ const editCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
 exports.editCustomer = editCustomer;
 const deleteCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // await stripe.customers.delete({
-        //   email: jsonCust.mail,
-        //   description: jsonCust.mail
-        // })
         yield customersModel_1.CustomerModel.findByIdAndDelete({ _id: req.params.id });
         res.status(200).json("customer deleted");
     }

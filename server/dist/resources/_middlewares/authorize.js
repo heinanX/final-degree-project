@@ -9,24 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteStripeCus = void 0;
-const customersModel_1 = require("../../../customers/customersModel");
-const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
-/* A middleware that checks for existing customer in database,
-if found, customer is deleted in stripe, if not found it moves on to next */
-const deleteStripeCus = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.authorization = void 0;
+const isAdmin_1 = require("./isAdmin");
+/* A middleware that confirms user authorization when making requests */
+const authorization = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     try {
-        const customer = yield customersModel_1.CustomerModel.findOne({ _id: req.params.id });
-        if (customer) {
-            yield stripe.customers.del(customer.stripe_id);
+        const customerId = req.params.id;
+        const sessionCustomerId = (_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b._id;
+        // ALLOW ACCESS IF USER IS FETCHING OWN DATA
+        if (customerId && sessionCustomerId && customerId === sessionCustomerId) {
+            return next();
         }
-        else {
-            return res.status(409).json("customer not found");
-        }
-        next();
+        // CHECK IF USER IS ADMIN
+        return (0, isAdmin_1.isAdmin)(req, res, next);
+        return res.status(404).json('Access denied. Only Admins allowed.');
     }
     catch (error) {
         next(error);
     }
 });
-exports.deleteStripeCus = deleteStripeCus;
+exports.authorization = authorization;

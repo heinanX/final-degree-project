@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { ProductModel } from "../../../products/productModel";
+import { CustomerModel } from "../../../customers/customersModel";
+
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 
-/* A middleware that checks for a product in database.
-If found, the product is updated in stripe, it then passes to the next function. */
+/* A middleware that checks for a customer in database.
+If found, the customer information is updated in stripe, it then passes to the next function. */
 
 export const updateStripeCustomer = async (
   req: Request,
@@ -11,32 +12,23 @@ export const updateStripeCustomer = async (
   next: NextFunction
 ) => {
   try {
-    const product = await ProductModel.findById({ _id: req.params.id });
+    const customer = await CustomerModel.findById({ _id: req.params.id });
 
-    if (!product) {
-      return res.status(409).json("Product not found");
+    if (!customer) {
+      return res.status(409).json("customer not found");
     } else {
 
-      /* IF PRICE FOR VHS PRODUCT IS UPDATED, IT IS UPDATED IN STRIPE */
-      if (req.body.vhs.price) {
-        await stripe.products.update(product.vhs.stripe_prod_id, {
-          default_price: req.body.vhs.price * 100,
+      /* IF CUSTOMER USERNAME IS UPDATED OR SET, IT IS UPDATED IN STRIPE */
+      if (req.body.username) {
+        await stripe.customers.update(customer.stripe_id, {
+          name: req.body.username
         });
       }
 
-      /* IF PRICE FOR DIGITAL PRODUCT IS UPDATED, IT IS UPDATED IN STRIPE */
-      if (req.body.digital.price) {
-        await stripe.products.update(product.digital.stripe_prod_id, {
-          default_price: req.body.digital.price * 100,
-        });
-      }
-      /* IF TITLE IS UPDATED, IT IS UPDATED IN STRIPE VHS AND DIGITAL PRODUCT */
-      if (req.body.title) {
-        await stripe.products.update(product.vhs.stripe_prod_id, {
-          name: req.body.title,
-        });
-        await stripe.products.update(product.digital.stripe_prod_id, {
-          name: req.body.title + " - digital",
+      /* IF CUSTOMER EMAIL IS UPDATED, IT IS UPDATED IN STRIPE */
+      if (req.body.mail) {
+        await stripe.customers.update(customer.stripe_id, {
+          email: req.body.mail
         });
       }
       next();

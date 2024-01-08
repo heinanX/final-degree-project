@@ -1,11 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 
-// declare module "express-session" {
-//   interface SessionData {
-//     isAdmin?: boolean;
-//   }
-// }
-
 export const isAdmin = async (
   req: Request,
   res: Response,

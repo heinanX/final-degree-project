@@ -5,20 +5,29 @@ const customerSchema = new Schema(
   {
     mail: { type: String, require: true },
     password: { type: String, require: true },
-    joinDate: { type: Date, default: Date.now()},
-    isAdmin: { type: Boolean, require: true, default: false},
+    joinDate: { type: Date, default: Date.now() },
+    isAdmin: { type: Boolean, require: true, default: false },
     address: [
       {
         _id: String,
         street: String,
         zip: String,
-        county: String,
+        city: String,
       },
     ],
     orders: [{ type: Schema.Types.ObjectId, ref: "customers" }],
-    stripe_id: String
+    stripe_id: String,
   },
   { versionKey: false }
+);
+
+const addressJoiSchema = Joi.object(
+  {
+    _id: String,
+    street: String,
+    zip: String,
+    city: String,
+  }
 );
 
 export const customerJoiSchema = Joi.object({
@@ -27,9 +36,16 @@ export const customerJoiSchema = Joi.object({
   password: Joi.string().required(),
   joinDate: Joi.date(),
   isAdmin: Joi.boolean(),
-  address: Joi.array(),
+  address: Joi.array().items(addressJoiSchema),
   orders: Joi.array(),
-  stripe_id: Joi.string()
+  stripe_id: Joi.string(),
+});
+
+export const updateCustomerJoiSchema = Joi.object({
+  mail: Joi.string().email({ minDomainSegments: 2 }),
+  password: Joi.string(),
+  isAdmin: Joi.boolean(),
+  address: Joi.array().items(addressJoiSchema),
 });
 
 export const CustomerModel =

@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { CustomerModel } from "./customersModel";
-//const stripe = require('stripe')(process.env.STRIPE_SECRETKEY);
 
 export const getCustomers = async (
   req: Request,
@@ -23,6 +22,8 @@ export const getCustomer = async (
 ) => {
   try {
     const customer = await CustomerModel.findOne({ _id: req.params.id });
+    customer.password = 'hidden';
+
     res.status(200).json(customer);
   } catch (error) {
     next(error);
@@ -41,6 +42,9 @@ export const createCustomer = async (
 
     const jsonCust = customer.toJSON();
     delete jsonCust.password;
+
+    console.log(req.session.customer);
+    
 
     req.session.customer = jsonCust;
     res.status(201).json(jsonCust);
@@ -102,13 +106,6 @@ export const editCustomer = async (
     const incomingData = req.body;
     const customer: string = req.params.id;
 
-    if (
-      req.session?.customer?._id === undefined ||
-      customer !== req.session?.customer?._id
-    ) {
-      return res.status(404).json({ message: "Access denied" });
-    }
-
     const updatedCustomer = await CustomerModel.findByIdAndUpdate(
       customer,
       incomingData,
@@ -127,10 +124,6 @@ export const deleteCustomer = async (
   next: NextFunction
 ) => {
   try {
-    // await stripe.customers.delete({
-    //   email: jsonCust.mail,
-    //   description: jsonCust.mail
-    // })
     await CustomerModel.findByIdAndDelete({ _id: req.params.id });
     res.status(200).json("customer deleted");
   } catch (error) {

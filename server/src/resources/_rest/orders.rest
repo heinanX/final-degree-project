@@ -2,7 +2,11 @@ GET http://localhost:3000/api/orders
 
 ###
 
-GET http://localhost:3000/api/orders/
+GET http://localhost:3000/api/orders/user-orders/6596c71ee62bf4f20da2ebcf
+
+###
+
+GET http://localhost:3000/api/orders/659bdd700a1556021d517e2d
 
 ###
 
@@ -10,10 +14,10 @@ POST http://localhost:3000/api/orders/create
 Content-Type: application/json
 
 {
-    "customer": "6593f10e96c5a10f07128130",
-    "order": [{ "product": "65942fe6164884dad74d321f", "quantity": 1}, { "product": "65943006164884dad74d3222", "quantity": 1} ],
-    "total_price": 29,
-    "discount": 10
+    "customer": "6596c71ee62bf4f20da2ebcf",
+    "order": [{ "product": "65983b80ad42eae475e37524", "quantity": 32}, { "product": "659827dd39cc31ac1bf1dc1d", "quantity": 2} ],
+    "total_price": 12229,
+    "discount": 0
 }
 
 ###

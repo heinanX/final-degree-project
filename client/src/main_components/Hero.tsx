@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import hero_1 from "../assets/images/ai-generated-hero.png";
 import hero_2 from "../assets/images/ai-generated-hero_2.png";
+import hero_3 from "../assets/images/ticket-hero.png";
 import hero_4 from "../assets/images/ai-generated-hero_4.png";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const Hero = () => {
-  const images = [hero_1, hero_2, hero_4];
+  const images = [hero_1, hero_2, hero_3, hero_4];
   const [num, setNum] = useState(0);
   const [heroImage, setHeroImage] = useState(images[num]);
 
@@ -43,13 +44,13 @@ const Hero = () => {
   }, [num]);
 
   const arrowStyling =
-    "absolute bottom-1/2 text-white hover:text-cyan-400 text-4xl drop-shadow-xl opacity-80";
+    "absolute bottom-1/2 text-white hover:text-cyan-400 text-4xl drop-shadow-xl opacity-60";
 
   return (
     <div
-      className="relative w-full h-533"
-      style={{ backgroundImage: `url(${heroImage})`, height: "533px" }}
+      className="relative w-full flex justify-center"
     >
+      <img src={heroImage}  className='w-full' alt="pancake" />
       <button onClick={backwards} className={`${arrowStyling} left-10`}>
         {" "}
         <FaArrowLeft />{" "}

@@ -3,6 +3,7 @@ import Joi from "joi";
 
 const customerSchema = new Schema(
   {
+    username: String,
     mail: { type: String, require: true },
     password: { type: String, require: true },
     joinDate: { type: Date, default: Date.now() },
@@ -32,6 +33,7 @@ const addressJoiSchema = Joi.object(
 
 export const customerJoiSchema = Joi.object({
   _id: Joi.string(),
+  username: Joi.string(),
   mail: Joi.string().email({ minDomainSegments: 2 }).required(),
   password: Joi.string().required(),
   joinDate: Joi.date(),

@@ -28,6 +28,7 @@ exports.getCustomers = getCustomers;
 const getCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const customer = yield customersModel_1.CustomerModel.findOne({ _id: req.params.id });
+        customer.password = 'hidden';
         res.status(200).json(customer);
     }
     catch (error) {
@@ -37,20 +38,14 @@ const getCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getCustomer = getCustomer;
 const createCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { password, mail } = req.body;
-        const existingMail = yield customersModel_1.CustomerModel.findOne({ mail: mail });
-        if (existingMail) {
-            return res.status(409).json("Email already in registered");
-        }
-        else {
-            const customer = new customersModel_1.CustomerModel(req.body);
-            customer.password = yield bcrypt_1.default.hash(password, 15);
-            yield customer.save();
-            const jsonCust = customer.toJSON();
-            delete jsonCust.password;
-            // req.session.customer = jsonUser;
-            res.status(201).json(jsonCust);
-        }
+        const customer = new customersModel_1.CustomerModel(req.body);
+        customer.password = yield bcrypt_1.default.hash(req.body.password, 15);
+        yield customer.save();
+        const jsonCust = customer.toJSON();
+        delete jsonCust.password;
+        console.log(req.session.customer);
+        req.session.customer = jsonCust;
+        res.status(201).json(jsonCust);
     }
     catch (error) {
         next(error);
@@ -91,14 +86,9 @@ const logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.logout = logout;
 const editCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c, _d, _e, _f;
     try {
         const incomingData = req.body;
         const customer = req.params.id;
-        if (((_d = (_c = req.session) === null || _c === void 0 ? void 0 : _c.customer) === null || _d === void 0 ? void 0 : _d._id) === undefined ||
-            customer !== ((_f = (_e = req.session) === null || _e === void 0 ? void 0 : _e.customer) === null || _f === void 0 ? void 0 : _f._id)) {
-            return res.status(404).json({ message: 'Access denied' });
-        }
         const updatedCustomer = yield customersModel_1.CustomerModel.findByIdAndUpdate(customer, incomingData, { new: true });
         res.status(200).json(updatedCustomer);
     }

@@ -9,14 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isAdmin = void 0;
-const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
-    if ((_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b.isAdmin) {
+exports.deleteStripeCus = void 0;
+const customersModel_1 = require("../../../customers/customersModel");
+const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
+/* A middleware that checks for existing customer in database,
+if found, customer is deleted in stripe, if not found it moves on to next */
+const deleteStripeCus = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const customer = yield customersModel_1.CustomerModel.findOne({ _id: req.params.id });
+        if (customer) {
+            yield stripe.customers.del(customer.stripe_id);
+        }
+        else {
+            return res.status(409).json("customer not found");
+        }
         next();
     }
-    else {
-        res.status(403).json(`Access denied. Must be Admin.`);
+    catch (error) {
+        next(error);
     }
 });
-exports.isAdmin = isAdmin;
+exports.deleteStripeCus = deleteStripeCus;

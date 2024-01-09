@@ -3,7 +3,7 @@ GET http://localhost:3000/api/customers
 
 
 ### // GET ONE CUSTOMER
-GET http://localhost:3000/api/customers/658ec9cc1c59f85c65b7c84a
+GET http://localhost:3000/api/customers/659bdad5f6b637fbe232607b
 
 
 ### // CREATE A NEW CUSTOMER
@@ -11,10 +11,19 @@ POST http://localhost:3000/api/customers/create
 Content-Type: application/json
 
 {
-    "mail": "delete4@user.com",
+    "mail": "yeong@user.com",
     "password": "12345"
 }
 
+
+### // LOGIN USER
+POST http://localhost:3000/api/customers/login
+Content-Type: application/json
+
+{
+"mail": "user@user.com",
+"password": "12345"
+}
 
 ### // LOGIN ADMIN
 POST http://localhost:3000/api/customers/login
@@ -27,21 +36,15 @@ Content-Type: application/json
 
 
 ### // EDIT CUSTOMER
-POST http://localhost:3000/api/customers/edit-customer/658ecd718cee95807c699848
+POST http://localhost:3000/api/customers/edit-customer/6596c71ee62bf4f20da2ebcf
 Content-Type: application/json
 
 {
-    "mail": "delete4@user.com",
-    "password": "$2b$15$AwiwCmyDeIbJ/BUg2N06vOUTYVyRX6ssu3z8yvGDcthoSwdZL8CSG",
-    "isAdmin": false,
-    "orders": [],
-    "joinDate": "2023-12-29T13:03:26.833Z",
     "address": [{
-        "_id": "mainaddress",
-        "street": "Road 30",
+        "_id": "line1",
+        "street": "Road 140",
         "zip": 1234,
-        "county": 1234,
-        "halleoluja":"hello"
+        "city": "sollentuna"
     }]
 }
 
@@ -51,4 +54,4 @@ POST http://localhost:3000/api/customers/logout
 
 
 ### // DELETE CUSTOMER
-DELETE http://localhost:3000/api/customers/delete/658ecba6c36a18b6a863fe95
+DELETE http://localhost:3000/api/customers/delete/6596c6d3e62bf4f20da2ebc7

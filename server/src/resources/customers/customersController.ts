@@ -22,6 +22,8 @@ export const getCustomer = async (
 ) => {
   try {
     const customer = await CustomerModel.findOne({ _id: req.params.id });
+    customer.password = 'hidden';
+
     res.status(200).json(customer);
   } catch (error) {
     next(error);
@@ -34,24 +36,18 @@ export const createCustomer = async (
   next: NextFunction
 ) => {
   try {
-    const { password, mail } = req.body;
+    const customer = new CustomerModel(req.body);
+    customer.password = await bcrypt.hash(req.body.password, 15);
+    await customer.save();
 
-    const existingMail = await CustomerModel.findOne({ mail: mail });
+    const jsonCust = customer.toJSON();
+    delete jsonCust.password;
 
-    if (existingMail) {
-      return res.status(409).json("Email already in registered");
-    } else {
-      const customer = new CustomerModel(req.body);
-      customer.password = await bcrypt.hash(password, 15);
-      await customer.save();
+    console.log(req.session.customer);
+    
 
-      const jsonCust = customer.toJSON();
-      delete jsonCust.password;
-
-      // req.session.customer = jsonUser;
-
-      res.status(201).json(jsonCust);
-    }
+    req.session.customer = jsonCust;
+    res.status(201).json(jsonCust);
   } catch (error) {
     next(error);
   }
@@ -108,14 +104,13 @@ export const editCustomer = async (
 ) => {
   try {
     const incomingData = req.body;
-    const customer:string = req.params.id;
+    const customer: string = req.params.id;
 
-    if (req.session?.customer?._id === undefined ||
-      customer !== req.session?.customer?._id) {
-      return res.status(404).json({ message: 'Access denied' });
-    }
-  
-    const updatedCustomer = await CustomerModel.findByIdAndUpdate(customer, incomingData, { new: true } );
+    const updatedCustomer = await CustomerModel.findByIdAndUpdate(
+      customer,
+      incomingData,
+      { new: true }
+    );
 
     res.status(200).json(updatedCustomer);
   } catch (error) {

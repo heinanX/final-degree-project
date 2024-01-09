@@ -9,14 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isAdmin = void 0;
-const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.authenticateUser = void 0;
+const authenticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
-    if ((_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b.isAdmin) {
+    if ((_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b._id) {
         next();
     }
     else {
-        res.status(403).json(`Access denied. Must be Admin.`);
+        res.status(401).json({ message: `No user in session` });
     }
 });
-exports.isAdmin = isAdmin;
+exports.authenticateUser = authenticateUser;

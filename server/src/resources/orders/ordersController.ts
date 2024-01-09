@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { OrderModel } from "./ordersModel";
+const stripe = require('stripe')(process.env.STRIPE_SECRETKEY);
 
 export const getOrders = async (
   req: Request,
@@ -13,6 +14,18 @@ export const getOrders = async (
     next(error);
   }
 };
+export const getUserOrders = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const orders = await OrderModel.find({customer: req.session?.customer?._id});
+    res.status(200).json(orders);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const getOrder = async (
   req: Request,
@@ -21,11 +34,34 @@ export const getOrder = async (
 ) => {
   try {
     const order = await OrderModel.findOne({ _id: req.params.id });
-    res.status(200).json(order);
+    if (order.customer === req.session?.customer?._id || req.session?.customer?.isAdmin ) {
+      return res.status(200).json(order);
+    } else {
+      return res.status(200).json('unable to fetch order. Check permission status');
+    }
+
   } catch (error) {
     next(error);
   }
 };
+
+export const createOrder = async ( req: Request,
+  res: Response) => {
+
+  const session = await stripe.checkout.sessions.create({
+      success_url: 'http://localhost:5173/success?id={CHECKOUT_SESSION_ID}',
+      cancel_url: 'http://localhost:5173/failed',
+      payment_method_types: ['card'],
+      mode: 'payment',
+      currency: 'sek',
+      allow_promotion_codes: true,
+      customer: req.body.userId,
+      line_items: req.body.order
+  })
+  res.status(200).json({
+      url: session.url,
+  });
+}
 
 export const createOrderDB = async (
   req: Request,

@@ -43,11 +43,8 @@ export const createCustomer = async (
     const jsonCust = customer.toJSON();
     delete jsonCust.password;
 
-    console.log(req.session.customer);
-    
-
     req.session.customer = jsonCust;
-    res.status(201).json(jsonCust);
+    res.status(201).json('customer' + jsonCust.mail + ' is created');
   } catch (error) {
     next(error);
   }
@@ -78,7 +75,19 @@ export const login = async (
     delete customer.password;
     req.session.customer = customer;
 
-    res.status(200).json(customer);
+    res.status(200).json(customer.mail + ' is logged in');
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const activeLogin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.status(200).json(req.session?.customer?.mail + " is logged in");
   } catch (error) {
     next(error);
   }

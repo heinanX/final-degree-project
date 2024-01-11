@@ -7,6 +7,7 @@ exports.CustomerModel = exports.updateCustomerJoiSchema = exports.customerJoiSch
 const mongoose_1 = require("mongoose");
 const joi_1 = __importDefault(require("joi"));
 const customerSchema = new mongoose_1.Schema({
+    username: String,
     mail: { type: String, require: true },
     password: { type: String, require: true },
     joinDate: { type: Date, default: Date.now() },
@@ -30,6 +31,7 @@ const addressJoiSchema = joi_1.default.object({
 });
 exports.customerJoiSchema = joi_1.default.object({
     _id: joi_1.default.string(),
+    username: joi_1.default.string(),
     mail: joi_1.default.string().email({ minDomainSegments: 2 }).required(),
     password: joi_1.default.string().required(),
     joinDate: joi_1.default.date(),

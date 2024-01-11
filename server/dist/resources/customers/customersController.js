@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCustomer = exports.editCustomer = exports.logout = exports.login = exports.createCustomer = exports.getCustomer = exports.getCustomers = void 0;
+exports.deleteCustomer = exports.editCustomer = exports.logout = exports.activeLogin = exports.login = exports.createCustomer = exports.getCustomer = exports.getCustomers = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const customersModel_1 = require("./customersModel");
 const getCustomers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -43,9 +43,8 @@ const createCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         yield customer.save();
         const jsonCust = customer.toJSON();
         delete jsonCust.password;
-        console.log(req.session.customer);
         req.session.customer = jsonCust;
-        res.status(201).json(jsonCust);
+        res.status(201).json('customer' + jsonCust.mail + ' is created');
     }
     catch (error) {
         next(error);
@@ -68,13 +67,23 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         const customer = existingCustomer.toJSON();
         delete customer.password;
         req.session.customer = customer;
-        res.status(200).json(customer);
+        res.status(200).json(customer.mail + ' is logged in');
     }
     catch (error) {
         next(error);
     }
 });
 exports.login = login;
+const activeLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c, _d;
+    try {
+        res.status(200).json(((_d = (_c = req.session) === null || _c === void 0 ? void 0 : _c.customer) === null || _d === void 0 ? void 0 : _d.mail) + " is logged in");
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.activeLogin = activeLogin;
 const logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         req.session.customer = undefined;

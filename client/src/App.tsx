@@ -1,6 +1,6 @@
-import Footer from "./main_components/Footer";
-import Header from "./main_components/Header";
-import Router from "./main_components/Router";
+import Footer from "./components/main_components/Footer";
+import Header from "./components/main_components/Header";
+import Router from "./components/main_components/Router";
 
 const App = () => {
   return (

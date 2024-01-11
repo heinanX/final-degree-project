@@ -1,6 +1,6 @@
 import { FaUserNinja } from "react-icons/fa";
 import { LuVideotape } from "react-icons/lu";
-import logo from '../assets/images/logo-videoshack_tape.png'
+import logo from '../../assets/images/logo-videoshack_tape.png'
 
 const Header = () => {
   return (

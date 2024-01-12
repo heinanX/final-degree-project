@@ -1,5 +1,6 @@
 //import Hero from "../main_components/Hero";
-import ProductForm from '../components/productForm';
+
+import ProductForm from '../components/ProductForm/ProductForm';
 import { useSocket as useSocketProducts } from '../contexts/productContext';
 
 const Home = () => {

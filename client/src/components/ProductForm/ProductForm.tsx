@@ -3,15 +3,15 @@ import GenreForm from "./addCategory";
 import AddTag from "./AddTag";
 
 const ProductForm = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [year, setYear] = useState(1990);
-  const [image, setImage] = useState("");
-  const [vhsPrice, setVhsPrice] = useState(0);
-  const [vhsQuantity, setVhsQuantity] = useState(0);
-  const [digitalPrice, setDigitalPrice] = useState(0);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [tags, setTags] = useState<string[]>([]);
+  const [frmTitle, setNewTitle] = useState("");
+  const [frmDescription, setNewDescription] = useState("");
+  const [frmYear, setFrmYear] = useState(1990);
+  const [frmImage, setFrmImage] = useState("");
+  const [frmVhsPrice, setFrmVhsPrice] = useState(0);
+  const [frmVhsQuantity, setFrmVhsQuantity] = useState(0);
+  const [frmDigitalPrice, setFrmDigitalPrice] = useState(0);
+  const [frmCategories, setFrmCategories] = useState<string[]>([]);
+  const [frmTags, setFrmTags] = useState<string[]>([]);
 
 
   const [checkVideo, setCheckVideo] = useState(false);
@@ -24,8 +24,8 @@ const ProductForm = () => {
   };
 
   useEffect(() => {
-    console.log(categories);
-  }, [title, description, year, image, vhsPrice, categories, vhsQuantity, digitalPrice]);
+    console.log(frmCategories);
+  }, [frmTitle, frmDescription, frmYear, frmImage, frmVhsPrice, frmCategories, frmVhsQuantity, frmDigitalPrice]);
 
   return (
     <form
@@ -58,10 +58,10 @@ const ProductForm = () => {
                 <label>
                   <input
                     type="number"
-                    name="vhsPrice"
+                    name="frmVhsPrice"
                     className="rounded-sm text-black pl-2 w-16"
                     placeholder="price"
-                    onChange={(e) => setVhsPrice(parseInt(e.target.value))}
+                    onChange={(e) => setFrmVhsPrice(parseInt(e.target.value))}
                   />
                   VHS Price
                 </label>
@@ -71,7 +71,7 @@ const ProductForm = () => {
                     name="vhsQuant"
                     className="rounded-sm text-black pl-2 w-16"
                     placeholder="quantity"
-                    onChange={(e) => setVhsQuantity(parseInt(e.target.value))}
+                    onChange={(e) => setFrmVhsQuantity(parseInt(e.target.value))}
                   />
                   VHS Quantity
                 </label>
@@ -91,7 +91,7 @@ const ProductForm = () => {
                     name="digital.price"
                     className="rounded-sm text-black pl-2 w-16"
                     placeholder="price"
-                    onChange={(e) => setDigitalPrice(parseInt(e.target.value))}
+                    onChange={(e) => setFrmDigitalPrice(parseInt(e.target.value))}
                   />
                   Digital Price
                 </label>
@@ -105,11 +105,11 @@ const ProductForm = () => {
 
       {/* ------------------------ IMAGE INPUT */}
       <div>
-        <label className="pr-4">image</label>
+        <label className="pr-4">frmImage</label>
         <input
           type="text"
           placeholder="http://"
-          onChange={(e) => setImage(e.target.value)}
+          onChange={(e) => setFrmImage(e.target.value)}
         />
       </div>
             
@@ -118,9 +118,9 @@ const ProductForm = () => {
       <div>
         <label className="pr-4">Year</label>
         <select
-          value={year}
+          value={frmYear}
           className="px-2"
-          onChange={(e) => setYear(parseInt(e.target.value))}
+          onChange={(e) => setFrmYear(parseInt(e.target.value))}
         >
           {years.map((year) => (
             <option key={year} value={year}>
@@ -132,12 +132,12 @@ const ProductForm = () => {
 
       {/* ------------------------ CATEGORY INPUT */}
 
-      <GenreForm categories={categories} setCategories={setCategories} />
+      <GenreForm frmCategories={frmCategories} setFrmCategories={setFrmCategories} />
 
      
       {/* ------------------------ TAG INPUT */}
 
-      <AddTag tags={tags} setTags={setTags} />
+      <AddTag frmTags={frmTags} setFrmTags={setFrmTags} />
 
 
       {/* ------------------------ TITLE INPUT */}
@@ -147,22 +147,22 @@ const ProductForm = () => {
         <input
           className="rounded-sm text-black px-2"
           type="text"
-          name="title"
-          onChange={(e) => setTitle(e.target.value)}
+          name="frmTitle"
+          onChange={(e) => setNewTitle(e.target.value)}
         />
       </div>
 
       {/* ------------------------ DESCRIPTION */}
 
       <div>
-        <label className="pr-4">description</label>
+        <label className="pr-4">frmDescription</label>
         <textarea
           className="p-2"
           rows={3}
-          placeholder="add a description"
+          placeholder="add a frmDescription"
           style={{ resize: "none" }}
-          name="description"
-          onChange={(e) => setDescription(e.target.value)}
+          name="frmDescription"
+          onChange={(e) => setNewDescription(e.target.value)}
         />
       </div>
 

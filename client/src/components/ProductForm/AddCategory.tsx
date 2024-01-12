@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useSocket as productSocket } from "../../contexts/productContext";
 
 interface props {
-  categories: string[];
-  setCategories: React.Dispatch<React.SetStateAction<string[]>>;
+  frmCategories: string[];
+  setFrmCategories: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const AddCategory = ({ categories, setCategories }: props) => {
+const AddCategory = ({ frmCategories, setFrmCategories }: props) => {
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    const {getCategories} = productSocket();
+    const {getCategories, categories} = productSocket();
 
     useEffect(()=> {
         getCategories();
@@ -21,12 +21,12 @@ const AddCategory = ({ categories, setCategories }: props) => {
   };
 
   const handleAddCategory = () => {
-    setCategories((prevCats) => [...prevCats, selectedCategory]);
+    setFrmCategories((prevCats) => [...prevCats, selectedCategory]);
     setSelectedCategory("");
   };
 
   const handleDeleteCategory = (categoryToDelete: string) => {
-    setCategories((prevCats) =>
+    setFrmCategories((prevCats) =>
       prevCats.filter((category) => category !== categoryToDelete)
     );
   };
@@ -34,7 +34,7 @@ const AddCategory = ({ categories, setCategories }: props) => {
   return (
     <div>
       <div>
-        {categories.map((category, index) => (
+        {frmCategories.map((category, index) => (
           <div key={index} className="flex items-center">
             <span>{category}</span>
             <button onClick={() => handleDeleteCategory(category)}>x</button>
@@ -49,6 +49,10 @@ const AddCategory = ({ categories, setCategories }: props) => {
         onChange={handleCatChange}
       >
         <option value="">Choose category</option>
+        
+        { categories.map((category, index) => (
+        <option key={index} value={category.category}>{category.category}</option>
+        ))}
         <option value="comedy">Comedy</option>
         <option value="romance">Romance</option>
       </select>

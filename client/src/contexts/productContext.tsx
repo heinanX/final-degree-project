@@ -38,9 +38,7 @@ function ProductProvider({ children }: PropsWithChildren) {
     const res = await fetch("http://localhost:3000/api/categories");
     const data = await res.json();
 
-    setCategories(data);
-    console.log(data);
-    
+    setCategories(data);    
   };
 
 

@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 interface props {
-  tags: string[];
-  setTags: React.Dispatch<React.SetStateAction<string[]>>;
+  frmTags: string[];
+  setFrmTags: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const AddTag = ({ tags, setTags }: props) => {
+const AddTag = ({ frmTags, setFrmTags }: props) => {
   const [selectedTag, setSelectedTag] = useState<string>("");
 
   const handleTagChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -13,12 +13,12 @@ const AddTag = ({ tags, setTags }: props) => {
   };
 
   const handleAddTag = () => {
-    setTags((prevTags) => [...prevTags, selectedTag]);
+    setFrmTags((prevTags) => [...prevTags, selectedTag]);
     setSelectedTag("");
   };
 
   const handleDeleteTag = (deleteTag: string) => {
-    setTags((prevTags) =>
+    setFrmTags((prevTags) =>
       prevTags.filter((tag) => tag !== deleteTag)
     );
   };
@@ -26,7 +26,7 @@ const AddTag = ({ tags, setTags }: props) => {
   return (
     <div>
       <div>
-        {tags.map((tag, index) => (
+        {frmTags.map((tag, index) => (
           <div key={index} className="flex items-center">
             <span>{tag}</span>
             <button onClick={() => handleDeleteTag(tag)}>x</button>

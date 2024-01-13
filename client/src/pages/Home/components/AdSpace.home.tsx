@@ -1,10 +1,10 @@
-import React from 'react'
+
 
 const AdSpaceHome = () => {
   return (
     <div className='w-full bg-slate-200 h-80 flex flex-row'>
-        <div className='w-1/2 bg-green-300 flex flex-col justify-center items-center'>
-            <h1 className='text-6xl'>dont have a vcr?</h1>
+        <div className='w-1/2 bg-green-300 flex flex-col justify-center items-center p-8 uppercase'>
+            <h1 className='text-5xl'>dont have a vcr?</h1>
             <h4>No worries, we got you covered</h4>
         </div>
         <div className='w-1/2 bg-red-500'>

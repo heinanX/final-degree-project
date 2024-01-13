@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import hero_1 from "../../assets/images/ai-generated-hero.png";
-import hero_2 from "../../assets/images/ai-generated-hero_2.png";
-import hero_3 from "../../assets/images/ticket-hero.png";
-import hero_4 from "../../assets/images/ai-generated-hero_4.png";
+import hero_1 from "../assets/images/ai-generated-hero.png";
+import hero_2 from "../assets/images/ai-generated-hero_2.png";
+import hero_3 from "../assets/images/ticket-hero.png";
+import hero_4 from "../assets/images/ai-generated-hero_4.png";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const Hero = () => {

@@ -6,12 +6,12 @@ import LoginPage from "../pages/LoginPage/Login.page";
 
 const Router = () => {
   return (
-    <main className="max-w-7xl">
+    <main className="w-full max-w-7xl">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
-      <Route path="/cart" element={<CartPage />} />
-      <Route path="/account" element={<AccountPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/account" element={<AccountPage />} />
       </Routes>
     </main>
   );

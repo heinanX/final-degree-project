@@ -3,8 +3,9 @@
 import FantasySection from "./Fantasy.section";
 import ThrowBacksSection from "./ThrowBacks.section";
 import HotRentalsSection from "./Hot.rental.section";
-import NewsSection from "./News.section";
+import RecentlyAddedSection from "./Recently.added.section";
 import AdSpaceHome from "./AdSpace.home";
+import Greeting from "./Greeting";
 
 const Products = () => {
   //flex gap-2 flex-wrap
@@ -17,12 +18,14 @@ const Products = () => {
   // ))}
 
   return (
-    <div className="w-full  bg-slate-400 py-20">
-      <NewsSection />
+    <div className="w-full py-10">
+
+      <RecentlyAddedSection />
       <HotRentalsSection />
-      <AdSpaceHome />
+      <Greeting />
       <ThrowBacksSection />
       <FantasySection />
+      <AdSpaceHome />
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import { Category } from "./categories_interface";
-import { Tag } from "./tags_interface";
+import { Category } from "./categories.interface";
+import { Tag } from "./tags.interface";
 
 export interface Product {
   id: string;

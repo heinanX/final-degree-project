@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSocket as useSocketProducts } from "../../../contexts/productContext";
+import { useSocket as useSocketProducts } from "../../../contexts/product.context";
 
 const Products = () => {
   const { getProducts } = useSocketProducts();

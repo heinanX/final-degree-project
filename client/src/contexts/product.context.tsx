@@ -1,8 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { PropsWithChildren, createContext, useContext, useState } from "react";
-import { Product, ProductContext } from "../interfaces/product_interface";
-import { Category } from "../interfaces/categories_interface";
-import { Tag, Tags } from "../interfaces/tags_interface";
+import { Product, ProductContext } from "../interfaces/product.interface";
+import { Category } from "../interfaces/categories.interface";
+import { Tag, Tags } from "../interfaces/tags.interface";
 
 
 const defaultValues = {

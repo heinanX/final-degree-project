@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSocket as productSocket } from "../../contexts/productContext";
+import { useSocket as productSocket } from "../../contexts/product.context";
 
 interface props {
   frmCategories: string[];

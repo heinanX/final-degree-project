@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSocket as customerSocket } from "../../../contexts/customerContext";
+import { useSocket as customerSocket } from "../../contexts/customer.context";
 import SignUpForm from "./SignUp.form";
 
 const LoginForm = () => {

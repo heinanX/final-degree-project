@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
-import Tag from "./Tag";
-import AddCategory from "./AddCategory";
-//import AddTag from "./AddTag";
+import AddTag from "./Add.tag";
+import AddCategory from "./Add.category";
 
 const ProductForm = () => {
   const [frmTitle, setNewTitle] = useState("");
@@ -139,7 +138,7 @@ const ProductForm = () => {
      
       {/* ------------------------ TAG INPUT */}
 
-            <Tag frmTags={frmTags} setFrmTags={setFrmTags} />
+            <AddTag frmTags={frmTags} setFrmTags={setFrmTags} />
 
 
       {/* ------------------------ TITLE INPUT */}

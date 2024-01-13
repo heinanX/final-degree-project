@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useSocket as productSocket } from "../../contexts/productContext";
+import { useSocket as productSocket } from "../../contexts/product.context";
 
 interface props {
   frmTags: string[];
   setFrmTags: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const Tag = ({ frmTags, setFrmTags }: props) => {
+const AddTag = ({ frmTags, setFrmTags }: props) => {
   const [selectedTag, setSelectedTag] = useState<string>("");
   const { getTag, tags } = productSocket();
 
@@ -55,4 +55,4 @@ const handleAddTag = () => {
   );
 };
 
-export default Tag;
+export default AddTag;

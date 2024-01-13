@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "../../pages/Home/Home";
-import CartPage from "../../pages/CartPage";
-import LoginPage from "../../pages/LoginPage";
-import CustomerPage from "../../pages/CustomerPage";
+import Home from "../pages/Home/Home";
+import CartPage from "../pages/CartPage/Cart.page";
+import AccountPage from "../pages/AccountPage/Account.page";
+import LoginPage from "../pages/LoginPage/Login.page";
 
 const Router = () => {
   return (
@@ -11,7 +11,7 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
       <Route path="/cart" element={<CartPage />} />
-      <Route path="/account" element={<CustomerPage />} />
+      <Route path="/account" element={<AccountPage />} />
       </Routes>
     </main>
   );

@@ -1,4 +1,4 @@
-import { useSocket as customerSocket } from "../../../contexts/customerContext";
+import { useSocket as customerSocket } from "../../contexts/customer.context";
 
 const CustomerDrawer = () => {
     const { logOut } = customerSocket();

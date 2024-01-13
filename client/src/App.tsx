@@ -1,9 +1,9 @@
 
 import { useEffect } from "react";
-import Footer from "./components/main_components/Footer/Footer";
-import Header from "./components/main_components/Header/Header";
-import Router from "./components/main_components/Router";
-import { useSocket as customerSocket } from "./contexts/customerContext";
+import Footer from "./Components/Footer/Footer";
+import Header from "./Components/Header/Header";
+import Router from "./Components/Router";
+import { useSocket as customerSocket } from "./contexts/customer.context";
 
 const App = () => {
   const { checkLoginStatus } = customerSocket();

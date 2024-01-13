@@ -18,7 +18,7 @@ const Products = () => {
   // ))}
 
   return (
-    <div className="w-full py-10">
+    <div className="w-full py-5">
 
       <RecentlyAddedSection />
       <HotRentalsSection />

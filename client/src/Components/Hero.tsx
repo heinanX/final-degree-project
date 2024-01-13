@@ -10,7 +10,6 @@ const Hero = () => {
   const [num, setNum] = useState(0);
   const [heroImage, setHeroImage] = useState(images[num]);
 
-
   const forward = () => {
     if (num >= images.length - 1) {
       setNum(0);
@@ -31,35 +30,39 @@ const Hero = () => {
 
   function createDots() {
     return images.map((item, index) => (
-      <div key={index} className={ `w-2 h-2  rounded-full ${num === index ? 'bg-cyan-700' : 'bg-white'}` } ></div>
+      <div
+        key={index}
+        className={`w-2 h-2  rounded-full ${
+          num === index ? "bg-cyan-700" : "bg-white"
+        }`}
+      ></div>
     ));
   }
-  
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       forward();
     }, 8000);
-  
+
     return () => clearInterval(intervalId);
   }, [num]);
 
-  const arrowStyling =
-    "absolute bottom-1/2 text-white hover:text-cyan-400 text-4xl drop-shadow-xl opacity-60";
+  const arrowStyling = "absolute bottom-1/2 text-white hover:text-cyan-400 text-xl opacity-50 hover:bg-white hover:p-2 hover:rounded-full";
 
   return (
-    <div
-      className="relative w-full flex justify-center"
-    >
-      <img src={heroImage}  className='w-full' alt="pancake" />
-      <button onClick={backwards} className={`${arrowStyling} left-10`}>
+    <div className="relative w-full flex justify-center">
+      <img src={heroImage} className="w-full" alt="pancake" />
+      <button onClick={backwards} className={`${arrowStyling} left-6`}>
         {" "}
         <FaArrowLeft />{" "}
       </button>
-      <button onClick={forward} className={`${arrowStyling} right-10`}>
+      <button onClick={forward} className={`${arrowStyling} right-6`}>
         {" "}
         <FaArrowRight />{" "}
       </button>
-      <div className="absolute bottom-6 right-1/2 flex gap-2">{createDots()}</div>
+      <div className="absolute bottom-6 right-1/2 flex gap-2">
+        {createDots()}
+      </div>
     </div>
   );
 };

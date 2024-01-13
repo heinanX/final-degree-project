@@ -2,7 +2,7 @@ GET http://localhost:3000/api/categories
 
 ###
 
-GET http://localhost:3000/api/categories/652509e897a9c2ea6fae0d97
+GET http://localhost:3000/api/categories/6593f55592952be70faf9abd
 
 ###
 
@@ -10,9 +10,9 @@ POST http://localhost:3000/api/categories/create
 Content-Type: application/json
 
 {
-    "category": "fantasy"
+    "category": "adventure"
 }
 
 ###
 
-DELETE http://localhost:3000/api/categories/652509e897a9c2ea6fae0d97
+DELETE http://localhost:3000/api/categories/6593f55592952be70faf9abd

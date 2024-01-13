@@ -15,7 +15,7 @@ POST http://localhost:3000/api/customers/create
 Content-Type: application/json
 
 {
-    "mail": "yeol@user.com",
+    "mail": "june@user.com",
     "password": "12345"
 }
 
@@ -46,7 +46,7 @@ Content-Type: application/json
 {
     "address": [{
         "_id": "line1",
-        "street": "Road 140",
+        "street": "Road 120",
         "zip": 1234,
         "city": "sollentuna"
     }]
@@ -58,4 +58,4 @@ POST http://localhost:3000/api/customers/logout
 
 
 ### // DELETE CUSTOMER
-DELETE http://localhost:3000/api/customers/delete/6596c6d3e62bf4f20da2ebc7
+DELETE http://localhost:3000/api/customers/delete/65a2a68e50d7dda54e90e32f

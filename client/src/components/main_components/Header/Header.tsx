@@ -1,15 +1,12 @@
-import { FaUserNinja } from "react-icons/fa";
 import { LuVideotape } from "react-icons/lu";
 import logo from "../../../assets/images/logo-videoshack_tape.png";
-import { useState } from "react";
-import LoginForm from "./LoginForm";
+import { useSocket as customerSocket} from "../../../contexts/customerContext";
+import LoggedOutUi from "./LoggedOut.ui";
+import LoggedInUi from "./LoggedIn.ui";
 
 const Header = () => {
-  const [showLoginForm, setShowLoginForm] = useState<boolean>();
 
-  const handleLogin = () => {
-    setShowLoginForm(!showLoginForm);    
-  };
+  const { isLoggedIn } = customerSocket();
 
   return (
     <div className="fixed text-white z-10 px-10 py-2 flex flex-row justify-between items-center w-full">
@@ -17,16 +14,7 @@ const Header = () => {
 
       <nav>
         <ul className="flex flex-row gap-4 items-center text-xl">
-          <li className="relative">
-            <button
-              className="w-50 flex flex-row gap-2 items-center"
-              onClick={handleLogin}
-            >
-              <p className="text-base uppercase tracking-wider">Sign in </p>
-              <FaUserNinja />
-            </button>
-            { showLoginForm ? <LoginForm /> : <></> }
-          </li>
+       { isLoggedIn ? <LoggedInUi /> : <LoggedOutUi /> } 
           <li>
             <button className="w-50 flex flex-row gap-2 items-center pt-1 text-2xl">
               <LuVideotape />

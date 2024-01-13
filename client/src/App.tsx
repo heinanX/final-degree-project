@@ -1,4 +1,5 @@
-import Footer from "./components/main_components/Footer";
+
+import Footer from "./components/main_components/Footer/Footer";
 import Header from "./components/main_components/Header/Header";
 import Router from "./components/main_components/Router";
 

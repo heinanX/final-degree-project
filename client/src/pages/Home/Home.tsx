@@ -1,6 +1,5 @@
-//import Hero from "../main_components/Hero";
 //import ProductForm from '../../components/ProductForm/ProductForm';
-
+//import Hero from "../../components/main_components/Hero";
 import Products from "./components/Products";
 
 const Home = () => {

@@ -2,7 +2,7 @@ GET http://localhost:3000/api/tags
 
 ###
 
-GET http://localhost:3000/api/tags/65942464d79e7cd5a3489d70
+GET http://localhost:3000/api/tags/65a2be2d6f8b84b920cdc649
 
 ###
 
@@ -10,7 +10,7 @@ POST http://localhost:3000/api/tags/create
 Content-Type: application/json
 
 {
-    "tag": "jude"
+    "tag": "ryan reynolds"
 }
 
 ###

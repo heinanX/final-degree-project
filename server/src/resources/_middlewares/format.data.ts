@@ -12,7 +12,7 @@ export const formatData = async (
 
   if (req.body.title && req.body.description) {
     req.body.title = req.body.title.toLowerCase();
-    req.body.description = req.body.description.toLowerCase();
+    //req.body.description = req.body.description.toLowerCase();
     return next();
   }
 

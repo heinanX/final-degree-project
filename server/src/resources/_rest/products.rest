@@ -10,19 +10,22 @@ POST http://localhost:3000/api/products/create
 Content-Type: application/json
 
 {
-    "title": "new movie",
-    "description": "we're back in the future ",
-    "category": ["6593ee75ad4bf20a16e96bc1"],
-    "tags": ["659424b2d79e7cd5a3489d7f"],
-    "year": 1990,
+    "title": "The Proposal",
+    "description": "rick",
+    "category": ["6593ee75ad4bf20a16e96bc1", "6593efd0a62dd39fcfa68fbf"],
+    "tags": ["65a2cd1b6f8b84b920cdc6e9", "65a2cd9a6f8b84b920cdc6f0", "65a2cdb06f8b84b920cdc6f3"],
+    "content_rating": "PG-13",
+    "rating": 4,
+    "year": 2009,
+    "image": "https://www.themoviedb.org/t/p/w500/aEqtJDj8MvSDQwzggvcOfFTZMw.jpg",
     "vhs": {
         "price": 29,
         "available": true,
-        "quantity": 5,
-        "inStock": 5
+        "quantity": 6,
+        "inStock": 6
     },
     "digital": {
-        "price": 39,
+        "price": 29,
         "available": true
     }
 }

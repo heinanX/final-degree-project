@@ -1,29 +1,26 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PropsWithChildren, createContext, useContext, useState } from "react";
-import { CustomerContext } from "../interfaces/customerInterface";
+import { CustomerContext } from "../interfaces/customer.interface";
 
 const defaultValues = {
-  loginVisibility: false,
-  setLoginVisibility: () => {},
-  signUpVisibility: false,
-  setSignUpVisibility: () => {},
   isLoggedIn: false,
   setIsLoggedIn: () => {},
   login: async (mail: string, pass: string) => {},
-  signUp: async (uname: string, mail: string, pass: string) => {},
+  signUp: async (mail: string, pass: string) => {},
   logOut: async () => {},
   checkLoginStatus: async () => {},
 };
 
-export const CustomerContextValues = createContext<CustomerContext>(defaultValues);
+export const CustomerContextValues =
+  createContext<CustomerContext>(defaultValues);
 export const useSocket = () => useContext(CustomerContextValues);
 
 function CustomerProvider({ children }: PropsWithChildren) {
-  const [loginVisibility, setLoginVisibility] = useState<boolean>(false);
-  const [signUpVisibility, setSignUpVisibility] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  // #LOG IN FUNCTION THAT TAKES IN 2 STRINGS FROM COMPONENT LOGINFORM
+
+  // LOG IN FUNCTION THAT ACCEPTS 2 PARAMETERS FROM COMPONENT Login.form
   const login = async (mail: string, pass: string) => {
     try {
       const res = await fetch("/api/customers/login", {
@@ -38,13 +35,8 @@ function CustomerProvider({ children }: PropsWithChildren) {
       });
       if (res.ok) {
         setIsLoggedIn(true);
-
-        loginVisibility ? setLoginVisibility(false) : null;
-        signUpVisibility ? setSignUpVisibility(false) : null;
         const data = await res.json();
         console.log(data);
-        
-        //localStorage.setItem("customer", JSON.stringify(data.userObject));
       } else {
         alert("incorrect mail or password");
       }
@@ -53,27 +45,25 @@ function CustomerProvider({ children }: PropsWithChildren) {
     }
   };
 
-  const signUp = async (uname: string, mail: string, pass: string) => {
+  // SIGN UP FUNCTION THAT ACCEPTS 2 PARAMETERS FROM COMPONENT SignUp.form
+  const signUp = async (mail: string, pass: string) => {
     try {
-      const res = await fetch("/api/customers/sign-up", {
+      const res = await fetch("/api/customers/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: mail,
+          mail: mail,
           password: pass,
-          description: uname,
         }),
       });
+      const data = await res.json();
       if (res.ok) {
-        loginVisibility ? setLoginVisibility(false) : null;
-        signUpVisibility ? setSignUpVisibility(false) : null;
-        
-        setTimeout(() => {
-          login(mail, pass);
-          loginVisibility ? setLoginVisibility(false) : null;
-        }, 1000);
+        setIsLoggedIn(true);
+        console.log(data);
+
+        //add 'customer reward' Issue logic here
 
       } else {
         alert("user already exists");
@@ -83,6 +73,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
     }
   };
 
+  // LOGOUT FUNCTION THAT SENDS A POST TO LOGOUT ENDPOINT, IF OK, CUSTOMER HAS LOGGED OUT
   const logOut = async () => {
     try {
       const res = await fetch("api/customers/logout", {
@@ -92,36 +83,32 @@ function CustomerProvider({ children }: PropsWithChildren) {
         },
         body: JSON.stringify({}),
       });
-      
-      localStorage.removeItem("customer");
-      setIsLoggedIn(false);
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log(data);
+        setIsLoggedIn(false);
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
+  // FUNCTION THAT CHECKS FOR USER IN SESSION.
   const checkLoginStatus = async () => {
     try {
-      const res = await fetch("api/customers/auth");
-      const data = await res.json();
+      const res = await fetch("api/customers/active");
       if (res.ok) {
         setIsLoggedIn(true);
-        !localStorage.getItem("customer")
-          ? localStorage.setItem("customer", JSON.stringify(data))
-          : null;
       }
     } catch (error) {
-      return;
+      console.error(error)
     }
   };
 
   return (
     <CustomerContextValues.Provider
       value={{
-        loginVisibility,
-        setLoginVisibility,
-        signUpVisibility,
-        setSignUpVisibility,
         isLoggedIn,
         setIsLoggedIn,
         login,

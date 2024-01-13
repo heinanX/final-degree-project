@@ -34,6 +34,10 @@
   box-shadow: 0 0 10px rgba(35, 44, 61, 0.1) ;
 }
 
+.text-10px {
+  font-size: 10px;
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

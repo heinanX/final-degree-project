@@ -2,6 +2,7 @@
 import { PropsWithChildren, createContext, useContext, useState } from "react";
 import { Product, ProductContext } from "../interfaces/product_interface";
 import { Category } from "../interfaces/categories_interface";
+import { Tag, Tags } from "../interfaces/tags_interface";
 
 
 const defaultValues = {
@@ -11,6 +12,10 @@ const defaultValues = {
   categories: [],
   setCategories: () => {},
   getCategories: () => {},
+  tags: [],
+  setTags: () => {},
+  getTags: () => {},
+  getTag: () => {},
 };
 
 export const ProductContextValues =
@@ -23,6 +28,7 @@ export const useSocket = () => useContext(ProductContextValues);
 function ProductProvider({ children }: PropsWithChildren) {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
 
  
   const getProducts = async () => {
@@ -41,6 +47,37 @@ function ProductProvider({ children }: PropsWithChildren) {
     setCategories(data);    
   };
 
+  const getTags = async () => {
+    const res = await fetch("http://localhost:3000/api/tags");
+    const data = await res.json();
+
+    setTags(data);    
+  };
+
+  const getTag = async (tag: string) => {
+    const res = await fetch("http://localhost:3000/api/tags");
+    const data = await res.json();
+
+const collected = data.find((item: Tags) => item.tag === tag);
+
+if (!collected) {
+  const createTagRes = await fetch("/api/tags/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      tag: tag
+    })
+  });
+  if (createTagRes.ok) {
+    const newTag = await createTagRes.json();
+    console.log(newTag);
+  }
+}
+    console.log(collected);  
+  };
+
 
   return (
     <ProductContextValues.Provider
@@ -49,7 +86,10 @@ function ProductProvider({ children }: PropsWithChildren) {
         setProducts,
         getProducts,
         categories,
-        getCategories
+        getCategories,
+        tags,
+        getTags,
+        getTag
       }}
     >
       {children}

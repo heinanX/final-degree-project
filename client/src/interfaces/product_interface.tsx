@@ -1,4 +1,5 @@
 import { Category } from "./categories_interface";
+import { Tag } from "./tags_interface";
 
 export interface Product {
   id: string;
@@ -50,4 +51,7 @@ export interface ProductContext {
   getProducts: () => void;
   categories: Category[];
   getCategories: () => void;
+  tags: Tag[]
+  getTags: () => void;
+  getTag: (tag: string) => void;
 }

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import GenreForm from "./addCategory";
-import AddTag from "./AddTag";
+
+import Tag from "./Tag";
+import AddCategory from "./AddCategory";
+//import AddTag from "./AddTag";
 
 const ProductForm = () => {
   const [frmTitle, setNewTitle] = useState("");
@@ -132,12 +134,12 @@ const ProductForm = () => {
 
       {/* ------------------------ CATEGORY INPUT */}
 
-      <GenreForm frmCategories={frmCategories} setFrmCategories={setFrmCategories} />
+      <AddCategory frmCategories={frmCategories} setFrmCategories={setFrmCategories} />
 
      
       {/* ------------------------ TAG INPUT */}
 
-      <AddTag frmTags={frmTags} setFrmTags={setFrmTags} />
+            <Tag frmTags={frmTags} setFrmTags={setFrmTags} />
 
 
       {/* ------------------------ TITLE INPUT */}

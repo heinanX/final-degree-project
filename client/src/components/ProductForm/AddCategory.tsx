@@ -53,8 +53,6 @@ const AddCategory = ({ frmCategories, setFrmCategories }: props) => {
         { categories.map((category, index) => (
         <option key={index} value={category.category}>{category.category}</option>
         ))}
-        <option value="comedy">Comedy</option>
-        <option value="romance">Romance</option>
       </select>
       <button onClick={handleAddCategory}>+</button>
     </div>

@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { createOrder, createOrderDB, deleteOrder,getOrder, getOrders, manageOrder } from './ordersController';
+import { createOrder, createOrderDB, deleteOrder,getOrder, getOrders, manageOrder } from './orders.controller';
 import { isAdmin } from '../_middlewares/isAdmin';
-import { validate } from '../_middlewares/validateSchema';
-import { markOrderJoiSchema, orderJoiSchema } from './ordersModel';
-import { formatData } from '../_middlewares/formatData';
+import { validate } from '../_middlewares/validate.schema';
+import { markOrderJoiSchema, orderJoiSchema } from './orders.model';
+import { formatData } from '../_middlewares/format.data';
 import { authorization } from '../_middlewares/authorize';
-import { authenticateUser } from '../_middlewares/authenticateUser';
+import { authenticateUser } from '../_middlewares/authenticate.user';
 
 export const orderRouter = Router();
 

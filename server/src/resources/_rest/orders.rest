@@ -6,7 +6,7 @@ GET http://localhost:3000/api/orders/user-orders/6596c71ee62bf4f20da2ebcf
 
 ###
 
-GET http://localhost:3000/api/orders/659bdd700a1556021d517e2d
+GET http://localhost:3000/api/orders/659bdf345234d267f4f1bcf0
 
 ###
 
@@ -14,7 +14,7 @@ POST http://localhost:3000/api/orders/create
 Content-Type: application/json
 
 {
-    "customer": "6596c71ee62bf4f20da2ebcf",
+    "customer": "659fe78583e4a05d0755f06a",
     "order": [{ "product": "65983b80ad42eae475e37524", "quantity": 32}, { "product": "659827dd39cc31ac1bf1dc1d", "quantity": 2} ],
     "total_price": 12229,
     "discount": 0
@@ -40,13 +40,13 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/api/orders/manage-order/659560fb456094ab0f8e8e2c
+PUT http://localhost:3000/api/orders/manage-order/65a2a5bd50d7dda54e90e324
 Content-Type: application/json
 
 {
-    "payment_status": "pending"
+    "payment_status": "paid"
 }
 
 ###
 
-DELETE http://localhost:3000/api/orders/delete/65942e4f9edbfa8f46d70d25
+DELETE http://localhost:3000/api/orders/delete/659bddc50a1556021d517e31

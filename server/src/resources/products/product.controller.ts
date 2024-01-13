@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ProductModel } from "./productModel";
+import { ProductModel } from "./product.model";
 
 export const getProducts = async (
   req: Request,
@@ -21,6 +21,10 @@ export const getProduct = async (
 ) => {
   try {
     const product = await ProductModel.findOne({ _id: req.params.id });
+    if (!product) {
+      return res.status(404).json({ error: 'Unknown ID' });
+    }
+    
     res.status(200).json(product);
   } catch (error) {
     next(error);

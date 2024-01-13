@@ -1,15 +1,15 @@
 const session = require("express-session");
 import express from "express";
 import cors from "cors";
-import { customerRouter } from "./resources/customers/customersRouter";
-import { categoryRouter } from "./resources/categories/categoriesRouter";
-import { productRouter } from "./resources/products/productRouter";
-import { tagRouter } from "./resources/tags/tagsRouter";
-import { orderRouter } from "./resources/orders/ordersRouter";
+import { customerRouter } from "./resources/customers/customers.router";
+import { categoryRouter } from "./resources/categories/categories.router";
+import { productRouter } from "./resources/products/product.router";
+import { tagRouter } from "./resources/tags/tags.router";
+import { orderRouter } from "./resources/orders/orders.router";
 import {
   errorHandler,
   notFound,
-} from "./resources/_middlewares/errorHandler";
+} from "./resources/_middlewares/error.handler";
 
 export const app = express();
 const cookieSecret = process.env.COOKIE_SESSION_KEY;

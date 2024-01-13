@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { CustomerModel } from "./customersModel";
+import { CustomerModel } from "./customers.model";
 
 export const getCustomers = async (
   req: Request,
@@ -22,8 +22,10 @@ export const getCustomer = async (
 ) => {
   try {
     const customer = await CustomerModel.findOne({ _id: req.params.id });
+    if (!customer) {
+      return res.status(404).json({ error: 'Unknown Customer ID' });
+    }
     customer.password = 'hidden';
-
     res.status(200).json(customer);
   } catch (error) {
     next(error);
@@ -44,7 +46,7 @@ export const createCustomer = async (
     delete jsonCust.password;
 
     req.session.customer = jsonCust;
-    res.status(201).json('customer' + jsonCust.mail + ' is created');
+    res.status(201).json('customer ' + jsonCust.mail + ' is created');
   } catch (error) {
     next(error);
   }

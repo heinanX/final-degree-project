@@ -2,7 +2,7 @@ GET http://localhost:3000/api/products
 
 ###
 
-GET http://localhost:3000/api/products/65982b6bf5a6f314600b4779
+GET http://localhost:3000/api/products/65982502e138d6b4a7377d66
 
 ###
 
@@ -10,8 +10,8 @@ POST http://localhost:3000/api/products/create
 Content-Type: application/json
 
 {
-    "title": "Tarzan",
-    "description": "A dog on the loose is the Postman's worst nightmare ",
+    "title": "new movie",
+    "description": "we're back in the future ",
     "category": ["6593ee75ad4bf20a16e96bc1"],
     "tags": ["659424b2d79e7cd5a3489d7f"],
     "year": 1990,
@@ -29,27 +29,27 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/api/products/edit-product/65943006164884dad74d3222
+POST http://localhost:3000/api/products/edit-product/65a2a0c4b4ff867e76bc6b57
 Content-Type: application/json
 
 {
-    "title": "new movie about something",
-    "description": "its a very new movie",
+    "title": "Back to the future",
+    "description": "we're back in the future ",
     "category": ["6593ee75ad4bf20a16e96bc1"],
     "tags": ["659424b2d79e7cd5a3489d7f"],
     "year": 1990,
     "vhs": {
-        "price": 29,
+        "price": 39,
         "available": true,
-        "quantity": 10,
+        "quantity": 5,
         "inStock": 5
     },
     "digital": {
-        "price": 49,
+        "price": 39,
         "available": true
     }
 }
 
 ###
 
-DELETE http://localhost:3000/api/products/delete/65982b6bf5a6f314600b4779
+DELETE http://localhost:3000/api/products/delete/65a2a4c22e6f0dfd126eb6ba

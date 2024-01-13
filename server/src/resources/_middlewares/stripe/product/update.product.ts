@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { ProductModel } from "../../../products/productModel";
+import { ProductModel } from "../../../products/product.model";
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 
 /* A middleware that checks for a product in database.
 If found, the product is updated in stripe, it then passes to the next function. */
 
-export const editStripeProduct = async (
+export const updateStripeProduct = async (
   req: Request,
   res: Response,
   next: NextFunction

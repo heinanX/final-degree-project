@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { CategoryModel } from "./categoriesModel";
+import { CategoryModel } from "./categories.model";
 
 export const getCats = async (
   req: Request,
@@ -21,6 +21,10 @@ export const getCat = async (
 ) => {
   try {
     const category = await CategoryModel.findOne({ _id: req.params.id });
+    if (!category) {
+      return res.status(404).json({ error: 'Unknown ID' });
+    }
+    
     res.status(200).json(category);
   } catch (error) {
     next(error);

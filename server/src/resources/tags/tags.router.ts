@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { validate } from '../_middlewares/validateSchema';
+import { validate } from '../_middlewares/validate.schema';
 import { isAdmin } from '../_middlewares/isAdmin';
-import { formatData } from '../_middlewares/formatData';
-import { createTag, deleteTag, getTag, getTags } from './tagsController';
-import { tagJoiSchema } from './tagsModel';
+import { formatData } from '../_middlewares/format.data';
+import { createTag, deleteTag, getTag, getTags } from './tags.controller';
+import { tagJoiSchema } from './tags.model';
 
 
 

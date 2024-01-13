@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { OrderModel } from "./ordersModel";
+import { OrderModel } from "./orders.model";
 const stripe = require('stripe')(process.env.STRIPE_SECRETKEY);
 
 export const getOrders = async (
@@ -34,6 +34,10 @@ export const getOrder = async (
 ) => {
   try {
     const order = await OrderModel.findOne({ _id: req.params.id });
+    if (!order) {
+      return res.status(404).json({ error: 'Unknown Order ID' });
+    }
+
     if (order.customer === req.session?.customer?._id || req.session?.customer?.isAdmin ) {
       return res.status(200).json(order);
     } else {

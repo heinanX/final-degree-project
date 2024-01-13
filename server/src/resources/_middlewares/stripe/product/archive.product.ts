@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ProductModel } from "../../../products/productModel";
+import { ProductModel } from "../../../products/product.model";
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 
 /* A middleware that checks for a product in database.

@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { createCat, deleteCat, getCats, getCat } from './categoriesController';
-import { catJoiSchema } from './categoriesModel';
-import { validate } from '../_middlewares/validateSchema';
+import { createCat, deleteCat, getCats, getCat } from './categories.controller';
+import { catJoiSchema } from './categories.model';
+import { validate } from '../_middlewares/validate.schema';
 import { isAdmin } from '../_middlewares/isAdmin';
-import { formatData } from '../_middlewares/formatData';
+import { formatData } from '../_middlewares/format.data';
 
 
 

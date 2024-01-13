@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { TagModel } from "./tagsModel";
+import { TagModel } from "./tags.model";
 
 export const getTags = async (
   req: Request,
@@ -20,8 +20,12 @@ export const getTag = async (
   next: NextFunction
 ) => {
   try {
-    const category = await TagModel.findOne({ _id: req.params.id });
-    res.status(200).json(category);
+    const tag = await TagModel.findOne({ _id: req.params.id });
+    if (!tag) {
+      return res.status(404).json({ error: 'Unknown ID' });
+    }
+
+    res.status(200).json(tag);
   } catch (error) {
     next(error);
   }

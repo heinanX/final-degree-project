@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSocket as customerSocket } from "../../../contexts/customerContext";
-import SignUpForm from "./signUp.form";
+import SignUpForm from "./SignUp.form";
+
 const LoginForm = () => {
   const [custMail, setCustMail] = useState<string>("");
   const [custPass, setCustPass] = useState<string>("");

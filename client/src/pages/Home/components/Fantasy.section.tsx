@@ -52,7 +52,7 @@ const FantasySection = () => {
   return (
     <div className="relative my-10 mx-16 border border-teal-700 h-60 flex flex-col justify-end rounded-sm">
       <div
-        className="absolute border border-teal-700 px-10 text-teal-700"
+        className="absolute border border-teal-700 px-10 text-teal-700 uppercase"
         style={{ top: "-26px", left: "-1px" }}
       >
         Fantasy

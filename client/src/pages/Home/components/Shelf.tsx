@@ -11,28 +11,28 @@ interface shelfProps {
 
 const Shelf = ({ arr, category, windowSize }: shelfProps) => {
 
-  let newArr = arr.slice(0, 6);
+  let newArr = arr.slice(0, 5);
 
   if (windowSize.width < 1100) {
-    newArr = arr.slice(0, 5);
-  }
-  if (windowSize.width < 950) {
     newArr = arr.slice(0, 4);
   }
-  if (windowSize.width < 776) {
+  if (windowSize.width < 950) {
     newArr = arr.slice(0, 3);
   }
-  if (windowSize.width < 620) {
+  if (windowSize.width < 776) {
     newArr = arr.slice(0, 2);
+  }
+  if (windowSize.width < 620) {
+    newArr = arr.slice(0, 1);
   }
   if (windowSize.width < 520) {
     newArr = arr.slice(0, 1);
   }
 
   return (
-    <div className="relative my-10 mx-16 border border-teal-700 h-60 flex flex-col justify-end rounded-sm">
+    <div className="relative my-10 mx-10 border border-teal-700 h-96 flex flex-col justify-end rounded-sm">
       <div
-        className="absolute border border-teal-700 px-10 text-teal-700 text-sm uppercase tracking-wider"
+        className="absolute border border-teal-700 px-10 text-teal-700 text-sm uppercase tracking-wider overflow-hidden"
         style={{
           top: "-26px",
           left: "-1px",
@@ -42,9 +42,9 @@ const Shelf = ({ arr, category, windowSize }: shelfProps) => {
       >
         {category}
       </div>
-      <div className="h-48 w-full flex gap-4 justify-center">
+      <div className="h-80 w-full flex gap-4 justify-center">
         {newArr.map((item, index) => (
-          <div key={index} className="h-48 relative">
+          <div key={index} className="h-80 relative">
             <img
               src={item.image}
               alt="item.title"

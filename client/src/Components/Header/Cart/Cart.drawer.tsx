@@ -1,4 +1,4 @@
-import * as React from "react";
+import {Fragment, useState, KeyboardEvent} from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
@@ -7,17 +7,17 @@ import { LuVideotape } from "react-icons/lu";
 type Anchor = "right";
 
 export default function TemporaryDrawer() {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     right: false,
   });
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
+    (event: KeyboardEvent | React.MouseEvent) => {
       if (
         event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
+        ((event as KeyboardEvent).key === "Tab" ||
+          (event as KeyboardEvent).key === "Shift")
       ) {
         return;
       }
@@ -29,7 +29,6 @@ export default function TemporaryDrawer() {
     <Box
       sx={{ width: anchor === "right" ? "auto" : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <div className="w-80">
@@ -45,7 +44,7 @@ export default function TemporaryDrawer() {
   return (
     <div>
       {(["right"] as const).map((anchor) => (
-        <React.Fragment key={anchor}>
+        <Fragment key={anchor}>
           <button className="text-2xl" onClick={toggleDrawer(anchor, true)}>
             <LuVideotape />
           </button>
@@ -56,7 +55,7 @@ export default function TemporaryDrawer() {
           >
             {list(anchor)}
           </Drawer>
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

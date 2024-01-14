@@ -14,8 +14,8 @@ const ThrowBacksSection = () => {
       </div>
       <div className="h-48 w-full flex gap-4 justify-center">
         {throwBacks.map((item, index) => (
-          <div className="relative">
-          <img src={item.image} alt="" key={index} className="h-48" />
+          <div className="relative"  key={index} >
+          <img src={item.image} alt=""className="h-48" />
           <button className="absolute bottom-2 left-0 w-full px-2"> read more</button>
           </div>
         ))}

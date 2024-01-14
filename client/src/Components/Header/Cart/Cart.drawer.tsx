@@ -1,4 +1,4 @@
-import {Fragment, useState, KeyboardEvent} from "react";
+import { Fragment, useState, KeyboardEvent } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
@@ -6,7 +6,7 @@ import { LuVideotape } from "react-icons/lu";
 
 type Anchor = "right";
 
-export default function TemporaryDrawer() {
+const CartDrawer = () => {
   const [state, setState] = useState({
     right: false,
   });
@@ -59,4 +59,5 @@ export default function TemporaryDrawer() {
       ))}
     </div>
   );
-}
+};
+export default CartDrawer;

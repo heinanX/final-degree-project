@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSocket as productSocket } from "../../contexts/product.context";
+import { useSocket as categorySocket } from "../../contexts/category.context";
 
 interface props {
   frmCategories: string[];
@@ -8,7 +8,7 @@ interface props {
 
 const AddCategory = ({ frmCategories, setFrmCategories }: props) => {
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    const {getCategories, categories} = productSocket();
+    const {getCategories, categories} = categorySocket();
 
     useEffect(()=> {
         getCategories();

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSocket as productSocket } from "../../contexts/product.context";
+import { useSocket as tagSocket } from "../../contexts/tags.context";
 
 interface props {
   frmTags: string[];
@@ -8,7 +8,7 @@ interface props {
 
 const AddTag = ({ frmTags, setFrmTags }: props) => {
   const [selectedTag, setSelectedTag] = useState<string>("");
-  const { getTag, tags } = productSocket();
+  const { getTag, tags } = tagSocket();
 
 //   const addTags = () => {
 //     setFrmTags((prevTags) => [...prevTags, selectedTag]);

@@ -1,5 +1,10 @@
-import { Category } from "./categories.interface";
-import { Tag } from "./tags.interface";
+export interface ProductContext {
+  products: Product[];
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  getProducts: () => void;
+  getProduct: (id:string) => void;
+  getMovie: Product | null
+}
 
 export interface Product {
   _id: string;
@@ -45,13 +50,4 @@ export interface ProductSegment {
   };
 }
 
-export interface ProductContext {
-  products: Product[];
-  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
-  getProducts: () => void;
-  categories: Category[];
-  getCategories: () => void;
-  tags: Tag[]
-  getTags: () => void;
-  getTag: (tag: string) => void;
-}
+

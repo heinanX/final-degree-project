@@ -2,7 +2,7 @@ import { Category } from "./categories.interface";
 import { Tag } from "./tags.interface";
 
 export interface Product {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   category: [];

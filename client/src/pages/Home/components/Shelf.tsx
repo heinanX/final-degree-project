@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { Product } from "../../../interfaces/product.interface";
 
 interface shelfProps {
@@ -44,13 +45,15 @@ const Shelf = ({ arr, category, windowSize }: shelfProps) => {
       </div>
       <div className="h-80 w-full flex gap-4 justify-center">
         {newArr.map((item, index) => (
-          <div key={index} className="h-80 relative">
+          <NavLink to={"/" + item._id} key={index} >
+          <div className="h-80 relative">
             <img
               src={item.image}
               alt="item.title"
               className="h-full"
             />
           </div>
+          </NavLink>
         ))}
       </div>
       <div className="mb-2 mx-2 border border-teal-900 h-5  rounded-sm"></div>

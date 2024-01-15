@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { PropsWithChildren, createContext, useContext, useState } from "react";
+import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 import { Product, ProductContext } from "../interfaces/product.interface";
 import { Category } from "../interfaces/categories.interface";
 import { Tag, Tags } from "../interfaces/tags.interface";
@@ -77,6 +77,10 @@ if (!collected) {
 }
     console.log(collected);  
   };
+
+  useEffect(()=> {
+getProducts()
+  },[])
 
 
   return (

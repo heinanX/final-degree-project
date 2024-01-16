@@ -1,19 +1,21 @@
 import { useSocket as productSocket } from "../../../contexts/product.context";
+import { useSocket as cartSocket } from "../../../contexts/cart.context";
 import { CategoryTwo } from "../../../interfaces/category.interface";
 import { Tags } from "../../../interfaces/tags.interface";
 import capitalizeLetters from "../../../functions/capitalizeLetters";
 
-const ProductCard = () => {
+const ProductDetails = () => {
   const { getMovie } = productSocket();
+  const { addToCart } = cartSocket();
 
   const handleRent = (type: string, id: string) => {
     if (type === 'vhs') {
       console.log('vhs', id);
-      console.log(capitalizeLetters('hello there this is a sentence'));
       
-      //addToCart(id)
+      if (getMovie) addToCart(getMovie, 'vhs');
     } else {
       console.log('digital', id);
+      if (getMovie) addToCart(getMovie, 'digital');
     }
   }
 
@@ -75,4 +77,4 @@ const ProductCard = () => {
   );
 };
 
-export default ProductCard;
+export default ProductDetails;

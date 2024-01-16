@@ -21,11 +21,6 @@ const ProductPage = () => {
 
   useEffect(() => {
     setLoadProduct(false);
-    console.log(getMovie);
-  }, [getMovie]);
-
-  useEffect(() => {
-
   }, [getMovie]);
 
   return (

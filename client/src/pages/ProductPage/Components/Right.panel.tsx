@@ -1,8 +1,8 @@
-import ProductCard from './Product.card'
+import ProductDetails from './Product.details'
 
 const RightPanel = () => {
   return (
-    <ProductCard />
+    <ProductDetails />
   )
 }
 

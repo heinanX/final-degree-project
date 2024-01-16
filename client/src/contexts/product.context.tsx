@@ -30,10 +30,16 @@ function ProductProvider({ children }: PropsWithChildren) {
   const [getMovie, setgetMovie] = useState<Product | null>(null);
 
   const getProducts = async () => {
-    const res = await fetch("http://localhost:3000/api/products");
-    const data = await res.json();
-
-    setProducts(data);
+    try {
+      const res = await fetch("http://localhost:3000/api/products");
+      const data = await res.json();
+      if (!res.ok) throw new Error("Failed to fetch product");
+      setProducts(data);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("Error fetching product", err.message);
+      }
+    }
   };
 
   /*

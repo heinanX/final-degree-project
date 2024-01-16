@@ -1,6 +1,7 @@
 import { useSocket as productSocket } from "../../../contexts/product.context";
 import { CategoryTwo } from "../../../interfaces/category.interface";
 import { Tags } from "../../../interfaces/tags.interface";
+import capitalizeLetters from "../../../functions/capitalizeLetters";
 
 const ProductCard = () => {
   const { getMovie } = productSocket();
@@ -8,6 +9,8 @@ const ProductCard = () => {
   const handleRent = (type: string, id: string) => {
     if (type === 'vhs') {
       console.log('vhs', id);
+      console.log(capitalizeLetters('hello there this is a sentence'));
+      
       //addToCart(id)
     } else {
       console.log('digital', id);
@@ -63,7 +66,7 @@ const ProductCard = () => {
           <p>Actors:</p>
           {getMovie?.tags.map((tag: Tags, index) => (
             <p data-info="movie-tags" key={index} className="text-xl">
-              {tag.tag}
+              {capitalizeLetters(tag.tag)}
             </p>
           ))}
         </div>

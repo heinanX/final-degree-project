@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSocket as productSocket } from "../../contexts/product.context";
 import RightPanel from "./Components/Right.panel";
 import LeftPanel from "./Components/Left.panel";
@@ -10,16 +10,22 @@ const ProductPage = () => {
   const [loadProduct, setLoadProduct] = useState(true);
   const { getProduct, getMovie, products } = productSocket();
 
+  const { id } = useParams();
   const windowSize = useWindowSize();
-  const location = useLocation();
-  const movieID = location.pathname.slice(1);
+
   useEffect(() => {
-    getProduct(movieID);
-  }, []);
+    if (id) {
+    getProduct(id);
+  }
+  }, [id]);
 
   useEffect(() => {
     setLoadProduct(false);
     console.log(getMovie);
+  }, [getMovie]);
+
+  useEffect(() => {
+
   }, [getMovie]);
 
   return (

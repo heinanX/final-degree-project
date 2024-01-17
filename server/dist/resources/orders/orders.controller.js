@@ -53,6 +53,8 @@ const getOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.getOrder = getOrder;
 const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _g;
+    console.log(req.session.customer);
     const session = yield stripe.checkout.sessions.create({
         success_url: 'http://localhost:5173/success?id={CHECKOUT_SESSION_ID}',
         cancel_url: 'http://localhost:5173/failed',
@@ -60,8 +62,8 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         mode: 'payment',
         currency: 'sek',
         allow_promotion_codes: true,
-        customer: req.body.userId,
-        line_items: req.body.order
+        customer: (_g = req.session.customer) === null || _g === void 0 ? void 0 : _g.stripe_id,
+        line_items: req.body
     });
     res.status(200).json({
         url: session.url,

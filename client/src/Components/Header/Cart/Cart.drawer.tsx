@@ -5,11 +5,12 @@ import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import { LuVideotape } from "react-icons/lu";
 import CartDetails from "./Cart.details";
+import { NavLink } from "react-router-dom";
 
 type Anchor = "right";
 
 const CartDrawer = () => {
-  const { cartTotal, handleCheckout } = cartSocket();
+  const { cartTotal} = cartSocket();
   const [state, setState] = useState({
     right: false,
   });
@@ -34,15 +35,18 @@ const CartDrawer = () => {
       role="presentation"
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <div className="w-80  px-6">
+      <div className="w-96  px-6">
         <h1 className="text-2xl py-6">Cart</h1>
         <Divider />
       <CartDetails />
       <Divider />
-      <span className="flex flex-row py-2 justify-between">
+      <span className="flex flex-row py-10 justify-between">
       <p className="font-medium">Total sum: </p>
         <p>{cartTotal}</p>
-      <button className="standard-btn" onClick={handleCheckout} > Go to checkout</button>
+        <NavLink to={'/checkout'}>
+           <button className="standard-btn" onClick={toggleDrawer(anchor, false)}> Go to checkout</button>
+        </NavLink>
+     
       </span>
       </div>
     </Box>

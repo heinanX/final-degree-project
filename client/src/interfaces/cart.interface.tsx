@@ -12,9 +12,3 @@ export interface CartItem {
   vhs: boolean;
   digital: boolean;
 }
-
-/* export interface Cart {
-  cart: CartItem[];
-  total_price: number;
-}
- */

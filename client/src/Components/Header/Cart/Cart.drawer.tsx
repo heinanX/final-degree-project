@@ -45,9 +45,9 @@ const CartDrawer = () => {
     <div>
       {(["right"] as const).map((anchor) => (
         <Fragment key={anchor}>
-          <button className="text-2xl" onClick={toggleDrawer(anchor, true)}>
+          <div className="text-2xl" onClick={toggleDrawer(anchor, true)}>
             <LuVideotape />
-          </button>
+          </div>
           <Drawer
             anchor={anchor}
             open={state[anchor]}

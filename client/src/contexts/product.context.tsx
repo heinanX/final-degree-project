@@ -1,21 +1,21 @@
 /* eslint-disable react-refresh/only-export-components */
-import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Product, ProductContext } from "../interfaces/product.interface";
-import { Category } from "../interfaces/categories.interface";
-import { Tag, Tags } from "../interfaces/tags.interface";
-
+import { CategoryTwo } from "../interfaces/category.interface";
+import { Tags } from "../interfaces/tags.interface";
 
 const defaultValues = {
   products: [],
   setProducts: () => {},
   getProducts: () => {},
-  categories: [],
-  setCategories: () => {},
-  getCategories: () => {},
-  tags: [],
-  setTags: () => {},
-  getTags: () => {},
-  getTag: () => {},
+  getProduct: () => {},
+  getMovie: null,
 };
 
 export const ProductContextValues =
@@ -27,61 +27,64 @@ export const useSocket = () => useContext(ProductContextValues);
 
 function ProductProvider({ children }: PropsWithChildren) {
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [tags, setTags] = useState<Tag[]>([]);
+  const [getMovie, setgetMovie] = useState<Product | null>(null);
 
- 
   const getProducts = async () => {
-    const res = await fetch("http://localhost:3000/api/products");
-    const data = await res.json();
-
-    setProducts(data);
-    console.log(data);
-    
+    try {
+      const res = await fetch("http://localhost:3000/api/products");
+      const data = await res.json();
+      if (!res.ok) throw new Error("Failed to fetch product");
+      setProducts(data);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("Error fetching product", err.message);
+      }
+    }
   };
 
-  const getCategories = async () => {
-    const res = await fetch("http://localhost:3000/api/categories");
-    const data = await res.json();
+  /*
+   * Fetches a product from the database, retrieves category IDs and Tag IDs,
+   * and fetches the names of the corresponding categories and tags.
+   * Then, updates the state with the product data, tags and category names.
+   */
+  const getProduct = async (id: string) => {
+    try {
+      // FETCH PRODUCT FROM DATABASE
+      const res = await fetch(`api/products/${id}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error("Failed to fetch product");
 
-    setCategories(data);    
+      //SAVE CATEGORIES INTO A SEPARATE VARIABLE AND FETCH EACH CATEGORY'S NAME
+      const categoryIds = data.category;
+
+      const categoryData = await Promise.all(
+        categoryIds.map(async (categoryId: CategoryTwo) => {
+          const categoryRes = await fetch(`api/categories/${categoryId}`);
+          return categoryRes.json();
+        })
+      );
+
+      //SAVE CATEGORIES INTO A SEPARATE VARIABLE AND FETCH EACH CATEGORY'S NAME
+      const tagIds = data.tags;
+
+      const tagData = await Promise.all(
+        tagIds.map(async (tagId: Tags) => {
+          const tagRes = await fetch(`api/tags/${tagId}`);
+          return tagRes.json();
+        })
+      );
+
+      setgetMovie({ ...data, category: categoryData, tags: tagData });
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("Error fetching product", err.message);
+      }
+    }
   };
 
-  const getTags = async () => {
-    const res = await fetch("http://localhost:3000/api/tags");
-    const data = await res.json();
-
-    setTags(data);    
-  };
-
-  const getTag = async (tag: string) => {
-    const res = await fetch("http://localhost:3000/api/tags");
-    const data = await res.json();
-
-const collected = data.find((item: Tags) => item.tag === tag);
-
-if (!collected) {
-  const createTagRes = await fetch("/api/tags/create", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      tag: tag
-    })
-  });
-  if (createTagRes.ok) {
-    const newTag = await createTagRes.json();
-    console.log(newTag);
-  }
-}
-    console.log(collected);  
-  };
-
-  useEffect(()=> {
-getProducts()
-  },[])
-
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <ProductContextValues.Provider
@@ -89,11 +92,8 @@ getProducts()
         products,
         setProducts,
         getProducts,
-        categories,
-        getCategories,
-        tags,
-        getTags,
-        getTag
+        getProduct,
+        getMovie,
       }}
     >
       {children}

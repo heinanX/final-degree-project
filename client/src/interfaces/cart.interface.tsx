@@ -4,6 +4,9 @@ export interface CartContext {
   cart: CartItem[];
   setCart: React.Dispatch<React.SetStateAction<CartItem[]>>
   addToCart: (product: Product, type: string) => void;
+  handleQuantity: (index: number, action: string) => void;
+  cartTotal: number;
+  handleCheckout: () => void;
 }
 
 export interface CartItem {
@@ -11,4 +14,8 @@ export interface CartItem {
   quantity: number;
   vhs: boolean;
   digital: boolean;
+  stripe: {
+    price: string,
+    quantity: number
+  }
 }

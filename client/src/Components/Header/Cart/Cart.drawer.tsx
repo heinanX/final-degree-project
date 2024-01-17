@@ -1,12 +1,15 @@
 import { Fragment, useState, KeyboardEvent } from "react";
+import { useSocket as cartSocket } from "../../../contexts/cart.context";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import { LuVideotape } from "react-icons/lu";
+import CartDetails from "./Cart.details";
 
 type Anchor = "right";
 
 const CartDrawer = () => {
+  const { cartTotal, handleCheckout } = cartSocket();
   const [state, setState] = useState({
     right: false,
   });
@@ -31,12 +34,16 @@ const CartDrawer = () => {
       role="presentation"
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <div className="w-80">
-        <h1 className="text-2xl py-6 px-6">Cart</h1>
+      <div className="w-80  px-6">
+        <h1 className="text-2xl py-6">Cart</h1>
         <Divider />
-        <div className="px-6 py-8">
-          <p>movies</p>
-        </div>
+      <CartDetails />
+      <Divider />
+      <span className="flex flex-row py-2 justify-between">
+      <p className="font-medium">Total sum: </p>
+        <p>{cartTotal}</p>
+      <button className="standard-btn" onClick={handleCheckout} > Go to checkout</button>
+      </span>
       </div>
     </Box>
   );

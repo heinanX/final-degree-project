@@ -13,6 +13,10 @@ const defaultValues = {
   cart: [],
   setCart: () => {},
   addToCart: () => {},
+  handleQuantity: () => {},
+  calcCartTotal: () => {},
+  cartTotal: 0,
+  handleCheckout: () => {}
 };
 
 export const CartContextValues = createContext<CartContext>(defaultValues);
@@ -23,6 +27,7 @@ export const useSocket = () => useContext(CartContextValues);
 
 function CartProvider({ children }: PropsWithChildren) {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartTotal, setCartTotal] = useState<number>(0);
 
   // A FUNCTION THAT ADDS A PRODUCT TO CART BASED ON ITS TYPE (VHS, DIGITAL OR NEITHER)
   const addToCart = async (product: Product, type: string) => {
@@ -45,6 +50,7 @@ function CartProvider({ children }: PropsWithChildren) {
       // If product already exists in cart, update its quantity, Copy the existing cart to create a new array and trigger a state update
       if (duplicateProduct) {
         duplicateProduct.quantity += 1;
+        isVHS ? duplicateProduct.stripe.quantity += 1 : duplicateProduct.stripe.quantity += 1 
         updatedCart = [...cart];
       } else {
         //  If product is not in cart, create a new movie object
@@ -53,6 +59,10 @@ function CartProvider({ children }: PropsWithChildren) {
           quantity: 1,
           vhs: isVHS,
           digital: isDigital,
+          stripe: {
+            price: isVHS ? product.vhs.stripe_price_id : product.digital.stripe_price_id,
+            quantity: 1
+          }
         };
         // Copy the existing cart and add the new movie to it
         updatedCart = [...cart, newRental];
@@ -68,6 +78,78 @@ function CartProvider({ children }: PropsWithChildren) {
       }
     }
   };
+
+  // A FUNCION THAT DELETES A PRODUCT INSIDE CART
+  const handleQuantity = (index: number, action: string) => {
+    const product = cart[index];
+    let updatedCart;
+
+    switch (action) {
+      case "add":
+        product.quantity += 1;
+        updatedCart = [...cart];
+
+        break;
+      case "sub":
+        product.quantity -= 1;
+        updatedCart = [...cart];
+
+        break;
+      case "del":
+        cart.splice(index, 1);
+        updatedCart = cart;
+
+        break;
+    }
+    if (updatedCart) {
+      setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
+  };
+
+  const calcCartTotal = () => {
+    let sum = 0;
+    
+    cart.forEach((item) => {
+      if (item.digital) return sum += item.product.digital.price * item.quantity;
+      if (item.vhs) return sum += item.product.vhs.price * item.quantity;
+      // if (item.digital) {
+      //   sum += item.product.digital.price;
+      // } else (item.vhs) {
+      //   sum += item.product.vhs.price;
+      // } else {
+      //   sum += item.product.price;
+      // }
+    });
+
+    setCartTotal(sum);
+  }
+
+  const handleCheckout = async () => {
+try {
+  const stripeOrders = cart.map((item) => item.stripe)
+  console.log(stripeOrders);
+  
+  const res = await fetch('api/orders/create-checkout-session', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(stripeOrders),
+  });
+
+  if (!res.ok) {
+    console.log('failed creating checkout');
+  }
+  const { url } = await res.json();
+  window.location = url;
+} catch (err) {
+  if (err instanceof Error) {
+    console.error("Error fetching product", err.message);
+  }
+}
+    
+  }
 
   // A FUNCTION THAT INITIALIZES CART FROM LS
   const setInitCart = async () => {
@@ -96,6 +178,9 @@ function CartProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     setInitCart();
   }, []);
+  useEffect(() => {
+    calcCartTotal();
+  }, [cart]);
 
   return (
     <CartContextValues.Provider
@@ -103,6 +188,9 @@ function CartProvider({ children }: PropsWithChildren) {
         cart,
         setCart,
         addToCart,
+        handleQuantity,
+        cartTotal,
+        handleCheckout
       }}
     >
       {children}

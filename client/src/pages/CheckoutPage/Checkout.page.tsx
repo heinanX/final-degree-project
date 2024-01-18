@@ -1,9 +1,12 @@
 import { useSocket as cartSocket } from "../../contexts/cart.context";
+import { useSocket as customerSocket } from "../../contexts/customer.context";
 import CheckoutDetails from "./Checkout.details";
-import PurchaseDetails from "./Components/purchase.details";
+import PurchaseDetails from "./Components/Purchase.details";
+
 
 const Checkout = () => {
   const { handleCheckout } = cartSocket();
+  const { isLoggedIn } = customerSocket();
 
   return (
     <div className="w-full max-w-7xl py-24 px-10 flex flex-col">
@@ -14,7 +17,7 @@ const Checkout = () => {
         <PurchaseDetails />
       </div>
       <div>
-        <button onClick={handleCheckout}></button>
+        <button onClick={handleCheckout} disabled={!isLoggedIn}></button>
       </div>
     </div>
   );

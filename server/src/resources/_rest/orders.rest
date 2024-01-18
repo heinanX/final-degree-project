@@ -27,14 +27,8 @@ Content-Type: application/json
 
 [
 {
-      "price_data": {
-        "currency": "sek",
-        "product_data": {
-          "name": "super cool product"
-        },
-        "unit_amount": 10000
-      },
-      "quantity": 1
+      "price": "price_1OY9H6G8mk548Xri9gY7CUXI",
+      "quantity": 2
     }
 ]
 

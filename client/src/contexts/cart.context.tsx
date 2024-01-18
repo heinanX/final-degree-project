@@ -141,6 +141,7 @@ try {
   if (!res.ok) {
     console.log('failed creating checkout');
   }
+  
   const { url } = await res.json();
   window.location = url;
 } catch (err) {

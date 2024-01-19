@@ -51,10 +51,6 @@ export const getOrder = async (
 
 export const createOrder = async ( req: Request,
   res: Response) => {
-
-    console.log(req.session.customer);
-    
-
   const session = await stripe.checkout.sessions.create({
       success_url: 'http://localhost:5173/success?id={CHECKOUT_SESSION_ID}',
       cancel_url: 'http://localhost:5173/failed',

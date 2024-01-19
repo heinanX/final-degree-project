@@ -28,6 +28,7 @@ export const useSocket = () => useContext(ProductContextValues);
 function ProductProvider({ children }: PropsWithChildren) {
   const [products, setProducts] = useState<Product[]>([]);
   const [getMovie, setgetMovie] = useState<Product | null>(null);
+  // const {getCategory } = categorySocket();
 
   const getProducts = async () => {
     try {
@@ -37,7 +38,7 @@ function ProductProvider({ children }: PropsWithChildren) {
       setProducts(data);
     } catch (err) {
       if (err instanceof Error) {
-        console.error("Error fetching product", err.message);
+        console.error(err);
       }
     }
   };
@@ -50,17 +51,23 @@ function ProductProvider({ children }: PropsWithChildren) {
   const getProduct = async (id: string) => {
     try {
       // FETCH PRODUCT FROM DATABASE
-      const res = await fetch(`api/products/${id}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error("Failed to fetch product");
+      const response = await fetch(`http://localhost:3000/api/products/${id}`);
+      console.log(response);
+
+      const data = await response.json();
+      console.log(data);
+
+      if (!response.ok) throw new Error("Failed to fetch product");
 
       //SAVE CATEGORIES INTO A SEPARATE VARIABLE AND FETCH EACH CATEGORY'S NAME
       const categoryIds = data.category;
+      console.log(categoryIds);
 
       const categoryData = await Promise.all(
         categoryIds.map(async (categoryId: CategoryTwo) => {
-          const categoryRes = await fetch(`api/categories/${categoryId}`);
-          return categoryRes.json();
+          const categoryRes = await fetch(`/api/categories/${categoryId}`);
+          const category = await categoryRes.json();
+          return category;
         })
       );
 
@@ -69,16 +76,15 @@ function ProductProvider({ children }: PropsWithChildren) {
 
       const tagData = await Promise.all(
         tagIds.map(async (tagId: Tags) => {
-          const tagRes = await fetch(`api/tags/${tagId}`);
-          return tagRes.json();
+          const tagRes = await fetch(`/api/tags/${tagId}`);
+          const tag = await tagRes.json();
+          return tag;
         })
       );
 
       setgetMovie({ ...data, category: categoryData, tags: tagData });
     } catch (err) {
-      if (err instanceof Error) {
-        console.error("Error fetching product", err.message);
-      }
+      console.log(err);
     }
   };
 

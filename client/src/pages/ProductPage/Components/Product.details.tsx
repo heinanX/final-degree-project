@@ -34,10 +34,7 @@ const ProductDetails = () => {
               data-info="Movie-rating"
               className="text-xs flex items-center justify-center"
             >
-              <button className="bg-teal-500 p-1 rounded">
-                {" "}
-                {getMovie?.content_rating}
-              </button>
+              <button className="bg-teal-500 p-1 rounded">{getMovie?.content_rating}</button>
             </li>
             <li data-info="Movie-year" className="">
               {getMovie?.year}

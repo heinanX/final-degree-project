@@ -17,7 +17,7 @@ const formatData = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
     if (req.body.title && req.body.description) {
         req.body.title = req.body.title.toLowerCase();
-        req.body.description = req.body.description.toLowerCase();
+        //req.body.description = req.body.description.toLowerCase();
         return next();
     }
     const stringifiedData = JSON.stringify(req.body);

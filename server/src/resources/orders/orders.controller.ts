@@ -51,7 +51,6 @@ export const getOrder = async (
 
 export const createOrder = async ( req: Request,
   res: Response) => {
-
   const session = await stripe.checkout.sessions.create({
       success_url: 'http://localhost:5173/success?id={CHECKOUT_SESSION_ID}',
       cancel_url: 'http://localhost:5173/failed',
@@ -59,8 +58,8 @@ export const createOrder = async ( req: Request,
       mode: 'payment',
       currency: 'sek',
       allow_promotion_codes: true,
-      customer: req.body.userId,
-      line_items: req.body.order
+      customer: req.session.customer?.stripe_id,
+      line_items: req.body
   })
   res.status(200).json({
       url: session.url,

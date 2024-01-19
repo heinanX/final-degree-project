@@ -5,7 +5,8 @@ declare module "express-session" {
     customer: {
       _id: string,
       isAdmin: boolean,
-      mail: string
+      mail: string,
+      stripe_id: string
     }
   }
 }

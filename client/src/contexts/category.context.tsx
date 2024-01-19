@@ -7,6 +7,7 @@ const defaultValues = {
   categories: [],
   setCategories: () => {},
   getCategories: () => {},
+  getCategory: () => {},
 };
 
 export const CategoryContextValues =
@@ -26,12 +27,23 @@ function CategoryProvider({ children }: PropsWithChildren) {
     setCategories(data);    
   };
 
+  const getCategory = async (id: string) => {
+    const res = await fetch(`/api/categories/${id}`);
+    console.log(res,1);
+
+    const data = await res.json();
+console.log(data, 2);
+
+    return data;
+  };
+
 
   return (
     <CategoryContextValues.Provider
       value={{
         categories,
-        getCategories
+        getCategories,
+        getCategory
       }}
     >
       {children}

@@ -1,6 +1,7 @@
 export interface CategoryContext {
   categories: Category[];
   getCategories: () => void;
+  getCategory: (id: string) => void;
 }
 
 

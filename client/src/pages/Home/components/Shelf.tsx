@@ -45,7 +45,7 @@ const Shelf = ({ arr, category, windowSize }: shelfProps) => {
       </div>
       <div className="h-80 w-full flex gap-4 justify-center">
         {newArr.map((item, index) => (
-          <NavLink to={"/" + item._id} key={index} >
+          <NavLink to={`/product/${item._id}`} key={index} >
           <div className="h-80 relative">
             <img
               src={item.image}

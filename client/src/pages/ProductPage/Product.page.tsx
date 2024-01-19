@@ -15,7 +15,10 @@ const ProductPage = () => {
 
   useEffect(() => {
     if (id) {
+      console.log(id);
+      
     getProduct(id);
+    window.scrollTo(0, 0);
   }
   }, [id]);
 

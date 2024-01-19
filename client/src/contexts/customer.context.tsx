@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { PropsWithChildren, createContext, useContext, useState } from "react";
+import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 import { CustomerContext } from "../interfaces/customer.interface";
 
 const defaultValues = {
@@ -105,6 +105,10 @@ function CustomerProvider({ children }: PropsWithChildren) {
       console.error(error)
     }
   };
+
+  useEffect(()=> {
+    checkLoginStatus();
+  },[])
 
   return (
     <CustomerContextValues.Provider

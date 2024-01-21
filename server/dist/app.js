@@ -18,7 +18,8 @@ const cookieSecret = process.env.COOKIE_SESSION_KEY;
 if (!cookieSecret) {
     throw new Error("The COOKIE_SESSION_KEY environment variable is not defined.");
 }
-exports.app.use((0, cors_1.default)());
+exports.app.use((0, cors_1.default)({ origin: "http://localhost:5173",
+    credentials: true, }));
 exports.app.use(express_1.default.json());
 exports.app.use(session({
     secret: cookieSecret,

@@ -6,13 +6,14 @@ import { markOrderJoiSchema, orderJoiSchema } from './orders.model';
 import { formatData } from '../_middlewares/format.data';
 import { authorization } from '../_middlewares/authorize';
 import { authenticateUser } from '../_middlewares/authenticate.user';
+import { checkOrder } from '../_middlewares/stripe/check.order';
 
 export const orderRouter = Router();
 
 orderRouter.get('/', isAdmin, getOrders);
 orderRouter.get('/user-orders/:id', authorization, getOrders);
 orderRouter.get('/:id', getOrder);
-orderRouter.post('/create', validate(orderJoiSchema), formatData, createOrderDB);
+orderRouter.post('/create',  checkOrder, validate(orderJoiSchema), createOrderDB);
 orderRouter.post('/create-checkout-session', authenticateUser, createOrder)
 orderRouter.put('/manage-order/:id', validate(markOrderJoiSchema), formatData, manageOrder);
 orderRouter.delete('/delete/:id', isAdmin, deleteOrder);

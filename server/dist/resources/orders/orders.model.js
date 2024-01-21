@@ -20,8 +20,8 @@ const orderSchema = new mongoose_1.Schema({
     total_price: { type: Number, default: 0, require: true },
     discount: { type: Number, default: 0 },
     date: { type: Date, default: Date.now() },
-    shipped: { type: Boolean, default: "false" },
-    returned: { type: Boolean, default: "false" },
+    shipped: { type: Boolean, default: false },
+    returned: { type: Boolean, default: false },
     payment_status: { type: String, default: "pending" },
     order_status: { type: String, default: "active" },
 }, { versionKey: false });

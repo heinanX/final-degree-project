@@ -49,6 +49,7 @@ export const getOrder = async (
   }
 };
 
+
 export const createOrder = async ( req: Request,
   res: Response) => {
   const session = await stripe.checkout.sessions.create({
@@ -72,8 +73,9 @@ export const createOrderDB = async (
   next: NextFunction
 ) => {
   try {
-    const newProduct = await OrderModel.create(req.body);
-
+    const newProduct = await OrderModel.create(req.body.order);
+    console.log(req.body.order);
+    
     res.status(201).json(newProduct);
   } catch (error) {
     next(error);

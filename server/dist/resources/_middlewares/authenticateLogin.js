@@ -10,13 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authenticateLogin = void 0;
-/* MIDDLEWARE THAT AUTHENTICATE A LOGIN */
+/* MIDDLEWARE THAT AUTHENTICATES A LOGIN */
 const authenticateLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     if ((_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b._id) {
+        // If a user is found in the session, proceed to the next middleware
         next();
     }
     else {
+        // else respond with an unauthorized status 
         res.status(401).json({ message: `No user in session` });
     }
 });

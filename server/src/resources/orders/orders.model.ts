@@ -40,6 +40,7 @@ const subOrderJoiSchema = Joi.object({
   quantity: Joi.number(),
 });
 
+
 export const orderJoiSchema = Joi.object({
   customer: Joi.string().required(),
   order: Joi.array().items(subOrderJoiSchema).required(),

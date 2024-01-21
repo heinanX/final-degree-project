@@ -9,7 +9,7 @@ import { orderRouter } from "./resources/orders/orders.router";
 import {
   errorHandler,
   notFound,
-} from "./resources/_middlewares/error.handler";
+} from "./resources/_middlewares/errorHandler";
 
 export const app = express();
 const cookieSecret = process.env.COOKIE_SESSION_KEY;

@@ -16,6 +16,7 @@ export const checkOrderStatus = async (
       // Replace entire request body with property order data
       req.body.order.payment_status = "paid";
       req.body = req.body.order;
+      req.body.customer = req.session.customer?._id
 
       // If session includes a discount, add it to the order
       if (session.total_details.discount != undefined) {

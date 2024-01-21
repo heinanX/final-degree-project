@@ -1,8 +1,8 @@
-const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
+const stripe = require("stripe")(process.env.STRIPE_SECRETKEY); //imports stripe key
 import { NextFunction, Request, Response } from "express";
 
-// Middleware to check status of a Stripe Checkout session
-export const checkOrder = async (
+/* A MIDDLEWARE TO CHECK STATUS OF A STRIPE CHECKOUT SESSION */
+export const checkOrderStatus = async (
   req: Request,
   res: Response,
   next: NextFunction

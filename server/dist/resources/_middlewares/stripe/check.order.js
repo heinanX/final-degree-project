@@ -9,10 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkOrder = void 0;
-const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
-// Middleware to check status of a Stripe Checkout session
-const checkOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.checkOrderStatus = void 0;
+const stripe = require("stripe")(process.env.STRIPE_SECRETKEY); //imports stripe key
+/* A MIDDLEWARE TO CHECK STATUS OF A STRIPE CHECKOUT SESSION */
+const checkOrderStatus = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Retrieve Stripe Checkout session using the sessionId from the request body
         const session = yield stripe.checkout.sessions.retrieve(req.body.sessionId);
@@ -34,4 +34,4 @@ const checkOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         next(error);
     }
 });
-exports.checkOrder = checkOrder;
+exports.checkOrderStatus = checkOrderStatus;

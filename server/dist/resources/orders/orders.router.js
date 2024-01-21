@@ -15,6 +15,6 @@ exports.orderRouter.get('/', isAdmin_1.isAdmin, orders_controller_1.getOrders);
 exports.orderRouter.get('/user-orders/:id', authorize_1.authorization, orders_controller_1.getOrders);
 exports.orderRouter.get('/:id', orders_controller_1.getOrder);
 exports.orderRouter.post('/create', check_order_1.checkOrder, (0, validate_schema_1.validate)(orders_model_1.orderJoiSchema), orders_controller_1.createOrderDB);
-exports.orderRouter.post('/create-checkout-session', authenticate_user_1.authenticateUser, orders_controller_1.createOrder);
+exports.orderRouter.post('/create-checkout-session', authenticate_user_1.authenticateUser, orders_controller_1.createCheckoutSession);
 exports.orderRouter.put('/manage-order/:id', (0, validate_schema_1.validate)(orders_model_1.markOrderJoiSchema), format_data_1.formatData, orders_controller_1.manageOrder);
 exports.orderRouter.delete('/delete/:id', isAdmin_1.isAdmin, orders_controller_1.deleteOrder);

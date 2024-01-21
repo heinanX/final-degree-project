@@ -14,7 +14,7 @@ POST http://localhost:3000/api/orders/create
 Content-Type: application/json
 
 {
-    "sessionId": "pm_1OZi8lG8mk548Xrii4TAvsuR",
+    "sessionId": "cs_test_b1IBZd1rTyrdNdUdAYkju3UJAs6QWuOkBqzqECuyUBPrl4EUOh3X7BwX9E",
     "order" : {
         "customer": "6596c71ee62bf4f20da2ebcf",
         "order": [{ "product": "65a2ae3d719aaaf33cdf52cf", "quantity": 32}, { "product": "65a2b128719aaaf33cdf52e3", "quantity": 2} ],

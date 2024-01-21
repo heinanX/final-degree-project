@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createOrder, createOrderDB, deleteOrder,getOrder, getOrders, manageOrder } from './orders.controller';
+import { createCheckoutSession, createOrderDB, deleteOrder,getOrder, getOrders, manageOrder } from './orders.controller';
 import { isAdmin } from '../_middlewares/isAdmin';
 import { validate } from '../_middlewares/validate.schema';
 import { markOrderJoiSchema, orderJoiSchema } from './orders.model';
@@ -14,6 +14,6 @@ orderRouter.get('/', isAdmin, getOrders);
 orderRouter.get('/user-orders/:id', authorization, getOrders);
 orderRouter.get('/:id', getOrder);
 orderRouter.post('/create',  checkOrder, validate(orderJoiSchema), createOrderDB);
-orderRouter.post('/create-checkout-session', authenticateUser, createOrder)
+orderRouter.post('/create-checkout-session', authenticateUser, createCheckoutSession)
 orderRouter.put('/manage-order/:id', validate(markOrderJoiSchema), formatData, manageOrder);
 orderRouter.delete('/delete/:id', isAdmin, deleteOrder);

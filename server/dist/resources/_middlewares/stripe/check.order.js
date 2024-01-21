@@ -11,30 +11,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkOrder = void 0;
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
+// Middleware to check status of a Stripe Checkout session
 const checkOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const session = yield stripe.checkout.sessions.retrieve(req.body.sessionId, { expand: ['line_items'] });
+        // Retrieve Stripe Checkout session using the sessionId from the request body
+        const session = yield stripe.checkout.sessions.retrieve(req.body.sessionId);
+        // Check if payment status of the session is "paid"
         if (session.payment_status === "paid") {
-            console.log("Payment is paid. Session details:", session);
-            req.body.order.discout = session.total_details.discount;
-            // Assuming that req.body has an 'order' property
-            if (req.body && req.body.order) {
-                req.body = req.body.order;
-                next();
+            // Replace entire request body with property order data
+            req.body.order.payment_status = "paid";
+            req.body = req.body.order;
+            // If session includes a discount, add it to the order
+            if (session.total_details.discount != undefined) {
+                req.body.order.discount = session.total_details.discount;
             }
-            else {
-                console.error("No 'order' property found in req.body.");
-                res.status(400).send("Invalid request: Missing 'order' property.");
-            }
-        }
-        else {
-            console.log("Payment is not yet paid. Session details:", session);
-            res.status(400).send("Invalid request: Payment not yet completed.");
+            // Move to the next middleware or route handler
+            next();
         }
     }
     catch (error) {
-        console.error("Error checking order:", error);
-        res.status(500).send("Internal Server Error");
+        // If an error occurs, pass it to the next middleware for error handling
+        next(error);
     }
 });
 exports.checkOrder = checkOrder;

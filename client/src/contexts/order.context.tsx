@@ -5,7 +5,7 @@ import {
   Order,
   defaultValues,
 } from "../interfaces/order.interface";
-import { CartItem } from "../interfaces/cart.interface";
+import { Cart, CartItem} from "../interfaces/cart.interface";
 import { useSocket as cartSocket } from "./cart.context";
 
 export const OrderContextValues = createContext<OrderContext>(defaultValues);
@@ -28,10 +28,10 @@ function OrderProvider({ children }: PropsWithChildren) {
     order_status: "",
     _id: ''
   });
-  const { cartTotal } = cartSocket();
+  const { newCart } = cartSocket();
 
-  const createOrderDatabase = async (cart: CartItem[], sessionId: string) => {
-    const itemsInCart = cart.map((item) => {
+  const createOrderDatabase = async (cartData: Cart, sessionId: string) => {
+    const itemsInCart = cartData.cart.map((item: CartItem) => {
       const { product, quantity, digital, vhs } = item;
       const newObject = {
         product: product._id,
@@ -51,7 +51,7 @@ function OrderProvider({ children }: PropsWithChildren) {
         body: JSON.stringify({
           session_id: sessionId,
           order: itemsInCart,
-          total_price: cartTotal,
+          total_price: newCart.total_price,
         }),
       });
       const data = await res.json();

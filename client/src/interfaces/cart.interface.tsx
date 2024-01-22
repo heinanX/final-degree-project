@@ -5,8 +5,9 @@ export interface CartContext {
   setCart: React.Dispatch<React.SetStateAction<CartItem[]>>
   addToCart: (product: Product, type: string) => void;
   handleQuantity: (index: number, action: string) => void;
-  cartTotal: number;
   handleCheckout: (addressee: Addressee) => void;
+  newCart: Cart
+  setNewCart: React.Dispatch<React.SetStateAction<Cart>>
 }
 
 export const defaultValues = {
@@ -14,9 +15,13 @@ export const defaultValues = {
   setCart: () => {},
   addToCart: () => {},
   handleQuantity: () => {},
-  calcCartTotal: () => {},
-  cartTotal: 0,
   handleCheckout: () => {},
+  newCart: {
+    cart: [],
+    total_price: 0,
+    address: []
+  },
+  setNewCart: () => {}
 };
 
 export interface CartItem {
@@ -29,9 +34,17 @@ export interface CartItem {
     quantity: number
   }
 }
+
 export interface Addressee {
   cust_name: string;
   street: string,
   zip_code: string,
   city: string
 }
+
+export interface Cart {
+  cart: CartItem[]
+  total_price: number
+  address: Addressee[]
+}
+

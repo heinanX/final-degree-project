@@ -9,7 +9,7 @@ import OrderDetails from './OrderDetails/OrderDetails';
 const OrderSuccessPage = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [ isloading, setIsLoading ] = useState<boolean>(true);
+  const [ isloading, setIsLoading ] = useState<boolean>(false);
   const { createOrderDatabase } = orderSocket();
 
   useEffect(()=> {

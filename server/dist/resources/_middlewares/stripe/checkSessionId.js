@@ -9,26 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkOrderStatus = void 0;
+exports.checkSessionId = void 0;
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY); //imports stripe key
+const orders_model_1 = require("../../orders/orders.model");
 /* A MIDDLEWARE TO CHECK STATUS OF A STRIPE CHECKOUT SESSION */
-const checkOrderStatus = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const checkSessionId = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
-        console.log(req.body.session_id);
-        // Retrieve Stripe Checkout session using the sessionId from the request body
-        const session = yield stripe.checkout.sessions.retrieve(req.body.session_id);
-        // Check if payment status of the session is "paid"
-        if (session.payment_status === "paid") {
-            // Replace entire request body with property order data
-            req.body.payment_status = "paid";
-            req.body.customer = (_a = req.session.customer) === null || _a === void 0 ? void 0 : _a._id;
-            // If session includes a discount, add it to the order
-            if (session.total_details.discount != undefined) {
-                req.body.discount = session.total_details.discount;
-            }
-            // Move to the next middleware or route handler
+        const sessionId = req.body.session_id;
+        const userOrders = yield orders_model_1.OrderModel.find({ customer: (_a = req.session.customer) === null || _a === void 0 ? void 0 : _a._id });
+        const orderWithSameSession = userOrders.find((order) => order.session_id === sessionId);
+        if (!orderWithSameSession) {
             next();
+        }
+        else {
+            return res.status(200).json(orderWithSameSession);
         }
     }
     catch (error) {
@@ -36,4 +31,4 @@ const checkOrderStatus = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         next(error);
     }
 });
-exports.checkOrderStatus = checkOrderStatus;
+exports.checkSessionId = checkSessionId;

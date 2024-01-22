@@ -107,7 +107,7 @@ export const createOrderDB = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {
+  try {    
     // Attempt to create a new order in database using the OrderModel
     const newProduct = await OrderModel.create(req.body);
 

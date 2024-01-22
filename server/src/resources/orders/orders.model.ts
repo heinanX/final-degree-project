@@ -13,7 +13,7 @@ const subOrderSchema = new Schema(
   { _id: false }
 );
 
-const orderSchema = new Schema(
+export const orderSchema = new Schema(
   {
     customer: { type: Schema.Types.ObjectId, ref: "customers", require: true },
     order: [subOrderSchema],
@@ -24,6 +24,7 @@ const orderSchema = new Schema(
     returned: { type: Boolean, default: false },
     payment_status: { type: String, default: "pending" },
     order_status: { type: String, default: "active" },
+    session_id: String
   },
   { versionKey: false }
 );
@@ -36,7 +37,7 @@ export const markOrderJoiSchema = Joi.object({
 });
 
 const subOrderJoiSchema = Joi.object({
-  product: Joi.object(),
+  product: Joi.string(),
   quantity: Joi.number(),
   vhs: Joi.boolean(),
   digital: Joi.boolean()
@@ -53,6 +54,7 @@ export const orderJoiSchema = Joi.object({
   returned: Joi.boolean(),
   payment_status: Joi.string(),
   order_status: Joi.string(),
+  session_id: Joi.string()
 });
 
 export const OrderModel = models.orders || model("orders", orderSchema);

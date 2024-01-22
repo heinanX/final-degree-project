@@ -7,13 +7,14 @@ import { formatData } from '../_middlewares/format.data';
 import { authorization } from '../_middlewares/authorize';
 import { authenticateLogin } from '../_middlewares/authenticateLogin';
 import { checkOrderStatus } from '../_middlewares/stripe/checkOrderStatus';
+import { checkSessionId } from '../_middlewares/stripe/checkSessionId';
 
 export const orderRouter = Router();
 
 orderRouter.get('/', isAdmin, getOrders);
 orderRouter.get('/user-orders/:id', authorization, getOrders);
 orderRouter.get('/:id', getOrder);
-orderRouter.post('/create', authenticateLogin, checkOrderStatus, validate(orderJoiSchema), createOrderDB);
+orderRouter.post('/create', authenticateLogin, checkSessionId,checkOrderStatus, validate(orderJoiSchema), createOrderDB);
 orderRouter.post('/create-checkout-session', authenticateLogin, createCheckoutSession)
 orderRouter.put('/manage-order/:id', validate(markOrderJoiSchema), formatData, manageOrder);
 orderRouter.delete('/delete/:id', isAdmin, deleteOrder);

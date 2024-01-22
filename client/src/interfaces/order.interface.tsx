@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { CartItem } from "./cart.interface";
+
 export interface OrderContext {
     order: Order,
     setOrder: React.Dispatch<React.SetStateAction<Order>>
-    createOrderDatabase: () => void
+    createOrderDatabase: (cart: CartItem[], sessionId: string) => void
   }
 
 export interface Order {
@@ -33,5 +36,5 @@ export interface OrderItem {
         order_status: "",
       },
     setOrder: () => {},
-    createOrderDatabase: () => {}
+    createOrderDatabase: (cart: CartItem[], sessionId: string) => {}
   };

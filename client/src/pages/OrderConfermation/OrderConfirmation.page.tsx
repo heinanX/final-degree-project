@@ -1,8 +1,22 @@
 //import { useState } from "react";
+import { useEffect } from 'react';
 import logo from '../../assets/images/logo-videoshack_tape.png';
+import { useSocket as cartSocket } from '../../contexts/cart.context';
+import { useSocket as orderSocket } from '../../contexts/order.context';
 
 
 const OrderConfirmationPage = () => {
+
+  const { cart } = cartSocket();
+  const { createOrderDatabase } = orderSocket();
+
+  useEffect(()=> {
+    console.log(cart);
+    
+    const queryString = location.search;
+    const sessionId = queryString.substring(4);
+    createOrderDatabase(cart, sessionId)
+  }, [cart])
 
   //const [ isLoading, setIsLoading ] = useState();
   return (

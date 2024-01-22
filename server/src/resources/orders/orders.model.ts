@@ -32,12 +32,14 @@ export const markOrderJoiSchema = Joi.object({
   shipped: Joi.boolean(),
   returned: Joi.boolean(),
   payment_status: Joi.string(),
-  order_status: Joi.string(),
+  order_status: Joi.string()
 });
 
 const subOrderJoiSchema = Joi.object({
-  product: Joi.string(),
+  product: Joi.object(),
   quantity: Joi.number(),
+  vhs: Joi.boolean(),
+  digital: Joi.boolean()
 });
 
 

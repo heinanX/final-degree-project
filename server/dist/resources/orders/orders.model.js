@@ -29,11 +29,13 @@ exports.markOrderJoiSchema = joi_1.default.object({
     shipped: joi_1.default.boolean(),
     returned: joi_1.default.boolean(),
     payment_status: joi_1.default.string(),
-    order_status: joi_1.default.string(),
+    order_status: joi_1.default.string()
 });
 const subOrderJoiSchema = joi_1.default.object({
-    product: joi_1.default.string(),
+    product: joi_1.default.object(),
     quantity: joi_1.default.number(),
+    vhs: joi_1.default.boolean(),
+    digital: joi_1.default.boolean()
 });
 exports.orderJoiSchema = joi_1.default.object({
     customer: joi_1.default.string().required(),

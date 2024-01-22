@@ -1,16 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
-import { CustomerContext } from "../interfaces/customer.interface";
-
-const defaultValues = {
-  isLoggedIn: false,
-  setIsLoggedIn: () => {},
-  login: async (mail: string, pass: string) => {},
-  signUp: async (mail: string, pass: string) => {},
-  logOut: async () => {},
-  checkLoginStatus: async () => {},
-};
+import { CustomerContext, defaultValues } from "../interfaces/customer.interface";
 
 export const CustomerContextValues =
   createContext<CustomerContext>(defaultValues);
@@ -18,6 +9,7 @@ export const useSocket = () => useContext(CustomerContextValues);
 
 function CustomerProvider({ children }: PropsWithChildren) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [activeCustomer, setActiveCustomer] = useState<string>('');
 
 
   // LOG IN FUNCTION THAT ACCEPTS 2 PARAMETERS FROM COMPONENT Login.form
@@ -106,6 +98,20 @@ function CustomerProvider({ children }: PropsWithChildren) {
     }
   };
 
+    // A FUNCTION THAT FETCHES CUSTOMER'S DETAILS 
+    const fetchCustomerDetails = async () => {
+      try {
+        const res = await fetch("api/customers/customer-details");
+        const data = await res.json();
+        setActiveCustomer(data)
+      return data;    
+      } catch (err) {
+        if (err instanceof Error) {
+          console.error("Error fetching product", err.message);
+        }
+      }
+    };
+
   useEffect(()=> {
     checkLoginStatus();
   },[])
@@ -119,6 +125,8 @@ function CustomerProvider({ children }: PropsWithChildren) {
         signUp,
         logOut,
         checkLoginStatus,
+        activeCustomer,
+        fetchCustomerDetails
       }}
     >
       {children}

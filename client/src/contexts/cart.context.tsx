@@ -6,18 +6,13 @@ import {
   useEffect,
   useState,
 } from "react";
+import {
+  Addressee,
+  CartContext,
+  CartItem,
+  defaultValues,
+} from "../interfaces/cart.interface";
 import { Product } from "../interfaces/product.interface";
-import { CartContext, CartItem } from "../interfaces/cart.interface";
-
-const defaultValues = {
-  cart: [],
-  setCart: () => {},
-  addToCart: () => {},
-  handleQuantity: () => {},
-  calcCartTotal: () => {},
-  cartTotal: 0,
-  handleCheckout: () => {}
-};
 
 export const CartContextValues = createContext<CartContext>(defaultValues);
 
@@ -50,7 +45,9 @@ function CartProvider({ children }: PropsWithChildren) {
       // If product already exists in cart, update its quantity, Copy the existing cart to create a new array and trigger a state update
       if (duplicateProduct) {
         duplicateProduct.quantity += 1;
-        isVHS ? duplicateProduct.stripe.quantity += 1 : duplicateProduct.stripe.quantity += 1 
+        isVHS
+          ? (duplicateProduct.stripe.quantity += 1)
+          : (duplicateProduct.stripe.quantity += 1);
         updatedCart = [...cart];
       } else {
         //  If product is not in cart, create a new movie object
@@ -60,9 +57,11 @@ function CartProvider({ children }: PropsWithChildren) {
           vhs: isVHS,
           digital: isDigital,
           stripe: {
-            price: isVHS ? product.vhs.stripe_price_id : product.digital.stripe_price_id,
-            quantity: 1
-          }
+            price: isVHS
+              ? product.vhs.stripe_price_id
+              : product.digital.stripe_price_id,
+            quantity: 1,
+          },
         };
         // Copy the existing cart and add the new movie to it
         updatedCart = [...cart, newRental];
@@ -109,10 +108,11 @@ function CartProvider({ children }: PropsWithChildren) {
 
   const calcCartTotal = () => {
     let sum = 0;
-    
+
     cart.forEach((item) => {
-      if (item.digital) return sum += item.product.digital.price * item.quantity;
-      if (item.vhs) return sum += item.product.vhs.price * item.quantity;
+      if (item.digital)
+        return (sum += item.product.digital.price * item.quantity);
+      if (item.vhs) return (sum += item.product.vhs.price * item.quantity);
       // if (item.digital) {
       //   sum += item.product.digital.price;
       // } else (item.vhs) {
@@ -123,34 +123,35 @@ function CartProvider({ children }: PropsWithChildren) {
     });
 
     setCartTotal(sum);
-  }
+  };
 
-  const handleCheckout = async () => {
-try {
-  const stripeOrders = cart.map((item) => item.stripe)
-  console.log(stripeOrders);
-  
-  const res = await fetch('api/orders/create-checkout-session', {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(stripeOrders),
-  });
+  const handleCheckout = async (addressee: Addressee) => {
+    try {
+      console.log(addressee);
 
-  if (!res.ok) {
-    console.log('failed creating checkout');
-  }
-  
-  const { url } = await res.json();
-  window.location = url;
-} catch (err) {
-  if (err instanceof Error) {
-    console.error("Error fetching product", err.message);
-  }
-}
-    
-  }
+      const stripeOrders = cart.map((item) => item.stripe);
+      console.log(stripeOrders);
+
+      const res = await fetch("api/orders/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(stripeOrders),
+      });
+
+      if (!res.ok) {
+        console.log("failed creating checkout");
+      }
+
+      const { url } = await res.json();
+      window.location = url;
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("Error fetching product", err.message);
+      }
+    }
+  };
 
   // A FUNCTION THAT INITIALIZES CART FROM LS
   const setInitCart = async () => {
@@ -176,6 +177,9 @@ try {
     }
   };
 
+
+
+
   useEffect(() => {
     setInitCart();
   }, []);
@@ -191,7 +195,7 @@ try {
         addToCart,
         handleQuantity,
         cartTotal,
-        handleCheckout
+        handleCheckout,
       }}
     >
       {children}

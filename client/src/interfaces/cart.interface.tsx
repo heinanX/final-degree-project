@@ -6,8 +6,18 @@ export interface CartContext {
   addToCart: (product: Product, type: string) => void;
   handleQuantity: (index: number, action: string) => void;
   cartTotal: number;
-  handleCheckout: () => void;
+  handleCheckout: (addressee: Addressee) => void;
 }
+
+export const defaultValues = {
+  cart: [],
+  setCart: () => {},
+  addToCart: () => {},
+  handleQuantity: () => {},
+  calcCartTotal: () => {},
+  cartTotal: 0,
+  handleCheckout: () => {},
+};
 
 export interface CartItem {
   product: Product;
@@ -18,4 +28,10 @@ export interface CartItem {
     price: string,
     quantity: number
   }
+}
+export interface Addressee {
+  cust_name: string;
+  street: string,
+  zip_code: string,
+  city: string
 }

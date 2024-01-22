@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import logo from '../../../assets/images/logo-videoshack_tape.png';
+import { LiaShippingFastSolid } from "react-icons/lia";
 import { useSocket as orderSocket } from '../../../contexts/order.context';
 const OrderDetails = () => {
 
@@ -12,7 +12,10 @@ const OrderDetails = () => {
 
   return (
     <>
-    <img src={logo} alt="" />
+    <span className='text-white text-8xl'>
+              <LiaShippingFastSolid />
+    </span>
+
     <h1 style={{ fontWeight: "800" }}>Thank You For Your Order!</h1>
     <p style={{ color: "rgb(100, 100, 100)" }}>
       It is now being processed and will arrive shortly

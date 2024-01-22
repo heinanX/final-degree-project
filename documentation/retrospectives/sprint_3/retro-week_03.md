@@ -1,6 +1,6 @@
-# Date: 01-08-2023
+# Date: 01-15-2023
 
-# RETROSPECTIVE 2
+# RETROSPECTIVE 3
 
 **Last week's sprint** focused on creating the frontend, more specifically the folder and file structure and the front page. That included user login and cart in the header.
 

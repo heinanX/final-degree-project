@@ -14,10 +14,19 @@ const subOrderSchema = new Schema(
   },
   { _id: false }
 );
+const addressSchema = new Schema(
+  {
+    street: String,
+    zip_code: String,
+    city: String
+  },
+  { _id: false }
+);
 
 export const orderSchema = new Schema(
   {
     customer: { type: Schema.Types.ObjectId, ref: "customers", require: true },
+    address: [addressSchema],
     order: [subOrderSchema],
     total_price: { type: Number, default: 0, require: true },
     discount: { type: Number, default: 0 },
@@ -45,9 +54,16 @@ const subOrderJoiSchema = Joi.object({
   digital: Joi.boolean()
 });
 
+const addressJoiSchema = Joi.object({
+    street: Joi.string(),
+    zip_code: Joi.string(),
+    city: Joi.string()
+  });
+
 
 export const orderJoiSchema = Joi.object({
   customer: Joi.string().required(),
+  address: Joi.array().items(addressJoiSchema).required(),
   order: Joi.array().items(subOrderJoiSchema).required(),
   total_price: Joi.number().required(),
   discount: Joi.number(),

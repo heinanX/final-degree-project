@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCustomer = exports.editCustomer = exports.logout = exports.activeLogin = exports.login = exports.createCustomer = exports.getCustomer = exports.getCustomers = void 0;
+exports.deleteCustomer = exports.editCustomer = exports.logout = exports.activeLogin = exports.login = exports.createCustomer = exports.getCustomerDetails = exports.getCustomer = exports.getCustomers = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const customers_model_1 = require("./customers.model");
 const getCustomers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -39,6 +39,17 @@ const getCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.getCustomer = getCustomer;
+const getCustomerDetails = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        const customer = (_a = req.session.customer) === null || _a === void 0 ? void 0 : _a.mail;
+        res.status(200).json(customer);
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.getCustomerDetails = getCustomerDetails;
 const createCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const customer = new customers_model_1.CustomerModel(req.body);
@@ -55,7 +66,7 @@ const createCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.createCustomer = createCustomer;
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _b, _c;
     try {
         const existingCustomer = yield customers_model_1.CustomerModel.findOne({
             mail: req.body.mail,
@@ -64,7 +75,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             !(yield bcrypt_1.default.compare(req.body.password, existingCustomer.password))) {
             return res.status(401).json("wrong mail or password");
         }
-        if ((_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b._id) {
+        if ((_c = (_b = req.session) === null || _b === void 0 ? void 0 : _b.customer) === null || _c === void 0 ? void 0 : _c._id) {
             return res.status(200).json("customer already logged in");
         }
         const customer = existingCustomer.toJSON();
@@ -78,9 +89,9 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.login = login;
 const activeLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c, _d;
+    var _d, _e;
     try {
-        res.status(200).json(((_d = (_c = req.session) === null || _c === void 0 ? void 0 : _c.customer) === null || _d === void 0 ? void 0 : _d.mail) + " is logged in");
+        res.status(200).json(((_e = (_d = req.session) === null || _d === void 0 ? void 0 : _d.customer) === null || _e === void 0 ? void 0 : _e.mail) + " is logged in");
     }
     catch (error) {
         next(error);

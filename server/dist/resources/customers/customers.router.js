@@ -14,6 +14,7 @@ const authorize_1 = require("../_middlewares/authorize");
 const authenticateLogin_1 = require("../_middlewares/authenticateLogin");
 exports.customerRouter = (0, express_1.Router)();
 exports.customerRouter.get('/active', authenticateLogin_1.authenticateLogin, customers_controller_1.activeLogin);
+exports.customerRouter.get('/customer-details', customers_controller_1.getCustomerDetails);
 exports.customerRouter.get('/', isAdmin_1.isAdmin, customers_controller_1.getCustomers);
 exports.customerRouter.get('/:id', authorize_1.authorization, customers_controller_1.getCustomer);
 exports.customerRouter.post('/create', (0, validate_schema_1.validate)(customers_model_1.customerJoiSchema), format_data_1.formatData, create_customer_1.createStripeCus, customers_controller_1.createCustomer);

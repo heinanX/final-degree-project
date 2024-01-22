@@ -9,6 +9,7 @@ export interface OrderContext {
 
 export interface Order {
     customer: string,
+    address: OrderAddress[]
     order: OrderItem[],
     total_price: number,
     discount: number,
@@ -24,9 +25,16 @@ export interface OrderItem {
     product: string,
     quantity: number
   }
+
+export interface OrderAddress {
+    street: string,
+    zip_code: string,
+    city: string
+  }
   export const defaultValues = {
     order: {
         customer: "",
+        address: [],
         order: [],
         total_price: 0,
         discount: 0,
@@ -35,6 +43,7 @@ export interface OrderItem {
         returned: false,
         payment_status: "",
         order_status: "",
+        _id: ''
       },
     setOrder: () => {},
     createOrderDatabase: (cart: CartItem[], sessionId: string) => {}

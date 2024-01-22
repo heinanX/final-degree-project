@@ -17,6 +17,7 @@ export const useSocket = () => useContext(OrderContextValues);
 function OrderProvider({ children }: PropsWithChildren) {
   const [order, setOrder] = useState<Order>({
     customer: "",
+    address: [],
     order: [],
     total_price: 0,
     discount: 0,
@@ -25,6 +26,7 @@ function OrderProvider({ children }: PropsWithChildren) {
     returned: false,
     payment_status: "",
     order_status: "",
+    _id: ''
   });
   const { cartTotal } = cartSocket();
 

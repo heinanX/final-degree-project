@@ -20,7 +20,7 @@ const PurchaseDetails = () => {
       zip_code: zipCode,
       city: city
     }
-
+    
     handleCheckout(addressee);
   };
 
@@ -29,7 +29,7 @@ const PurchaseDetails = () => {
   }, [])
 
   const labelCss = "text-white";
-  const inputCss = "h-8 py-1 px-2 mb-2";
+  const inputCss = "h-8 py-1 px-2 mb-2 text-black";
   return (
     <form className="w-1/2 flex flex-col px-4" onSubmit={(e) => submitForm(e)}>
       <label className={labelCss}>Mail</label>

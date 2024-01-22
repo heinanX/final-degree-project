@@ -2,11 +2,11 @@ import { useSocket as cartSocket } from "../../contexts/cart.context";
 import "../../scrollbar.css";
 
 const CheckoutDetails = () => {
-  const { cart, cartTotal } = cartSocket();
+  const { newCart } = cartSocket();
   return (
     <div className="w-1/2">
       <ul className="max-h-96 p-4 overflow-y-auto cart-scrollbar border border-teal-600 text-white">
-        {cart.map((item, index) => (
+        {newCart.cart.map((item, index) => (
           <li key={index} className="pb-4 flex flex-row">
             <img
               src={item.product.image}
@@ -35,7 +35,7 @@ const CheckoutDetails = () => {
       </ul>
       <div className="border border-teal-600 rounded-sm flex flex-row justify-between text-white" >
       <p className="uppercase py-2 px-10 text-end">Total sum:</p>
-      <p className="uppercase py-2 px-10 text-end">{cartTotal} sek</p>
+      <p className="uppercase py-2 px-10 text-end">{newCart.total_price} sek</p>
       </div>
     </div>
   );

@@ -22,12 +22,16 @@ export const useSocket = () => useContext(CartContextValues);
 //---------------------- Provider begins here
 
 function CartProvider({ children }: PropsWithChildren) {
-  const [cart, setCart] = useState<CartItem[]>([]);
   const [newCart, setNewCart] = useState<Cart>({
     cart: [],
     total_price: 0,
-    address: []
-  })
+    address: {
+      cust_name: '',
+      street: '',
+      zip_code: '',
+      city: '' 
+    },
+  });
   //const [cartTotal, setCartTotal] = useState<number>(0);
 
   // A FUNCTION THAT ADDS A PRODUCT TO CART BASED ON ITS TYPE (VHS, DIGITAL OR NEITHER)
@@ -36,14 +40,14 @@ function CartProvider({ children }: PropsWithChildren) {
       // Check if type is true
       const isVHS = type === "vhs";
       const isDigital = type === "digital";
-  
+
       // Check if product with the same ID and type already exists in the cart
       const duplicateProduct = newCart.cart.find(
         (cartItem: CartItem) =>
           cartItem.product._id === product._id &&
           (isVHS ? cartItem.vhs : isDigital ? cartItem.digital : false)
       );
-  
+
       // If product already exists in cart, update its quantity
       if (duplicateProduct) {
         duplicateProduct.quantity += 1;
@@ -67,16 +71,16 @@ function CartProvider({ children }: PropsWithChildren) {
             quantity: 1,
           },
         };
-  
+
         // Add the new product price to total_price
         newCart.total_price += isVHS
           ? newRental.product.vhs.price
           : newRental.product.digital.price;
-  
+
         // Copy the existing cart and add the new movie to it
         newCart.cart = [...newCart.cart, newRental];
       }
-  
+
       // Update cart state with newCart and then store it inside cart in LS
       setNewCart({ ...newCart });
       localStorage.setItem("cart", JSON.stringify(newCart));
@@ -87,44 +91,77 @@ function CartProvider({ children }: PropsWithChildren) {
       }
     }
   };
-  
 
   // A FUNCION THAT DELETES A PRODUCT INSIDE CART
   const handleQuantity = (index: number, action: string) => {
     const product = newCart.cart[index];
-    console.log('this here', product);
-    
+
     let updatedCart;
+    let updatedTotalPrice = newCart.total_price;
 
     switch (action) {
       case "add":
         product.quantity += 1;
-          product.stripe.quantity += 1;
+        product.stripe.quantity += 1;
         updatedCart = [...newCart.cart];
+        updatedTotalPrice =
+          newCart.total_price +
+          (product.vhs
+            ? product.product.vhs.price
+            : product.product.digital.price);
         break;
 
       case "sub":
         product.quantity -= 1;
+        product.stripe.quantity -= 1;
         updatedCart = [...newCart.cart];
+        updatedTotalPrice =
+          newCart.total_price -
+          (product.vhs
+            ? product.product.vhs.price
+            : product.product.digital.price);
         break;
 
       case "del":
-        cart.splice(index, 1);
+        updatedTotalPrice =
+          newCart.total_price -
+          (product.vhs
+            ? product.product.vhs.price * product.quantity
+            : product.product.digital.price * product.quantity);
+        newCart.total_price;
+        newCart.cart.splice(index, 1);
         updatedCart = newCart.cart;
         break;
     }
+
     if (updatedCart) {
-      setNewCart({...newCart, cart:updatedCart});
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      setNewCart({
+        ...newCart,
+        cart: updatedCart,
+        total_price: updatedTotalPrice,
+      });
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          ...newCart,
+          cart: updatedCart,
+          total_price: updatedTotalPrice,
+        })
+      );
     }
   };
 
-
   const handleCheckout = async (addressee: Addressee) => {
     try {
-      console.log(addressee);
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          ...newCart,
+          address: addressee
+        })
+      );
 
-      const stripeOrders = cart.map((item) => item.stripe);
+      const stripeOrders = newCart.cart.map((item) => item.stripe);
       console.log(stripeOrders);
 
       const res = await fetch("api/orders/create-checkout-session", {
@@ -172,9 +209,6 @@ function CartProvider({ children }: PropsWithChildren) {
     }
   };
 
-
-
-
   useEffect(() => {
     setInitCart();
   }, []);
@@ -182,13 +216,11 @@ function CartProvider({ children }: PropsWithChildren) {
   return (
     <CartContextValues.Provider
       value={{
-        cart,
-        setCart,
         addToCart,
         handleQuantity,
         handleCheckout,
         newCart,
-        setNewCart
+        setNewCart,
       }}
     >
       {children}

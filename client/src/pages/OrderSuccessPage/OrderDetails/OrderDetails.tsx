@@ -21,12 +21,18 @@ const OrderDetails = () => {
         </p>
       </div>
 
-      <div className="py-10 text-sm">
+      <div className="py-10 text-sm bg-">
         <p className="font-bold">Order Number: {order._id}</p>
+        <p className="">Order Total: {order.total_price}</p>
         <p>Shipping Address:</p>
-{/*       <ul>
-        <li></li>
-      </ul> */}
+        
+        {order.address.map((item, index) => (
+          <ul key={index}>
+          <li>{item.street}</li>
+          <li>{item.zip_code}</li>
+          <li>{item.city}</li>
+          </ul>
+        ))}
       </div>
 
       <div>

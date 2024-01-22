@@ -17,6 +17,7 @@ export interface Order {
     returned: boolean,
     payment_status: string,
     order_status: string,
+    _id: string
   }
 
 export interface OrderItem {

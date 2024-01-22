@@ -32,7 +32,7 @@ const OrderSuccessPage = () => {
 
   //const [ isLoading, setIsLoading ] = useState();
   return (
-    <div className="orderSuccess flex flex-col items-center py-32">
+    <div className="orderSuccess flex flex-col items-center py-32 px-24 my-40 border border-teal-600">
       {isloading ? <LoadBar /> : <OrderDetails />}
   </div>
   )

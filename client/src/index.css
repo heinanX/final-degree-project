@@ -17,11 +17,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: rgb(243, 244, 246) ;
 }
 
 .standard-btn {
   border-radius: 5px;
-  background-color: yellowgreen;
+  background-color: teal;
   color: black;
   padding: 3px 15px;
 }

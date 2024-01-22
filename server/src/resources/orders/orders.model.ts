@@ -16,6 +16,7 @@ const subOrderSchema = new Schema(
 );
 const addressSchema = new Schema(
   {
+    cust_name: String,
     street: String,
     zip_code: String,
     city: String
@@ -55,6 +56,7 @@ const subOrderJoiSchema = Joi.object({
 });
 
 const addressJoiSchema = Joi.object({
+    cust_name: Joi.string(),
     street: Joi.string(),
     zip_code: Joi.string(),
     city: Joi.string()
@@ -63,7 +65,7 @@ const addressJoiSchema = Joi.object({
 
 export const orderJoiSchema = Joi.object({
   customer: Joi.string().required(),
-  address: Joi.array().items(addressJoiSchema).required(),
+  address: addressJoiSchema.required(),
   order: Joi.array().items(subOrderJoiSchema).required(),
   total_price: Joi.number().required(),
   discount: Joi.number(),

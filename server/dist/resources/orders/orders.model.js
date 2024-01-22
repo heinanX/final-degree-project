@@ -17,6 +17,7 @@ const subOrderSchema = new mongoose_1.Schema({
     digital: Boolean
 }, { _id: false });
 const addressSchema = new mongoose_1.Schema({
+    cust_name: String,
     street: String,
     zip_code: String,
     city: String
@@ -47,13 +48,14 @@ const subOrderJoiSchema = joi_1.default.object({
     digital: joi_1.default.boolean()
 });
 const addressJoiSchema = joi_1.default.object({
+    cust_name: joi_1.default.string(),
     street: joi_1.default.string(),
     zip_code: joi_1.default.string(),
     city: joi_1.default.string()
 });
 exports.orderJoiSchema = joi_1.default.object({
     customer: joi_1.default.string().required(),
-    address: joi_1.default.array().items(addressJoiSchema).required(),
+    address: addressJoiSchema.required(),
     order: joi_1.default.array().items(subOrderJoiSchema).required(),
     total_price: joi_1.default.number().required(),
     discount: joi_1.default.number(),

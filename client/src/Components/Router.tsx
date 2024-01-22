@@ -4,7 +4,7 @@ import CheckoutPage from "../pages/CheckoutPage/Checkout.page";
 import AccountPage from "../pages/AccountPage/Account.page";
 import LoginPage from "../pages/LoginPage/Login.page";
 import ProductPage from "../pages/ProductPage/Product.page";
-import OrderConfirmationPage from "../pages/OrderConfermation/OrderConfirmation.page";
+import OrderConfirmationPage from "../pages/OrderSuccessPage/OrderSuccess.page";
 import NotFoundPage from "../pages/NotFound.page";
 
 const Router = () => {

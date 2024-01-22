@@ -29,31 +29,38 @@ function OrderProvider({ children }: PropsWithChildren) {
   const { cartTotal } = cartSocket();
 
   const createOrderDatabase = async (cart: CartItem[], sessionId: string) => {
-    console.log(cart, sessionId);
-    const newOrder = {
-      sessionId: sessionId,
-      order: cart,
+    
+    const itemsInCart = cart.map(item => {
+      const { product, quantity, digital, vhs } = item;
+      const newObject = {
+          product: product._id,
+          quantity: quantity,
+          digital: digital,
+          vhs: vhs
+      }
+      return newObject;
+    });
+
+    const once = {
+      session_id: sessionId,
+      order: itemsInCart,
       total_price: cartTotal
     }
-    console.log(newOrder);
+    console.log('cons', once);
+    
+    
     try {
       const res = await fetch("/api/orders/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          sessionId: sessionId,
-          order: cart,
-          total_price: cartTotal
-        }),
+        body: JSON.stringify(once),
       });
       const data = await res.json();
       if (res.ok) {
         console.log(data);
-        
-
-        //add 'customer reward' Issue logic here
+        setOrder(data)
       }
     } catch (err) {
       // Handle errors, if any

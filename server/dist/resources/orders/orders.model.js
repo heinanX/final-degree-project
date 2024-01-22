@@ -13,6 +13,8 @@ const subOrderSchema = new mongoose_1.Schema({
         require: true,
     },
     quantity: Number,
+    vhs: Boolean,
+    digital: Boolean
 }, { _id: false });
 exports.orderSchema = new mongoose_1.Schema({
     customer: { type: mongoose_1.Schema.Types.ObjectId, ref: "customers", require: true },

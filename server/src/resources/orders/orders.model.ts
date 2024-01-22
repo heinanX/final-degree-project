@@ -9,6 +9,8 @@ const subOrderSchema = new Schema(
       require: true,
     },
     quantity: Number,
+    vhs: Boolean,
+    digital: Boolean
   },
   { _id: false }
 );

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LoginForm from "./Login.form";
+import LoginForm from "./LoginForm";
 import { FaUserNinja } from "react-icons/fa";
 const LoggedOutUi = () => {
   const [showLoginForm, setShowLoginForm] = useState<boolean>();

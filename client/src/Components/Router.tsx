@@ -9,7 +9,7 @@ import NotFoundPage from "../pages/NotFound.page";
 
 const Router = () => {
   return (
-    <main className="w-full flex flex-col items-center">
+    <main className="w-full flex flex-col items-center justify-center min-h-screen">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductPage />} />

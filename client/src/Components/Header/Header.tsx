@@ -1,7 +1,7 @@
 import logo from "../../assets/images/logo-videoshack_tape.png";
 import { useSocket as customerSocket } from "../../contexts/customer.context";
-import LoggedOutUi from "./LoggedOut.ui";
-import LoggedInUi from "./LoggedIn.ui";
+import LoggedOutUi from "./Login/LoggedOut.ui";
+import LoggedInUi from "./Login/LoggedIn.ui";
 
 import { useState } from "react";
 import TemporaryDrawer from "./Cart/Cart.drawer";

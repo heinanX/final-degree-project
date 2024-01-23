@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaUserNinja } from "react-icons/fa";
-import CustomerDrawer from "./Customer.drawer";
+import CustomerDrawer from "../Customer.drawer";
 
 const LoggedInUi = () => {
   const [showDrawer, setShowDrawer] = useState<boolean>();

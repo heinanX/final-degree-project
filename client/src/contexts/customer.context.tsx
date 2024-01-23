@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 import { CustomerContext, defaultValues } from "../interfaces/customer.interface";
+import { useNavigate } from "react-router-dom";
 
 export const CustomerContextValues =
   createContext<CustomerContext>(defaultValues);
@@ -10,6 +11,7 @@ export const useSocket = () => useContext(CustomerContextValues);
 function CustomerProvider({ children }: PropsWithChildren) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [activeCustomer, setActiveCustomer] = useState<string>('');
+  const navigate = useNavigate();
 
 
   // LOG IN FUNCTION THAT ACCEPTS 2 PARAMETERS FROM COMPONENT Login.form
@@ -29,6 +31,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
         setIsLoggedIn(true);
         const data = await res.json();
         console.log(data);
+        navigate('/customer/account')
       } else {
         alert("incorrect mail or password");
       }
@@ -68,7 +71,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
   // LOGOUT FUNCTION THAT SENDS A POST TO LOGOUT ENDPOINT, IF OK, CUSTOMER HAS LOGGED OUT
   const logOut = async () => {
     try {
-      const res = await fetch("api/customers/logout", {
+      const res = await fetch("/api/customers/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +92,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
   // FUNCTION THAT CHECKS FOR USER IN SESSION.
   const checkLoginStatus = async () => {
     try {
-      const res = await fetch("api/customers/active");
+      const res = await fetch("/api/customers/active");
       if (res.ok) {
         setIsLoggedIn(true);
       }
@@ -101,7 +104,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
     // A FUNCTION THAT FETCHES CUSTOMER'S DETAILS 
     const fetchCustomerDetails = async () => {
       try {
-        const res = await fetch("api/customers/customer-details");
+        const res = await fetch("/api/customers/customer-details");
         const data = await res.json();
         setActiveCustomer(data)
       return data;    

@@ -3,9 +3,7 @@ import { useState } from "react";
 const useSwitchForms = () => {
   const [showSignUp, setShowSignUp] = useState<boolean>(false);
 
-  const handleSwitch = () => {
-    console.log('jella');
-    
+  const handleSwitch = () => {    
     setShowSignUp(!showSignUp);
   };
 

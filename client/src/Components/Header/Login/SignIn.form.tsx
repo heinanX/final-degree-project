@@ -9,7 +9,9 @@ const SignInForm = ({ handleSwitch }: formProps) => {
   const [custMail, setCustMail] = useState<string>("");
   const [custPass, setCustPass] = useState<string>("");
   const { login } = customerSocket();
+
   const saveToState = (
+
     setState: React.Dispatch<React.SetStateAction<string>>,
     value: string
   ) => {

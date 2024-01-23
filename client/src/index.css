@@ -20,6 +20,10 @@
   color: rgb(243, 244, 246) ;
 }
 
+ul {
+  cursor: default;
+}
+
 .standard-btn {
   border-radius: 5px;
   background-color: teal;

@@ -17,7 +17,7 @@ const Header = () => {
   };
 
   return (
-    <div className="fixed text-white z-10 px-10 py-2 flex flex-row justify-between items-center w-full">
+    <div className="fixed top-0 left-0 text-white z-10 px-10 py-2 flex flex-row justify-between items-center w-full">
       <NavLink to={"/"}>
         <img src={logo} style={{ width: "120px" }} alt="" />
       </NavLink>

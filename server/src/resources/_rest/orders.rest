@@ -14,10 +14,12 @@ POST http://localhost:3000/api/orders/create
 Content-Type: application/json
 
 {
-    "customer": "659fe78583e4a05d0755f06a",
-    "order": [{ "product": "65983b80ad42eae475e37524", "quantity": 32}, { "product": "659827dd39cc31ac1bf1dc1d", "quantity": 2} ],
-    "total_price": 12229,
-    "discount": 0
+    "sessionId": "cs_test_b1IBZd1rTyrdNdUdAYkju3UJAs6QWuOkBqzqECuyUBPrl4EUOh3X7BwX9E",
+    "order" : {
+        "order": [{ "product": "65a2ae3d719aaaf33cdf52cf", "quantity": 32, "digital": false, "vhs": true}, { "product": "65a2b128719aaaf33cdf52e3", "quantity": 2, "digital": false, "vhs": true} ],
+        "total_price": 12229,
+        "discount": 0
+    }
 }
 
 ###

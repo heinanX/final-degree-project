@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { activeLogin, createCustomer, deleteCustomer, editCustomer, getCustomer, getCustomers, login, logout } from './customers.controller';
+import { activeLogin, createCustomer, deleteCustomer, editCustomer, getCustomer, getCustomerDetails, getCustomers, login, logout } from './customers.controller';
 import { isAdmin } from '../_middlewares/isAdmin';
 import { validate } from '../_middlewares/validate.schema';
 import { customerJoiSchema, updateCustomerJoiSchema } from './customers.model';
@@ -8,11 +8,12 @@ import { createStripeCus } from '../_middlewares/stripe/customer/create.customer
 import { deleteStripeCus } from '../_middlewares/stripe/customer/delete.customer';
 import { updateStripeCustomer } from '../_middlewares/stripe/customer/update.customer';
 import { authorization } from '../_middlewares/authorize';
-import { authenticateUser } from '../_middlewares/authenticate.user';
+import { authenticateLogin } from '../_middlewares/authenticateLogin';
 
 export const customerRouter = Router();
 
-customerRouter.get('/active', authenticateUser, activeLogin);
+customerRouter.get('/active', authenticateLogin, activeLogin);
+customerRouter.get('/customer-details', getCustomerDetails);
 customerRouter.get('/', isAdmin, getCustomers);
 customerRouter.get('/:id', authorization, getCustomer);
 customerRouter.post('/create', validate(customerJoiSchema), formatData, createStripeCus, createCustomer);

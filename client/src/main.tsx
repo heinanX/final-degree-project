@@ -7,6 +7,7 @@ import CustomerProvider from "./contexts/customer.context.tsx";
 import CartProvider from "./contexts/cart.context.tsx";
 import CategoryProvider from "./contexts/category.context.tsx";
 import TagProvider from "./contexts/tags.context.tsx";
+import OrderProvider from "./contexts/order.context.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <TagProvider>
           <ProductProvider>
             <CartProvider>
-              <App />
+              <OrderProvider>
+                <App />
+              </OrderProvider>
             </CartProvider>
           </ProductProvider>
         </TagProvider>

@@ -1,0 +1,18 @@
+@keyframes moveForward {
+    0% {
+        transform: translateX(-100px);
+        opacity: 0; /* Fully transparent */
+      }
+      50% {
+        transform: translateX(0); /* Move forward by adjusting the distance */
+        opacity: 1; /* Fully opaque */
+      }
+      100% {
+        transform: translateX(100px); /* Move forward by adjusting the distance */
+        opacity: 0; /* Fully opaque */
+      }
+  }
+  
+  .animate {
+    animation: moveForward 5s linear infinite; /* Adjust the duration and timing function as needed */
+  }

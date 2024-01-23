@@ -4,12 +4,12 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import "../../../scrollbar.css";
 
 const CartDetails = () => {
-  const { cart, handleQuantity } = cartSocket();
+  const { newCart, handleQuantity } = cartSocket();
 
   return (
     <div className=" py-8 max-h-96 overflow-y-auto cart-scrollbar">
       <ul>
-        {cart.map((item, index) => (
+        {newCart.cart.map((item, index) => (
           <li key={index} className="flex items-center">
             <div className="w-1/6 pb-2">
               <img src={item.product.image} alt="" className="h-12" />

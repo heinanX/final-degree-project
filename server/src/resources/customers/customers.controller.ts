@@ -32,6 +32,19 @@ export const getCustomer = async (
   }
 };
 
+export const getCustomerDetails = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const customer = req.session.customer?.mail
+    res.status(200).json(customer);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const createCustomer = async (
   req: Request,
   res: Response,

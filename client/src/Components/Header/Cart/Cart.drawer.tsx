@@ -7,12 +7,13 @@ import Divider from "@mui/material/Divider";
 import { LuVideotape } from "react-icons/lu";
 import CartDetails from "./Cart.details";
 import { NavLink } from "react-router-dom";
-import LoginBtn from "./login.btn";
+import LoginBtn from "./Login.btn";
+
 
 type Anchor = "right";
 
 const CartDrawer = () => {
-  const { cartTotal } = cartSocket();
+  const { newCart } = cartSocket();
   const { isLoggedIn } = customerSocket();
   const [state, setState] = useState({
     right: false,
@@ -53,7 +54,7 @@ const CartDrawer = () => {
 
         <div className="flex flex-row justify-between px-6">
           <p className="font-medium">Total sum: </p>
-          <p>{cartTotal} sek</p>
+          <p>{newCart.total_price} sek</p>
         </div>
 
         <div className="flex flex-row py-10 justify-end">

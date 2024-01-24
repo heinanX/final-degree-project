@@ -17,11 +17,11 @@ const AccountPage = () => {
       <div id="account-page-border-div" className="border border-teal-600 flex flex-col sm:flex-row w-full max-w-7xl">
         
         {/* Left side content */}
-        <div className="w-full sm:w-1/3 p-10 uppercase tracking-widest">
+        <div className="w-full sm:w-1/3 p-5 md:p-10 uppercase tracking-widest">
           {isAdmin ? <AdminDashboard /> : <UserDashboard />}
           <ul className="account-page-ul pb-20">
-            <li onClick={() => setDistplayComponent("myorders")}>My Orders</li>
-            <li onClick={() => setDistplayComponent("accountsettings")}>
+            <li onClick={() => setDistplayComponent("my orders")}>My Orders</li>
+            <li onClick={() => setDistplayComponent("account settings")}>
               Account Settings
             </li>
             <li onClick={() => setDistplayComponent("logout")}>Log Out</li>

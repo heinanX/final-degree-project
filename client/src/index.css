@@ -46,3 +46,6 @@ ul {
 .text-10px {
   font-size: 10px;
 }
+input {
+  outline: none;
+}

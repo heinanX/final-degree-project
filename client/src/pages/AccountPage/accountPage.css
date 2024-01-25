@@ -18,3 +18,17 @@
     max-height: 700px;
   }
 }
+
+#all-orders-main-div *:hover {
+  cursor: pointer;
+}
+#all-orders-main-div:hover {
+  border: 1px solid yellow;
+}
+
+.standard-form-darkmode {
+  background: none;
+  border: 1px solid teal;
+  border-radius: 3px;
+  padding: 2px 5px;
+}

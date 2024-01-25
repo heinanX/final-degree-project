@@ -15,20 +15,34 @@ export const useSocket = () => useContext(OrderContextValues);
 //---------------------- Provider begins here
 
 function OrderProvider({ children }: PropsWithChildren) {
+
+  const [ getOrders, setGetOrders ] = useState<Order[]>([]);
   const [order, setOrder] = useState<Order>({
     customer: "",
     address: [],
     order: [],
     total_price: 0,
     discount: 0,
-    date: new Date(),
+    date: new Date().toDateString(),
     shipped: false,
     returned: false,
     payment_status: "",
     order_status: "",
     _id: ''
   });
-  //const { newCart } = cartSocket();
+
+  const getOrdersDatabase = async () => {
+    try {
+      const res = await fetch('/api/orders');
+      const data = await res.json();
+      if (!res.ok) throw new Error("Failed to fetch product");
+      setGetOrders(data)
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("Error fetching product", err.message);
+      }
+    }
+  }
 
   const createOrderDatabase = async (cartData: Cart, sessionId: string) => {
     const itemsInCart = cartData.cart.map((item: CartItem) => {
@@ -71,9 +85,12 @@ function OrderProvider({ children }: PropsWithChildren) {
   return (
     <OrderContextValues.Provider
       value={{
+        getOrders,
+        setGetOrders,
         order,
         setOrder,
         createOrderDatabase,
+        getOrdersDatabase,
       }}
     >
       {children}

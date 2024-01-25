@@ -4,6 +4,8 @@ import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 interface SingleOrderReturnedProps {
     returned: boolean;
     disableForm: boolean
+    isReturned: boolean;
+    setIsReturned: React.Dispatch<React.SetStateAction<boolean>>
   }
 const SingleOrderReturned = ({returned, disableForm}: SingleOrderReturnedProps) => {
   return (

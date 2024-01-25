@@ -27,7 +27,7 @@ const addressSchema = new Schema(
 export const orderSchema = new Schema(
   {
     customer: { type: Schema.Types.ObjectId, ref: "customers", require: true },
-    address: [addressSchema],
+    address: addressSchema,
     order: [subOrderSchema],
     total_price: { type: Number, default: 0, require: true },
     discount: { type: Number, default: 0 },

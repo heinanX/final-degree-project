@@ -26,13 +26,11 @@ const OrderDetails = () => {
         <p className="">Order Total: {order.total_price}</p>
         <p>Shipping Address:</p>
         
-        {order.address.map((item, index) => (
-          <ul key={index}>
-          <li>{item.street}</li>
-          <li>{item.zip_code}</li>
-          <li>{item.city}</li>
+          <ul>
+          <li>{order.address.street}</li>
+          <li>{order.address.zip_code}</li>
+          <li>{order.address.city}</li>
           </ul>
-        ))}
       </div>
 
       <div>

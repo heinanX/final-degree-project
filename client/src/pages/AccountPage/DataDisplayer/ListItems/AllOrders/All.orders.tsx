@@ -8,8 +8,8 @@ import { Product } from "../../../../../interfaces/product.interface";
 
 interface AllOrdersProps {
   displayComponent: string;
-  viewDetails: Product[] | Order[]
-  setViewDetails: React.Dispatch<React.SetStateAction<Order[] | Product[]>>
+  viewDetails: Product | Order | null
+  setViewDetails: React.Dispatch<React.SetStateAction<Product | Order | null>>
 }
 const AllOrders = ({ displayComponent, setViewDetails }: AllOrdersProps) => {
   const { getOrders, getOrdersDatabase } = orderSocket();
@@ -39,7 +39,7 @@ const AllOrders = ({ displayComponent, setViewDetails }: AllOrdersProps) => {
               key={index}
               id="all-orders-main-div"
               className="flex flex-row items-center pb-2 odd:bg-teal-900"
-              onClick={() => setViewDetails([item])}
+              onClick={() => setViewDetails(item)}
             >
               <OrderOverview item={item} />
             </div>

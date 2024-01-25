@@ -19,7 +19,12 @@ function OrderProvider({ children }: PropsWithChildren) {
   const [ getOrders, setGetOrders ] = useState<Order[]>([]);
   const [order, setOrder] = useState<Order>({
     customer: "",
-    address: [],
+    address: {
+      cust_name: '',
+      street: '',
+      zip_code: '',
+      city: ''
+    },
     order: [],
     total_price: 0,
     discount: 0,

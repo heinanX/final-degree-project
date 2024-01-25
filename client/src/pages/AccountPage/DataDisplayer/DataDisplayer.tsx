@@ -15,11 +15,12 @@ interface dataDisplayerProps {
 }
 
 const DataDisplayer = ({ displayComponent }: dataDisplayerProps) => {
-  const [viewDetails, setViewDetails] = useState<Order[] | Product[]>([]);
+  const [viewDetails, setViewDetails] = useState<Order | Product | null>(null);
+
 
   return (
     <div className="right w-full sm:w-2/3 p-5">
-      {viewDetails.length != 0 ? (
+      {viewDetails? (
         <ViewInDetail
           viewDetails={viewDetails}
           setViewDetails={setViewDetails}

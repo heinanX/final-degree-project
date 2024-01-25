@@ -2,7 +2,7 @@ import React from 'react'
 import { OrderAddress } from '../../../../../../interfaces/order.interface'
 
 interface SingleOrderAddressProps {
-    address: OrderAddress[]
+    address: OrderAddress
     setNewStreet: React.Dispatch<React.SetStateAction<string>>
     setNewZipCode: React.Dispatch<React.SetStateAction<string>>
     setNewCity: React.Dispatch<React.SetStateAction<string>>
@@ -16,35 +16,31 @@ const SingleOrderAddress = ({address, disableForm, setNewStreet, setNewZipCode, 
   return (
     <div className={`flex flex-row gap-2 uppercase ${changeTextcolor}`}>
             <label className="w-20 pt-1">address</label>
-            {address.map((addressLine, index) => (
               <div
-                key={index}
                 className="flex flex-col gap-2 w-full ml-10 text-gray-400"
               >
                 <input
                   type="text"
                   disabled={disableForm}
-                  defaultValue={addressLine.street}
+                  defaultValue={address.street}
                   onChange={(e) => setNewStreet(e.target.value)}
                   className={`w-full standard-form-darkmode ${changeTextcolor}`}
                 />
                 <input
                   type="text"
                   disabled={disableForm}
-                  defaultValue={addressLine.zip_code}
+                  defaultValue={address.zip_code}
                   onChange={(e) => setNewZipCode(e.target.value)}
                   className={`w-full standard-form-darkmode ${changeTextcolor}`}
                 />
                 <input
-                  key={index}
                   type="text"
                   disabled={disableForm}
-                  defaultValue={addressLine.city}
+                  defaultValue={address.city}
                   onChange={(e) => setNewCity(e.target.value)}
                   className={`w-full standard-form-darkmode ${changeTextcolor}`}
                 />
               </div>
-            ))}
           </div>
   )
 }

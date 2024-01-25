@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import formatDate from "../../../../functions/date.formatter";
 import { Order } from "../../../../interfaces/order.interface";
 import { Product } from "../../../../interfaces/product.interface";
@@ -11,8 +11,8 @@ import SingleOrderDiscount from "./components/order/Single.order.discount";
 import SingleOrderAddress from "./components/order/Single.order.address";
 
 interface ViewSingleOrderProps {
-  viewDetails: Order[] | Product[];
-  setViewDetails: React.Dispatch<React.SetStateAction<Order[] | Product[]>>;
+  viewDetails: Product | Order
+  setViewDetails: React.Dispatch<React.SetStateAction<Product | Order | null>>
 }
 
 const ViewSingleOrder = ({
@@ -20,11 +20,11 @@ const ViewSingleOrder = ({
   setViewDetails,
 }: ViewSingleOrderProps) => {
   const [disableForm, setDisableForm ] = useState<boolean>(true);
-  const [isShipped, setIsShipped ] = useState<boolean>(false);
-  const [isReturned, setIsReturned ] = useState<boolean>(false);
-  const [ newStreet, setNewStreet ] = useState<string>('');
-  const [ newZipCode, setNewZipCode ] = useState<string>('');
-  const [ newCity, setNewCity ] = useState<string>('');
+  const [isShipped, setIsShipped ] = useState<boolean>((viewDetails as Order).shipped);
+  const [isReturned, setIsReturned ] = useState<boolean>((viewDetails as Order).returned);
+  const [ newStreet, setNewStreet ] = useState<string>((viewDetails as Order).address.street);
+  const [ newZipCode, setNewZipCode ] = useState<string>((viewDetails as Order).address.zip_code);
+  const [ newCity, setNewCity ] = useState<string>((viewDetails as Order).address.city);
 
   const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -52,9 +52,8 @@ const ViewSingleOrder = ({
           </button>
         )}
       </div>
-      {viewDetails.map((item, index) => (
+      
         <form
-          key={index}
           className="w-full text-sm flex flex-col gap-2 pb-6 text-gray-400"
         >
           <div className="flex flex-row items-center gap-2 uppercase">
@@ -62,7 +61,7 @@ const ViewSingleOrder = ({
             <input
               type="text"
               disabled={true}
-              defaultValue={(item as Order)._id}
+              defaultValue={(viewDetails as Order)._id}
               className="w-full standard-form-darkmode"
             />
           </div>
@@ -72,7 +71,7 @@ const ViewSingleOrder = ({
             <input
               type="text"
               disabled={true}
-              defaultValue={formatDate((item as Order).date)}
+              defaultValue={formatDate((viewDetails as Order).date)}
               className="w-full standard-form-darkmode"
             />
           </div>
@@ -82,21 +81,21 @@ const ViewSingleOrder = ({
             <input
               type="text"
               disabled={true}
-              defaultValue={(item as Order).customer}
+              defaultValue={(viewDetails as Order).customer}
               className="w-full text-gray-400 standard-form-darkmode"
             />
           </div>
 
-          <SingleOrderAddress address={(item as Order).address}
+          <SingleOrderAddress address={(viewDetails as Order).address}
               setNewStreet={setNewStreet}
               setNewZipCode={setNewZipCode}
               setNewCity={setNewCity}
               disableForm={disableForm}
           />
 
-          <SingleOrderProducts singleOrder={(item as Order).order} />
+          <SingleOrderProducts singleOrder={(viewDetails as Order).order} />
 
-          <SingleOrderDiscount discount={(item as Order).discount} />
+          <SingleOrderDiscount discount={(viewDetails as Order).discount} />
 
 
 
@@ -106,7 +105,7 @@ const ViewSingleOrder = ({
               <input
                 type="text"
                 disabled={true}
-                defaultValue={(item as Order).total_price}
+                defaultValue={(viewDetails as Order).total_price}
                 className="w-32 text-right standard-form-darkmode"
               />
               <p className="w-12 text-right">.00 sek</p>
@@ -114,14 +113,14 @@ const ViewSingleOrder = ({
           </div>
 
           <SingleOrderShipped
-            shipped={(item as Order).shipped}
+            shipped={(viewDetails as Order).shipped}
             disableForm={disableForm}
             isShipped={isShipped}
             setIsShipped={setIsShipped}
           />
 
           <SingleOrderReturned
-            returned={(item as Order).returned}
+            returned={(viewDetails as Order).returned}
             disableForm={disableForm}
             isReturned={isReturned}
             setIsReturned={setIsReturned}
@@ -132,7 +131,7 @@ const ViewSingleOrder = ({
             <input
               type="text"
               disabled={true}
-              defaultValue={(item as Order).payment_status}
+              defaultValue={(viewDetails as Order).payment_status}
               className="w-full standard-form-darkmode"
             />
           </div>
@@ -142,15 +141,14 @@ const ViewSingleOrder = ({
             <input
               type="text"
               disabled={true}
-              defaultValue={(item as Order).order_status}
+              defaultValue={(viewDetails as Order).order_status}
               className="w-full text-left standard-form-darkmode"
             />
           </div>
         </form>
-      ))}
 
       <div className="flex flex-row w-full justify-end gap-4">
-        <button className="standard-btn" onClick={() => setViewDetails([])}>
+        <button className="standard-btn" onClick={() => setViewDetails(null)}>
           return
         </button>
       </div>

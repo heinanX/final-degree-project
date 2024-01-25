@@ -7,8 +7,8 @@ import { Order } from "../../../../interfaces/order.interface";
 
 interface AllProductsProps {
   displayComponent: string
-  viewDetails: Product[] | Order[]
-  setViewDetails: React.Dispatch<React.SetStateAction<Order[] | Product[]>>
+  viewDetails: Product | Order | null
+  setViewDetails: React.Dispatch<React.SetStateAction<Product | Order | null>>
 }
 
 const AllProducts = ({displayComponent/* , viewDetails, setViewDetails */}: AllProductsProps) => {

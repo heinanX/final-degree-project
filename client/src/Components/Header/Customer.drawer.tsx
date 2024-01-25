@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { useSocket as customerSocket } from "../../contexts/customer.context";
 
 const CustomerDrawer = () => {
@@ -12,10 +13,14 @@ const CustomerDrawer = () => {
   return (
     <div className="absolute top-8 right-0 w-40">
       <div className="bg-white text-red-700 py-2 rounded-sm text-xs w-full">
-        <ul>
+        <ul>\
+          
           <li>
+          <NavLink to="/customer/account">
             <button className={btnStyle}>My account</button>
+            </NavLink>
           </li>
+
           <li className={liStyle}>
             <button className={btnStyle}>Settings</button>
           </li>

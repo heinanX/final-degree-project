@@ -12,7 +12,7 @@ export interface OrderContext {
 
 export interface Order {
   customer: string;
-  address: OrderAddress[];
+  address: OrderAddress;
   order: OrderItem[];
   total_price: number;
   discount: number;
@@ -30,6 +30,7 @@ export interface OrderItem {
 }
 
 export interface OrderAddress {
+  cust_name: string,
   street: string;
   zip_code: string;
   city: string;
@@ -39,7 +40,12 @@ export const defaultValues = {
   setGetOrders: () => {},
   order: {
     customer: "",
-    address: [],
+    address: {
+      cust_name: '',
+      street: '',
+      zip_code: '',
+      city: ''
+    },
     order: [],
     total_price: 0,
     discount: 0,

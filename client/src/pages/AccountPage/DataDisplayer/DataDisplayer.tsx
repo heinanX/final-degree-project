@@ -5,9 +5,7 @@ import AllProducts from "./ListItems/All.products";
 import DeleteProduct from "./ListItems/Delete.product";
 import MyOrders from "./ListItems/My.orders";
 import UpdateProduct from "./ListItems/Update.product";
-import { useState } from "react";
-import { Product } from "../../../interfaces/product.interface";
-import { Order } from "../../../interfaces/order.interface";
+import { useSocket as orderSocket } from "../../../contexts/order.context";
 import ViewInDetail from "./viewInDetail/View.in.detail";
 
 interface dataDisplayerProps {
@@ -15,16 +13,12 @@ interface dataDisplayerProps {
 }
 
 const DataDisplayer = ({ displayComponent }: dataDisplayerProps) => {
-  const [viewDetails, setViewDetails] = useState<Order | Product | null>(null);
-
+  const { viewDetails, setViewDetails } = orderSocket();
 
   return (
     <div className="right w-full sm:w-2/3 p-5">
-      {viewDetails? (
-        <ViewInDetail
-          viewDetails={viewDetails}
-          setViewDetails={setViewDetails}
-        />
+      {viewDetails ? (
+        <ViewInDetail />
       ) : (
         <>
           <div id="data-display-header" className="uppercase px-2 py-4 h-10">

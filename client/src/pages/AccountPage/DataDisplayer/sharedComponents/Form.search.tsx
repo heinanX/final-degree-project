@@ -1,3 +1,4 @@
+import { useState } from "react";
 import capitalizeLetters from "../../../../functions/capitalizeLetters";
 
 interface FormSearchProps {
@@ -6,17 +7,27 @@ interface FormSearchProps {
 }
 
 const FormSearch = ({ setShowState, displayComponent }: FormSearchProps) => {
+  
+    const [ searchById, setSearchById ] = useState<string>('');
+    const handleSearch = () => {
+      setShowState(false)
+     console.log(searchById);
+     //add logic to get an order by id
+     
+    }
+
   return (
     <form onSubmit={(e) => e.preventDefault()} className="flex flex-col w-full">
       <div className="w-full flex justify-evenly">
         <input
           type="text"
-          placeholder="search order"
+          onChange={(e) => setSearchById(e.target.value)}
+          placeholder="search by id"
           className="text-black rounded px-2 py-1 flex-grow-0 flex-shrink-0 2/4 lg:w-2/3"
         />
         <button
           className="standard-btn flex-grow-0 flex-shrink-0"
-          onClick={() => setShowState(false)}
+          onClick={handleSearch}
         >
           Look up
         </button>

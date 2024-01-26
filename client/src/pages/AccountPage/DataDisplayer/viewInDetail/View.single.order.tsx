@@ -1,7 +1,6 @@
 import {  useState } from "react";
 import formatDate from "../../../../functions/date.formatter";
 import { Order } from "../../../../interfaces/order.interface";
-import { Product } from "../../../../interfaces/product.interface";
 import { FaSave } from "react-icons/fa";
 import { FaPen } from "react-icons/fa";
 import SingleOrderProducts from "./components/order/Single.order.products";
@@ -11,15 +10,8 @@ import SingleOrderDiscount from "./components/order/Single.order.discount";
 import SingleOrderAddress from "./components/order/Single.order.address";
 import { useSocket as orderSocket } from "../../../../contexts/order.context";
 
-interface ViewSingleOrderProps {
-  viewDetails: Product | Order
-  setViewDetails: React.Dispatch<React.SetStateAction<Product | Order | null>>
-}
-
-const ViewSingleOrder = ({
-  viewDetails,
-  setViewDetails,
-}: ViewSingleOrderProps) => {
+const ViewSingleOrder = () => {
+  const { viewDetails, setViewDetails, updateOrderDatabase } = orderSocket();
   const [disableForm, setDisableForm ] = useState<boolean>(true);
   const [isShipped, setIsShipped ] = useState<boolean>((viewDetails as Order).shipped);
   const [isReturned, setIsReturned ] = useState<boolean>((viewDetails as Order).returned);
@@ -27,7 +19,7 @@ const ViewSingleOrder = ({
   const [ newStreet, setNewStreet ] = useState<string>((viewDetails as Order).address.street);
   const [ newZipCode, setNewZipCode ] = useState<string>((viewDetails as Order).address.zip_code);
   const [ newCity, setNewCity ] = useState<string>((viewDetails as Order).address.city);
-  const { updateOrderDatabase } = orderSocket();
+
 
   const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -42,7 +34,8 @@ const ViewSingleOrder = ({
         city: newCity
       }
     }
-    updateOrderDatabase(updateOrderObject, viewDetails._id)
+    if (viewDetails?._id) updateOrderDatabase(updateOrderObject, viewDetails?._id)
+
 
   };
 

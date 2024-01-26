@@ -1,10 +1,7 @@
-import { Order } from "../../../../interfaces/order.interface"
-import { Product } from "../../../../interfaces/product.interface"
+import { useSocket as orderSocket } from "../../../../contexts/order.context";
 
-interface ViewSingleProductProps {
-    viewDetails: Order[] | Product[]
-}
-const ViewSingleProduct = ({viewDetails}: ViewSingleProductProps) => {
+const ViewSingleProduct = () => {
+  const { viewDetails } = orderSocket();
     console.log(viewDetails);
     
   return (

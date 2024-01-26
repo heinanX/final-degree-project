@@ -13,7 +13,6 @@ const FormSearch = ({ setShowState, displayComponent }: FormSearchProps) => {
       setShowState(false)
      console.log(searchById);
      //add logic to get an order by id
-     
     }
 
   return (

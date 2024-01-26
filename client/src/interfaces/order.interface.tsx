@@ -8,6 +8,7 @@ export interface OrderContext {
   setOrder: React.Dispatch<React.SetStateAction<Order>>;
   createOrderDatabase: (cart: Cart, sessionId: string) => void;
   getOrdersDatabase: () => void;
+  updateOrderDatabase: (updateOrderObject: object, id: string) => void;
 }
 
 export interface Order {
@@ -58,5 +59,6 @@ export const defaultValues = {
   },
   setOrder: () => {},
   createOrderDatabase: (cart: Cart, sessionId: string) => {},
-  getOrdersDatabase: () => {}
+  getOrdersDatabase: () => {},
+  updateOrderDatabase: (updateOrderObject: object, id: string) => {}
 };

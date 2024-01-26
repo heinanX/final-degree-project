@@ -9,6 +9,7 @@ import SingleOrderReturned from "./components/order/Single.order.returned";
 import SingleOrderShipped from "./components/order/Single.order.shipped";
 import SingleOrderDiscount from "./components/order/Single.order.discount";
 import SingleOrderAddress from "./components/order/Single.order.address";
+import { useSocket as orderSocket } from "../../../../contexts/order.context";
 
 interface ViewSingleOrderProps {
   viewDetails: Product | Order
@@ -22,17 +23,27 @@ const ViewSingleOrder = ({
   const [disableForm, setDisableForm ] = useState<boolean>(true);
   const [isShipped, setIsShipped ] = useState<boolean>((viewDetails as Order).shipped);
   const [isReturned, setIsReturned ] = useState<boolean>((viewDetails as Order).returned);
+  const [ newCustName, setCustName ] = useState<string>((viewDetails as Order).address.cust_name);
   const [ newStreet, setNewStreet ] = useState<string>((viewDetails as Order).address.street);
   const [ newZipCode, setNewZipCode ] = useState<string>((viewDetails as Order).address.zip_code);
   const [ newCity, setNewCity ] = useState<string>((viewDetails as Order).address.city);
+  const { updateOrderDatabase } = orderSocket();
 
   const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    console.log("value");
-    console.log(newStreet);
-    console.log(newZipCode);
-    console.log(newCity);
   setDisableForm(true)
+    const updateOrderObject: object = {
+      shipped: isShipped,
+      returned: isReturned,
+      address: {
+        cust_name: newCustName,
+        street: newStreet,
+        zip_code: newZipCode,
+        city: newCity
+      }
+    }
+    updateOrderDatabase(updateOrderObject, viewDetails._id)
+
   };
 
   return (
@@ -82,6 +93,17 @@ const ViewSingleOrder = ({
               type="text"
               disabled={true}
               defaultValue={(viewDetails as Order).customer}
+              className="w-full text-gray-400 standard-form-darkmode"
+            />
+          </div>
+
+          <div className="flex flex-row items-center gap-2 uppercase">
+            <label className="w-20">name</label>
+            <input
+              type="text"
+              disabled={disableForm}
+              onChange={(e) => setCustName(e.target.value)}
+              defaultValue={(viewDetails as Order).address.cust_name}
               className="w-full text-gray-400 standard-form-darkmode"
             />
           </div>

@@ -16,5 +16,5 @@ orderRouter.get('/user-orders/:id', authorization, getOrders);
 orderRouter.get('/:id', getOrder);
 orderRouter.post('/create', authenticateLogin, checkSessionId,checkOrderStatus, validate(orderJoiSchema), createOrderDB);
 orderRouter.post('/create-checkout-session', authenticateLogin, createCheckoutSession)
-orderRouter.put('/manage-order/:id', validate(markOrderJoiSchema), formatData, manageOrder);
+orderRouter.put('/manage-order/:id', validate(markOrderJoiSchema), manageOrder);
 orderRouter.delete('/delete/:id', isAdmin, deleteOrder);

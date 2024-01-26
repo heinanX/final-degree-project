@@ -41,13 +41,6 @@ export const orderSchema = new Schema(
   { versionKey: false }
 );
 
-export const markOrderJoiSchema = Joi.object({
-  shipped: Joi.boolean(),
-  returned: Joi.boolean(),
-  payment_status: Joi.string(),
-  order_status: Joi.string()
-});
-
 const subOrderJoiSchema = Joi.object({
   product: Joi.string(),
   quantity: Joi.number(),
@@ -61,6 +54,14 @@ const addressJoiSchema = Joi.object({
     zip_code: Joi.string(),
     city: Joi.string()
   });
+
+export const markOrderJoiSchema = Joi.object({
+  shipped: Joi.boolean(),
+  returned: Joi.boolean(),
+  payment_status: Joi.string(),
+  order_status: Joi.string(),
+  address: addressJoiSchema
+});
 
 
 export const orderJoiSchema = Joi.object({

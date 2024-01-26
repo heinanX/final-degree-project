@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { IoIosCheckbox } from "react-icons/io";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 
@@ -14,9 +13,6 @@ const SingleOrderShipped = ({
   isShipped,
   setIsShipped,
 }: SingleOrderShippedProps) => {
-  useEffect(() => {
-    shipped ? setIsShipped(true) : setIsShipped(false);
-  }, []);
 
   const editCheckbox = () => {
     let checkboxContent;
@@ -45,7 +41,7 @@ const SingleOrderShipped = ({
           />
         );
       } else {
-        checkboxContent = <input type="checkbox" />;
+        checkboxContent = <input type="checkbox" onChange={ ()=> setIsShipped(!shipped)} />;
       }
     }
     return <>{checkboxContent}</>;

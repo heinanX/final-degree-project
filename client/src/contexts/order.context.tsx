@@ -87,6 +87,27 @@ function OrderProvider({ children }: PropsWithChildren) {
     }
   };
 
+  const updateOrderDatabase = async (updateOrderObject: object, id: string) => {
+    try {
+      const res = await fetch(`/api/orders/manage-order/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateOrderObject),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data);
+        setOrder(data);
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("Error fetching product", err.message);
+      }
+    }
+  }
+
   return (
     <OrderContextValues.Provider
       value={{
@@ -96,6 +117,7 @@ function OrderProvider({ children }: PropsWithChildren) {
         setOrder,
         createOrderDatabase,
         getOrdersDatabase,
+        updateOrderDatabase
       }}
     >
       {children}

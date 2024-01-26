@@ -1,6 +1,6 @@
 import AccountSettings from "./AccountSettings/Account.settings";
 import AddProduct from "./products/AddProduct/Add.product";
-import AllOrders from "./orders/All.orders";
+import AllOrders from "./Orders/All.orders";
 import AllProducts from "./products/All.products";
 import DeleteProduct from "./products/Delete.product";
 import MyOrders from "./MyOrders/My.orders";

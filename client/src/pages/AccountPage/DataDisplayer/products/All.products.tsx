@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSocket as productSocket } from "../../../../contexts/product.context";
-import FormSearch from "../sharedComponents/Form.search";
-import ProductOverview from "../productsOverview/ProductOverview";
+import FormSearch from "../_sharedComponents/Form.search";
+import ProductOverview from "../ProductsOverview/ProductOverview";
 
 interface AllProductsProps {
   displayComponent: string

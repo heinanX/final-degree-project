@@ -1,8 +1,8 @@
 import { useState } from "react";
-import AdminDashboard from "./AdminDashboard/Admin.dashboard";
-import AdminListItems from "./AdminListItems/Admin.list.items";
+import AdminDashboard from "./Dashboard/AdminDashboard/Admin.dashboard";
+import AdminListItems from "./Dashboard/AdminListItems/Admin.list.items";
 import DataDisplayer from "./DataDisplayer/DataDisplayer";
-import UserDashboard from "./UserDashboard/UserDashboard";
+import UserDashboard from "./Dashboard/UserDashboard/UserDashboard";
 import "./accountPage.css";
 
 const AccountPage = () => {

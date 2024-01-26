@@ -1,16 +1,18 @@
 import { useState } from "react";
 import formatDate from "../../../../functions/date.formatter";
 import { Order } from "../../../../interfaces/order.interface";
-import { FaSave } from "react-icons/fa";
-import { FaPen } from "react-icons/fa";
 import SingleOrderProducts from "./components/order/Single.order.products";
 import SingleOrderReturned from "./components/order/Single.order.returned";
 import SingleOrderShipped from "./components/order/Single.order.shipped";
 import SingleOrderDiscount from "./components/order/Single.order.discount";
 import SingleOrderAddress from "./components/order/Single.order.address";
 import { useSocket as orderSocket } from "../../../../contexts/order.context";
+import EditForm from "../_sharedComponents/Edit.form";
+
+/* COMPONENT THAT RENDERS OUT A COMPLETE ORDER */
 
 const ViewSingleOrder = () => {
+
   const { viewOrderDetails, setViewOrderDetails, updateOrderDatabase } = orderSocket();
   const [disableForm, setDisableForm] = useState<boolean>(true);
   const [newShipped, setNewShipped] = useState<boolean>((viewOrderDetails as Order).shipped);
@@ -23,6 +25,8 @@ const ViewSingleOrder = () => {
   const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setDisableForm(true);
+
+    // Construct an object with updated order details
     const updateOrderObject: object = {
       shipped: newShipped,
       returned: newReturned,
@@ -33,26 +37,17 @@ const ViewSingleOrder = () => {
         city: newCity,
       },
     };
-      updateOrderDatabase(updateOrderObject, (viewOrderDetails as Order)._id);
+    updateOrderDatabase(updateOrderObject, (viewOrderDetails as Order)._id);
   };
 
   return (
     <div>
-      <div className="flex flex-row w-full justify-end">
-        {disableForm ? (
-          <button className="pb-4" onClick={() => setDisableForm(false)}>
-            <FaPen />
-          </button>
-        ) : (
-          <button
-            className="pb-4 w-30 flex flex-row items-center gap-2 justify-center"
-            onClick={(e) => handleForm(e)}
-          >
-            <p>Save</p>
-            <FaSave />
-          </button>
-        )}
-      </div>
+      {/* EDIT FORM COMPONENT */}
+      <EditForm
+        disableForm={disableForm}
+        setDisableForm={setDisableForm}
+        handleForm={handleForm}
+      />
 
       <form className="w-full text-sm flex flex-col gap-2 pb-6 text-gray-400">
         <div className="flex flex-row items-center gap-2 uppercase">
@@ -157,7 +152,10 @@ const ViewSingleOrder = () => {
       </form>
 
       <div className="flex flex-row w-full justify-end gap-4">
-        <button className="standard-btn" onClick={() => setViewOrderDetails(null)}>
+        <button
+          className="standard-btn"
+          onClick={() => setViewOrderDetails(null)}
+        >
           return
         </button>
       </div>

@@ -1,4 +1,4 @@
-import profilePic from '../../../assets/images/profile-picture.png'
+import profilePic from '../../../../assets/images/profile-picture.png'
 
 const UserDashboard = () => {
   return (

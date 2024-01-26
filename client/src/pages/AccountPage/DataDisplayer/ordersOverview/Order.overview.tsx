@@ -18,18 +18,18 @@ const OrderOverview = ({ orderObject }: OrderOverviewProps) => {
   return (
     <ul className="flex flex-col text-base xl:flex-row justify-between xl:items-center gap-1 mb-2 p-2 w-full md:text-xs">
      
-      {/* 'ORDER ID' */}
+      {/* 'order id' */}
       <li className="w-full xl:w-2/6 pr-2">id: {orderObject._id}</li>
 
-      {/* 'PAYMENT STATUS' */}
+      {/* 'payment status' */}
       <li className="w-full xl:w-1/6 pr-2">
         status: <span className="text-green-500">{orderObject.payment_status}</span>
       </li>
 
-      {/* 'ORDER STATUS' */}
+      {/* 'order status' */}
       <li className="w-full xl:w-1/6 pr-2">order: {orderObject.order_status}</li>
 
-      {/* 'SHIPPED' CHECKBOX DEPENDENT ON STATUS */}
+      {/* 'shipped' checkbox dependent on status */}
       <li className={liWithCheckboxCss}>
         <p>shipped</p>
         {orderObject.shipped ? (
@@ -43,7 +43,7 @@ const OrderOverview = ({ orderObject }: OrderOverviewProps) => {
         )}
       </li>
 
-      {/* 'RETURNED' CHECKBOX DEPENDENT ON STATUS */}
+      {/* 'returned' checkbox dependent on status */}
       <li className={liWithCheckboxCss}>
         <p>returned</p>
         {orderObject.returned ? (
@@ -57,7 +57,7 @@ const OrderOverview = ({ orderObject }: OrderOverviewProps) => {
         )}
       </li>
 
-      {/* UTILIZES 'FORMATDATE' FUNCTION TO DISPLAY DATE AS MM/DD/YY*/}
+      {/* utilizes 'FormatDate' function to display date as MM/DD/YY*/}
       <li className="w-full lg:w-1/6 pr-2">{formatDate(orderObject.date)}</li>
     </ul>
   );

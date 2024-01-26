@@ -11,14 +11,14 @@ interface AllOrdersProps {
 /* COMPONENT THAT RENDERS ALL ORDERS FROM DATABASE */
 
 const AllOrders = ({ displayComponent }: AllOrdersProps) => {
-  // Destructuring functions from orderSocket
+  //Destructuring functions from orderSocket
   const { getOrders, getOrdersDatabase, setViewOrderDetails } = orderSocket();
 
-  // State to manage whether to show orders and loading status
+  //State to manage whether to show orders and loading status
   const [showOrders, setShowOrders] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Fetch orders from database on component mount
+  //Fetch orders from database on component mount
   useEffect(() => {
     const fetchData = async () => {
       await getOrdersDatabase();
@@ -36,18 +36,19 @@ const AllOrders = ({ displayComponent }: AllOrdersProps) => {
       />
 
       {loading ? (
-        <p>Loading...</p> // Loading message while fetching orders
+        <p>Loading...</p> //Loading message while fetching orders
       ) : (
-        // Render orders if not loading
+        //Render orders if not loading
         showOrders &&
-        getOrders.map((item, index) => ( //maps through orders array
+        getOrders.map((orderObject, index) => ( //maps through getOrders array
           <div
             key={index}
             id="all-orders-main-div"
             className="flex flex-row items-center pb-2 odd:bg-teal-900"
-            onClick={() => setViewOrderDetails(item)}
+            onClick={() => setViewOrderDetails(orderObject)}
           >
-            <OrderOverview item={item} />
+            {/* renders component for each orderObject and passes it as a prop */}
+            <OrderOverview orderObject={orderObject} /> 
           </div>
         ))
       )}

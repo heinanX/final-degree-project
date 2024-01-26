@@ -6,7 +6,6 @@ import {
   defaultValues,
 } from "../interfaces/order.interface";
 import { Cart, CartItem} from "../interfaces/cart.interface";
-import { Product } from "../interfaces/product.interface";
 //import { useSocket as cartSocket } from "./cart.context";
 
 export const OrderContextValues = createContext<OrderContext>(defaultValues);
@@ -36,7 +35,7 @@ function OrderProvider({ children }: PropsWithChildren) {
     order_status: "",
     _id: ''
   });
-  const [viewDetails, setViewDetails] = useState<Order | Product | null>(null);
+  const [viewOrderDetails, setViewOrderDetails] = useState<Order | null>(null);
 
   const getOrdersDatabase = async () => {
     try {
@@ -101,7 +100,7 @@ function OrderProvider({ children }: PropsWithChildren) {
       const data = await res.json();
       if (res.ok) {
         console.log(data);
-        setViewDetails(data);
+        setViewOrderDetails(data);
       }
     } catch (err) {
       if (err instanceof Error) {
@@ -120,8 +119,8 @@ function OrderProvider({ children }: PropsWithChildren) {
         createOrderDatabase,
         getOrdersDatabase,
         updateOrderDatabase,
-        viewDetails,
-        setViewDetails
+        viewOrderDetails,
+        setViewOrderDetails
       }}
     >
       {children}

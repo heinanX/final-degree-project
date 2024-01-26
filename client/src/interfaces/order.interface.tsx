@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Cart } from "./cart.interface";
-import { Product } from "./product.interface";
 
 export interface OrderContext {
   getOrders: Order[];
@@ -10,8 +9,8 @@ export interface OrderContext {
   createOrderDatabase: (cart: Cart, sessionId: string) => void;
   getOrdersDatabase: () => void;
   updateOrderDatabase: (updateOrderObject: object, id: string) => void;
-  viewDetails: Product | Order | null
-  setViewDetails: React.Dispatch<React.SetStateAction<Product | Order | null>>
+  viewOrderDetails: Order | null
+  setViewOrderDetails: React.Dispatch<React.SetStateAction<Order | null>>
 }
 
 export interface Order {
@@ -64,6 +63,6 @@ export const defaultValues = {
   createOrderDatabase: (cart: Cart, sessionId: string) => {},
   getOrdersDatabase: () => {},
   updateOrderDatabase: (updateOrderObject: object, id: string) => {},
-  viewDetails: null,
-  setViewDetails: () => {}
+  viewOrderDetails: null,
+  setViewOrderDetails: () => {}
 };

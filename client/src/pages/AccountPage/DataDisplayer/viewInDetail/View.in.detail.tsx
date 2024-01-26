@@ -4,12 +4,12 @@ import { useSocket as orderSocket } from '../../../../contexts/order.context';
 
 
 const ViewInDetail= () => {
-  const { viewDetails } = orderSocket();
-    console.log(viewDetails);
+  const { viewOrderDetails } = orderSocket();
+    console.log(viewOrderDetails);
     
   return (
     <div>
-        {viewDetails ? <ViewSingleOrder /> : <ViewSingleProduct /> }
+        {viewOrderDetails ? <ViewSingleOrder /> : <ViewSingleProduct /> }
     </div>
   )
 }

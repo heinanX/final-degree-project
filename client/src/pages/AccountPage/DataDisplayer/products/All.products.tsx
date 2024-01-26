@@ -2,16 +2,12 @@ import { useState } from "react";
 import { useSocket as productSocket } from "../../../../contexts/product.context";
 import capitalizeLetters from "../../../../functions/capitalizeLetters";
 import FormSearch from "../sharedComponents/Form.search";
-import { Product } from "../../../../interfaces/product.interface";
-import { Order } from "../../../../interfaces/order.interface";
 
 interface AllProductsProps {
   displayComponent: string
-  viewDetails: Product | Order | null
-  setViewDetails: React.Dispatch<React.SetStateAction<Product | Order | null>>
 }
 
-const AllProducts = ({displayComponent/* , viewDetails, setViewDetails */}: AllProductsProps) => {
+const AllProducts = ({displayComponent}: AllProductsProps) => {
   const { products } = productSocket();
 
   const [showProducts, setShowProducts ] = useState<boolean>(true);

@@ -1,10 +1,9 @@
-import AccountSettings from "./ListItems/Account.settings";
-import AddProduct from "./ListItems/AddProduct/Add.product";
-import AllOrders from "./ListItems/AllOrders/All.orders";
-import AllProducts from "./ListItems/All.products";
-import DeleteProduct from "./ListItems/Delete.product";
-import MyOrders from "./ListItems/My.orders";
-import UpdateProduct from "./ListItems/Update.product";
+import AccountSettings from "./AccountSettings/Account.settings";
+import AddProduct from "./products/AddProduct/Add.product";
+import AllOrders from "./orders/All.orders";
+import AllProducts from "./products/All.products";
+import DeleteProduct from "./products/Delete.product";
+import MyOrders from "./MyOrders/My.orders";
 import { useSocket as orderSocket } from "../../../contexts/order.context";
 import ViewInDetail from "./viewInDetail/View.in.detail";
 
@@ -13,11 +12,11 @@ interface dataDisplayerProps {
 }
 
 const DataDisplayer = ({ displayComponent }: dataDisplayerProps) => {
-  const { viewDetails, setViewDetails } = orderSocket();
+  const { viewOrderDetails } = orderSocket();
 
   return (
     <div className="right w-full sm:w-2/3 p-5">
-      {viewDetails ? (
+      {viewOrderDetails ? (
         <ViewInDetail />
       ) : (
         <>
@@ -35,23 +34,14 @@ const DataDisplayer = ({ displayComponent }: dataDisplayerProps) => {
               <></>
             )}
             {displayComponent === "products" ? (
-              <AllProducts
-                displayComponent={displayComponent}
-                viewDetails={viewDetails}
-                setViewDetails={setViewDetails}
-              />
+              <AllProducts displayComponent={displayComponent} />
             ) : (
               <></>
             )}
             {displayComponent === "add product" ? <AddProduct /> : <></>}
-            {displayComponent === "update product" ? <UpdateProduct /> : <></>}
             {displayComponent === "delete product" ? <DeleteProduct /> : <></>}
             {displayComponent === "orders" ? (
-              <AllOrders
-                displayComponent={displayComponent}
-                viewDetails={viewDetails}
-                setViewDetails={setViewDetails}
-              />
+              <AllOrders displayComponent={displayComponent} />
             ) : (
               <></>
             )}

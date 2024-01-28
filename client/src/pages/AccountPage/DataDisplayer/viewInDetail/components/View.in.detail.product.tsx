@@ -17,49 +17,23 @@ const ViewInDetailProduct = ({
   disableForm,
   setDisableForm,
 }: ViewInDetailProductProps) => {
-  const { viewProductDetails } = productSocket();
+  const { viewProductDetails, updateProduct, newUpdatedProduct, setNewUpdatedProduct } = productSocket();
 
-  const [newVhsAvailable, setNewVhsAvailable] = useState<boolean>(
-    (viewProductDetails as Product).vhs.available
-  );
-  const [newDigitalAvailable, setNewDigitalAvailable] = useState<boolean>(
-    (viewProductDetails as Product).digital.available
-  );
-  const [newUpdatedProduct, setNewUpdatedProduct] = useState<object>({
-    title: (viewProductDetails as Product).title,
-    description: (viewProductDetails as Product).description,
-    category: (viewProductDetails as Product).category,
-    tags: (viewProductDetails as Product).tags,
-    content_rating: (viewProductDetails as Product).content_rating,
-    rating: (viewProductDetails as Product).rating,
-    year: (viewProductDetails as Product).year,
-    image: (viewProductDetails as Product).image,
-    vhs: {
-      price: (viewProductDetails as Product).vhs.price,
-      available: newVhsAvailable,
-      quantity: (viewProductDetails as Product).vhs.quantity,
-      inStock: (viewProductDetails as Product).vhs.inStock,
-      stripe_price_id: (viewProductDetails as Product).vhs.stripe_price_id,
-      stripe_prod_id: (viewProductDetails as Product).vhs.stripe_prod_id
-    },
-    digital: {
-      price: (viewProductDetails as Product).digital.price,
-      available: newDigitalAvailable,
-      stripe_price_id: (viewProductDetails as Product).digital.stripe_price_id,
-      stripe_prod_id: (viewProductDetails as Product).digital.stripe_prod_id
-    }
+  const [newVhs, setNewVhs] = useState<Partial<Product['vhs']>>({
+    price: (viewProductDetails as Product).vhs.price,
+    available: (viewProductDetails as Product).vhs.available,
+    quantity: (viewProductDetails as Product).vhs.quantity,
+    inStock: (viewProductDetails as Product).vhs.inStock,
+    stripe_price_id: (viewProductDetails as Product).vhs.stripe_price_id,
+    stripe_prod_id: (viewProductDetails as Product).vhs.stripe_prod_id,
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const updateProduct = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    property: string
-  ) => {
-    setNewUpdatedProduct((prevState) => ({
-      ...prevState,
-      [property]: e.target.value,
-    }));
-  };
+  const [newDigital, setNewDigital] = useState<Partial<Product['digital']>>({
+    price: (viewProductDetails as Product).vhs.price,
+    available: (viewProductDetails as Product).vhs.available,
+    stripe_price_id: (viewProductDetails as Product).vhs.stripe_price_id,
+    stripe_prod_id: (viewProductDetails as Product).vhs.stripe_prod_id,
+  });
 
   const handleProductForm = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -71,10 +45,13 @@ const ViewInDetailProduct = ({
     //updateOrderDatabase(updateProductObject, (viewProductDetails as Product)._id);
   };
 
-
   useEffect(() => {
     console.log(newUpdatedProduct);
   }, [newUpdatedProduct]);
+
+  useEffect(() => {
+    setNewUpdatedProduct((prev) => ({...prev, vhs: newVhs, digital: newDigital}))
+  }, [newVhs, newDigital]);
 
   return (
     <>
@@ -105,22 +82,21 @@ const ViewInDetailProduct = ({
               type="text"
               disabled={disableForm}
               defaultValue={(viewProductDetails as Product).title}
-              onChange={(e) => updateProduct(e, "title")}
+              onChange={(e) => updateProduct(e, 'title')}
               className="w-full standard-form-darkmode"
             />
           </div>
 
           <ProductVhs
             disableForm={disableForm}
-            newVhsAvailable={newVhsAvailable}
-            setNewVhsAvailable={setNewVhsAvailable}
-            
+            newVhs={newVhs}
+            setNewVhs={setNewVhs}
           />
 
           <ProductDigital
             disableForm={disableForm}
-            newDigitalAvailable={newDigitalAvailable}
-            setNewDigitalAvailable={setNewDigitalAvailable}
+            newDigital={newDigital}
+            setNewDigital={setNewDigital}
           />
 
           <div className="flex flex-col gap-2 uppercase">
@@ -128,6 +104,7 @@ const ViewInDetailProduct = ({
             <textarea
               rows={8}
               disabled={disableForm}
+              onChange={(e) => updateProduct(e, 'description')}
               defaultValue={(viewProductDetails as Product).description}
               className="w-full text-gray-400 pr-2 standard-form-darkmode secondary-scrollbar resize-none"
             />
@@ -145,6 +122,7 @@ const ViewInDetailProduct = ({
             <input
               type="text"
               disabled={disableForm}
+              onChange={(e) => updateProduct(e, 'content_rating')}
               defaultValue={(viewProductDetails as Product).content_rating}
               className="w-full standard-form-darkmode"
             />
@@ -155,6 +133,7 @@ const ViewInDetailProduct = ({
             <input
               type="text"
               disabled={disableForm}
+              onChange={(e) => updateProduct(e, 'year')}
               defaultValue={(viewProductDetails as Product).year}
               className="w-full text-left standard-form-darkmode"
             />
@@ -165,6 +144,7 @@ const ViewInDetailProduct = ({
             <input
               type="text"
               disabled={disableForm}
+              onChange={(e) => updateProduct(e, 'image')}
               defaultValue={(viewProductDetails as Product).image}
               className="w-full text-left standard-form-darkmode"
             />

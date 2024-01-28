@@ -1,20 +1,18 @@
 import { useSocket as productSocket } from "../../../../../../contexts/product.context";
-import { Product } from "../../../../../../interfaces/product.interface";
+import { Product, iProductVhs } from "../../../../../../interfaces/product.interface";
 import ProductVhsAvailable from "./Product.vhs.available";
 
 interface ProductVhsProps {
   disableForm: boolean;
-  newVhsAvailable: boolean;
-  setNewVhsAvailable: React.Dispatch<React.SetStateAction<boolean>>
+  newVhs: Partial<iProductVhs>;
+  setNewVhs: React.Dispatch<React.SetStateAction<Partial<iProductVhs>>>
 }
 
 /* COMPONENT THAT RENDERS DETAILS ABOUT VHS VERSION OF A MOVIE 
 - ie. price, quantity, current stock, ids, and availability*/
 
-const ProductVhs = ({ disableForm, newVhsAvailable, setNewVhsAvailable }: ProductVhsProps) => {
+const ProductVhs = ({ disableForm, newVhs, setNewVhs }: ProductVhsProps) => {
   const { viewProductDetails } = productSocket();
-
-
 
   return (
     <div>
@@ -39,8 +37,8 @@ const ProductVhs = ({ disableForm, newVhsAvailable, setNewVhsAvailable }: Produc
         <ProductVhsAvailable
           available={(viewProductDetails as Product).vhs.available}
           disableForm={disableForm}
-          newVhsAvailable={newVhsAvailable}
-          setNewVhsAvailable={setNewVhsAvailable}
+          newVhs={newVhs}
+          setNewVhs={setNewVhs}
         />
 
         {/* stock */}
@@ -48,7 +46,7 @@ const ProductVhs = ({ disableForm, newVhsAvailable, setNewVhsAvailable }: Produc
           <label className="w-40">stock</label>
           <input
             type="text"
-            disabled={true}
+            disabled={disableForm}
             defaultValue={(viewProductDetails as Product).vhs.quantity}
             className="w-full text-right standard-form-darkmode"
           />
@@ -59,7 +57,7 @@ const ProductVhs = ({ disableForm, newVhsAvailable, setNewVhsAvailable }: Produc
           <label className="w-40">In stock</label>
           <input
             type="text"
-            disabled={true}
+            disabled={disableForm}
             defaultValue={(viewProductDetails as Product).vhs.inStock}
             className="w-full text-right standard-form-darkmode"
           />
@@ -70,7 +68,7 @@ const ProductVhs = ({ disableForm, newVhsAvailable, setNewVhsAvailable }: Produc
           <label className="w-40">stripe id</label>
           <input
             type="text"
-            disabled={true}
+            disabled={disableForm}
             defaultValue={(viewProductDetails as Product).vhs.stripe_price_id}
             className="w-full text-right standard-form-darkmode"
           />

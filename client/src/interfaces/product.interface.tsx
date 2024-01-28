@@ -6,6 +6,9 @@ export interface ProductContext {
   getMovie: Product | null;
   viewProductDetails: Product | null;
   setViewProductDetails: React.Dispatch<React.SetStateAction<Product | null>>
+  newUpdatedProduct: object | null,
+  setNewUpdatedProduct: React.Dispatch<React.SetStateAction<object | null>>,
+  updateProduct: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>, property: string) => void
 }
 
 export const defaultValues = {
@@ -15,8 +18,27 @@ export const defaultValues = {
   getProduct: () => {},
   getMovie: null,
   viewProductDetails: null,
-  setViewProductDetails: () => {}
+  setViewProductDetails: () => {},
+  newUpdatedProduct: null,
+  setNewUpdatedProduct: () => {},
+  updateProduct:  () => {},
 };
+
+export interface iProductVhs {
+  price: number;
+  available: boolean;
+  quantity: number;
+  inStock: number;
+  stripe_price_id: string;
+  stripe_prod_id: string;
+}
+
+export interface iProductDigital {
+  price: number;
+  available: boolean;
+  stripe_price_id: string;
+  stripe_prod_id: string;
+}
 
 export interface Product {
   _id: string;
@@ -28,20 +50,8 @@ export interface Product {
   rating: number;
   year: number;
   image: string;
-  vhs: {
-    price: number;
-    available: boolean;
-    quantity: number;
-    inStock: number;
-    stripe_price_id: string;
-    stripe_prod_id: string;
-  };
-  digital: {
-    price: number;
-    available: boolean;
-    stripe_price_id: string;
-    stripe_prod_id: string;
-  };
+  vhs: iProductVhs;
+  digital: iProductDigital;
 }
 
 export interface ProductSegment {
@@ -61,5 +71,3 @@ export interface ProductSegment {
     price: number;
   };
 }
-
-

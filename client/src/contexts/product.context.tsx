@@ -6,11 +6,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Product, ProductContext, defaultValues } from "../interfaces/product.interface";
+import {
+  Product,
+  ProductContext,
+  defaultValues,
+} from "../interfaces/product.interface";
 import { CategoryTwo } from "../interfaces/category.interface";
 import { Tags } from "../interfaces/tags.interface";
-
-
 
 export const ProductContextValues =
   createContext<ProductContext>(defaultValues);
@@ -22,7 +24,9 @@ export const useSocket = () => useContext(ProductContextValues);
 function ProductProvider({ children }: PropsWithChildren) {
   const [products, setProducts] = useState<Product[]>([]);
   const [getMovie, setgetMovie] = useState<Product | null>(null);
-  const [viewProductDetails, setViewProductDetails] = useState<Product | null>(null);
+  const [viewProductDetails, setViewProductDetails] = useState<Product | null>(
+    null
+  );
   // const {getCategory } = categorySocket();
 
   const getProducts = async () => {
@@ -83,6 +87,29 @@ function ProductProvider({ children }: PropsWithChildren) {
     }
   };
 
+  //STATES TO STORE UPDATED INFO WHEN IN EDIT MODE
+
+  const [newUpdatedProduct, setNewUpdatedProduct] = useState<object | null>(
+    null
+  );
+
+  const updateProduct = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | object,
+    property: string
+  ) => {
+    const targetValue =
+      property === "description"
+        ? (e as React.ChangeEvent<HTMLTextAreaElement>).target.value
+        : (e as React.ChangeEvent<HTMLInputElement>).target.value;
+    setNewUpdatedProduct((prevState) => ({
+      ...prevState,
+      [property]: targetValue,
+    }));
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -96,7 +123,10 @@ function ProductProvider({ children }: PropsWithChildren) {
         getProduct,
         getMovie,
         viewProductDetails,
-        setViewProductDetails
+        setViewProductDetails,
+        newUpdatedProduct,
+        setNewUpdatedProduct,
+        updateProduct,
       }}
     >
       {children}

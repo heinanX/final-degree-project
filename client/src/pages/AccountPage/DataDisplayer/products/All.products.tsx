@@ -10,7 +10,7 @@ interface AllProductsProps {
 /* COMPONENT THAT RENDERS ALL PRODUCTS FROM DATABASE */
 
 const AllProducts = ({ displayComponent }: AllProductsProps) => {
-  const { products, setViewProductDetails } = productSocket(); //Destructures functions from productSocket
+  const { products, setViewProductDetails, setNewUpdatedProduct } = productSocket(); //Destructures functions from productSocket
 
   const [showProducts, setShowProducts] = useState<boolean>(true); //state to manage whether to show products or not
 
@@ -27,7 +27,8 @@ const AllProducts = ({ displayComponent }: AllProductsProps) => {
         products.map((productItem, index) => (
           <div
             key={index}
-            onClick={() => setViewProductDetails(productItem)}
+            onClick={() => {setViewProductDetails(productItem)
+            setNewUpdatedProduct(productItem)}}
             className="flex flex-row items-center pb-2 odd:bg-teal-900"
           >
             {/* renders component for each productItem and passes it as a prop */}

@@ -1,42 +1,60 @@
 import { IoIosCheckbox } from "react-icons/io";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
+import { iProductDigital } from "../../../../../../interfaces/product.interface";
 
 interface ProductDigitalAvailableProps {
-    available: boolean;
-    disableForm: boolean;
-    newDigitalAvailable: boolean;
-    setNewDigitalAvailable: React.Dispatch<React.SetStateAction<boolean>>;
-  }
+  available: boolean;
+  disableForm: boolean;
+  newDigital: Partial<iProductDigital>;
+  setNewDigital: React.Dispatch<React.SetStateAction<Partial<iProductDigital>>>;
+}
+
+/* A COMPONENT THAT RENDERS DIFFERENT AVAILIBILITY CHECKBOXES FOR DIGITAL
+   DEPENDENT ON EDIT MODE OR NOT. IT ALSO UPDATES ITS DATA. */
 
 const ProductDigitalAvailable = ({
-    available,
-    disableForm,
-    newDigitalAvailable,
-    setNewDigitalAvailable,
-  }: ProductDigitalAvailableProps) => {
-  /* FUNCTION THAT SETS CONTENT OF CHECKBOX [AVAILABLE] BASED ON CURRENT STATE */
+  available,
+  disableForm,
+  newDigital,
+  setNewDigital,
+}: ProductDigitalAvailableProps) => {
+  const setAvailability = () => {
+    setNewDigital((prevDigital) => ({
+      ...prevDigital,
+      available: !prevDigital.available,
+    }));
+  };
+
+  /* function that sets content of checkbox [available] based on current state */
   const editCheckbox = () => {
     let checkboxContent; //initiates a variable
 
-    if (disableForm) { // if form is not in edit mode display styled icons
-      
-      if (available) { //if available is true display ticked box
+    if (disableForm) {
+      // if form is not in edit mode display styled icons
+
+      if (available) {
+        //if available is true display ticked box
         checkboxContent = (
           <span className="text-base text-yellow-400">
             <IoIosCheckbox />
           </span>
         );
-      } else { //else display empty box
+      } else {
+        //else display empty box
         checkboxContent = (
           <span className="text-base text-yellow-400">
             <MdOutlineCheckBoxOutlineBlank />
           </span>
         );
       }
-
     } else {
-        checkboxContent = <input type="checkbox" checked={newDigitalAvailable} onChange={ ()=> setNewDigitalAvailable(!newDigitalAvailable)} />;
-      
+      checkboxContent = (
+        <input
+          type="checkbox"
+          checked={newDigital.available}
+          onChange={setAvailability}
+        />
+      );
     }
     return <>{checkboxContent}</>; //returns component
   };
@@ -49,4 +67,4 @@ const ProductDigitalAvailable = ({
   );
 };
 
-export default ProductDigitalAvailable
+export default ProductDigitalAvailable;

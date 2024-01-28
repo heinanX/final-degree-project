@@ -1,21 +1,32 @@
+import { useEffect } from "react";
 import { useSocket as productSocket } from "../../../../../../contexts/product.context";
-import { Product } from "../../../../../../interfaces/product.interface";
+import { Product, iProductDigital } from "../../../../../../interfaces/product.interface";
 import ProductDigitalAvailable from "./Product.Digital.available";
 
 interface ProductDigitalProps {
   disableForm: boolean;
-  newDigitalAvailable: boolean
-  setNewDigitalAvailable: React.Dispatch<React.SetStateAction<boolean>>;
+  newDigital: Partial<iProductDigital>;
+  setNewDigital: React.Dispatch<React.SetStateAction<Partial<iProductDigital>>>
 }
 
 /* COMPONENT THAT RENDERS DETAILS ABOUT DIGITAL VERSION OF A MOVIE 
 - ie. price, ids, and availability*/
 
-const ProductDigital = ({ disableForm, newDigitalAvailable, setNewDigitalAvailable }: ProductDigitalProps) => {
+const ProductDigital = ({ disableForm, newDigital,setNewDigital }: ProductDigitalProps) => {
   const { viewProductDetails } = productSocket(); //destructs state from product context
 
   //states to hold updated values if they're edited.
+    const updateDigitalProduct = (e: React.ChangeEvent<HTMLInputElement>, property: string) => {
+      setNewDigital((prevState) => ({
+        ...prevState,
+        [property]: e.target.value,
+      }));
+    }
 
+    useEffect(() => {
+      console.log(newDigital);
+      
+    },[newDigital])
 
   return (
     <div>
@@ -29,7 +40,8 @@ const ProductDigital = ({ disableForm, newDigitalAvailable, setNewDigitalAvailab
             <input
               type="text"
               disabled={disableForm}
-              defaultValue={(viewProductDetails as Product).digital.price}
+              onChange={(e) => updateDigitalProduct(e, 'price')}
+              defaultValue={(viewProductDetails as Product).vhs.price}
               className="w-32 text-right standard-form-darkmode"
             />
             <p className="w-12 text-right">.00 sek</p>
@@ -40,8 +52,8 @@ const ProductDigital = ({ disableForm, newDigitalAvailable, setNewDigitalAvailab
         <ProductDigitalAvailable
           available={(viewProductDetails as Product).digital.available}
           disableForm={disableForm}
-          newDigitalAvailable={newDigitalAvailable}
-          setNewDigitalAvailable={setNewDigitalAvailable}
+          newDigital={newDigital}
+          setNewDigital={setNewDigital}
         />
 
         {/* stripe price id */}
@@ -63,6 +75,7 @@ const ProductDigital = ({ disableForm, newDigitalAvailable, setNewDigitalAvailab
           <input
             type="text"
             disabled={true}
+
             defaultValue={
               (viewProductDetails as Product).digital.stripe_prod_id
             }

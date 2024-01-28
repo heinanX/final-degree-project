@@ -12,7 +12,7 @@ import { checkSessionId } from '../_middlewares/stripe/checkSessionId';
 export const orderRouter = Router();
 
 orderRouter.get('/', isAdmin, getOrders);
-orderRouter.get('/user-orders/:id', authorization, getOrders);
+orderRouter.get('/user-orders', authorization, getOrders);
 orderRouter.get('/:id', getOrder);
 orderRouter.post('/create', authenticateLogin, checkSessionId,checkOrderStatus, validate(orderJoiSchema), createOrderDB);
 orderRouter.post('/create-checkout-session', authenticateLogin, createCheckoutSession)

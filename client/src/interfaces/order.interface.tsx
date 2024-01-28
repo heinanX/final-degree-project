@@ -4,6 +4,8 @@ import { Cart } from "./cart.interface";
 export interface OrderContext {
   getOrders: Order[];
   setGetOrders: React.Dispatch<React.SetStateAction<Order[]>>;
+  userOrders: Order[];
+  setUserOrders: React.Dispatch<React.SetStateAction<Order[]>>;
   order: Order;
   setOrder: React.Dispatch<React.SetStateAction<Order>>;
   createOrderDatabase: (cart: Cart, sessionId: string) => void;
@@ -11,6 +13,7 @@ export interface OrderContext {
   updateOrderDatabase: (updateOrderObject: object, id: string) => void;
   viewOrderDetails: Order | null
   setViewOrderDetails: React.Dispatch<React.SetStateAction<Order | null>>
+  getUserOrdersDatabase: () => void
 }
 
 export interface Order {
@@ -31,6 +34,9 @@ export interface OrderItem {
   product: string;
   quantity: number;
 }
+export interface OrderItemWithId extends OrderItem {
+  _id: string
+}
 
 export interface OrderAddress {
   cust_name: string,
@@ -41,6 +47,8 @@ export interface OrderAddress {
 export const defaultValues = {
   getOrders: [],
   setGetOrders: () => {},
+  userOrders: [],
+  setUserOrders: () => {},
   order: {
     customer: "",
     address: {
@@ -64,5 +72,6 @@ export const defaultValues = {
   getOrdersDatabase: () => {},
   updateOrderDatabase: (updateOrderObject: object, id: string) => {},
   viewOrderDetails: null,
-  setViewOrderDetails: () => {}
+  setViewOrderDetails: () => {},
+  getUserOrdersDatabase: () => {}
 };

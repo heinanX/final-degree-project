@@ -1,127 +1,117 @@
-// import formatDate from "../../../../functions/date.formatter";
-// import { Order } from "../../../../interfaces/order.interface";
-// import { useSocket as orderSocket } from "../../../../contexts/order.context";
-// import ViewInDetailCancelBtn from "../_sharedComponents/View.in.detail.cancelBtn";
+import { useSocket as orderSocket } from "../../../../contexts/order.context";
+import formatDate from "../../../../functions/date.formatter";
+import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
+import { IoIosCheckbox } from "react-icons/io";
+import { useEffect } from "react";
 
+/* COMPONENT THAT RENDERS OUT A COMPLETE ORDER */
 
+const MyOrders = () => {
+  const { getUserOrdersDatabase, userOrders } = orderSocket();
+  // const [disableForm, setDisableForm] = useState<boolean>(true);
 
-// /* COMPONENT THAT RENDERS OUT A COMPLETE ORDER */
+  useEffect(() => {
+    getUserOrdersDatabase();
+  }, []);
 
-// const MyOrders = () => {
+  return (
+    <div
+      id="myOrders"
+      className="w-full px-4 py-2 overflow-y-auto primary-scrollbar "
+    >
+      {userOrders.length === 0 ? ( // display loader if array is empty
+        <p>Loading...</p>
+      ) : (
+        // Map through orders if userOrders is not empty
+        userOrders.map((orders, index) => (
+          <form
+            key={index}
+            className="w-full text-sm flex flex-col gap-2 py-6 px-2 text-gray-400 odd:bg-teal-950"
+          >
+            <div className="flex flex-row items-center gap-2 uppercase w-full">
+              <label className="w-1/3">order id</label>
+              <input
+                type="text"
+                disabled={true}
+                defaultValue={orders._id}
+                className="w-2/3 standard-form-darkmode"
+              />
+            </div>
 
-//   const { viewOrderDetails } = orderSocket();
-//   // const [disableForm, setDisableForm] = useState<boolean>(true);
+            <div className="flex flex-row items-center gap-2 uppercase">
+              <label className="w-1/3">total_price</label>
+              <input
+                type="text"
+                disabled={true}
+                defaultValue={orders.total_price + " SEK"}
+                className="w-2/3 standard-form-darkmode"
+              />
+            </div>
 
+            {orders.discount > 0 ? (
+              <div className="flex flex-row items-center gap-2 uppercase">
+                <label className="w-1/3">discount</label>
+                <input
+                  type="text"
+                  disabled={true}
+                  defaultValue={orders.discount}
+                  className="w-2/3 standard-form-darkmode"
+                />
+              </div>
+            ) : (
+              <></>
+            )}
 
-//   return (
-//     <div>
+            <div className="flex flex-row items-center gap-2 uppercase">
+              <label className="w-1/3">payment status</label>
+              <input
+                type="text"
+                disabled={true}
+                defaultValue={orders.payment_status}
+                className="w-2/3 standard-form-darkmode"
+              />
+            </div>
 
-//       <form className="w-full text-sm flex flex-col gap-2 pb-6 text-gray-400">
-//         <div className="flex flex-row items-center gap-2 uppercase">
-//           <label className="w-20">id</label>
-//           <input
-//             type="text"
-//             disabled={true}
-//             defaultValue={(viewOrderDetails as Order)._id}
-//             className="w-full standard-form-darkmode"
-//           />
-//         </div>
+            <div className="flex flex-row items-center gap-2 uppercase">
+              <label className="w-1/3">date</label>
+              <input
+                type="text"
+                disabled={true}
+                defaultValue={formatDate(orders.date)}
+                className="w-2/3 standard-form-darkmode"
+              />
+            </div>
 
-//         <div className="flex flex-row items-center gap-2 uppercase">
-//           <label className="w-20">date</label>
-//           <input
-//             type="text"
-//             disabled={true}
-//             defaultValue={formatDate((viewOrderDetails as Order).date)}
-//             className="w-full standard-form-darkmode"
-//           />
-//         </div>
+            <div className="flex flex-row items-center justify-between gap-2 uppercase">
+              <label className="w-1/3">returned</label>
+              {orders.returned ? (
+                <span className="text-base text-yellow-400">
+                  <IoIosCheckbox />
+                </span>
+              ) : (
+                <span className="text-base text-yellow-400">
+                  <MdOutlineCheckBoxOutlineBlank />
+                </span>
+              )}
+            </div>
 
-//         <div className="flex flex-row items-center gap-2 uppercase">
-//           <label className="w-20">cust. id</label>
-//           <input
-//             type="text"
-//             disabled={true}
-//             defaultValue={(viewOrderDetails as Order).customer}
-//             className="w-full text-gray-400 standard-form-darkmode"
-//           />
-//         </div>
+            <div className="flex flex-row items-center justify-between gap-2 uppercase">
+              <label className="w-1/3">shipped</label>
+              {orders.shipped ? (
+                <span className="text-base text-yellow-400">
+                  <IoIosCheckbox />
+                </span>
+              ) : (
+                <span className="text-base text-yellow-400">
+                  <MdOutlineCheckBoxOutlineBlank />
+                </span>
+              )}
+            </div>
+          </form>
+        ))
+      )}
+    </div>
+  );
+};
 
-//         <div className="flex flex-row items-center gap-2 uppercase">
-//           <label className="w-20">name</label>
-//           <input
-//             type="text"
-//             disabled={disableForm}
-//             onChange={(e) => setCustName(e.target.value)}
-//             defaultValue={(viewOrderDetails as Order).address.cust_name}
-//             className="w-full text-gray-400 standard-form-darkmode"
-//           />
-//         </div>
-
-//         <SingleOrderAddress
-//           address={(viewOrderDetails as Order).address}
-//           setNewStreet={setNewStreet}
-//           setNewZipCode={setNewZipCode}
-//           setNewCity={setNewCity}
-//           disableForm={disableForm}
-//         />
-
-//         <SingleOrderProducts singleOrder={(viewOrderDetails as Order).order} />
-
-//         <SingleOrderDiscount discount={(viewOrderDetails as Order).discount} />
-
-//         <div className="flex flex-row items-center justify-between gap-2 uppercase">
-//           <label>Order Total</label>
-//           <div className="flex flex-row justify-end items-center gap-1">
-//             <input
-//               type="text"
-//               disabled={true}
-//               defaultValue={(viewOrderDetails as Order).total_price}
-//               className="w-32 text-right standard-form-darkmode"
-//             />
-//             <p className="w-12 text-right">.00 sek</p>
-//           </div>
-//         </div>
-
-//         <SingleOrderShipped
-//           shipped={(viewOrderDetails as Order).shipped}
-//           disableForm={disableForm}
-//           newShipped={newShipped}
-//           setNewShipped={setNewShipped}
-//         />
-
-//         <SingleOrderReturned
-//           returned={(viewOrderDetails as Order).returned}
-//           disableForm={disableForm}
-//           newReturned={newReturned}
-//           setNewReturned={setNewReturned}
-//         />
-
-//         <div className="flex flex-row items-center gap-2 uppercase">
-//           <label className="w-40">Payment Status</label>
-//           <input
-//             type="text"
-//             disabled={true}
-//             defaultValue={(viewOrderDetails as Order).payment_status}
-//             className="w-full standard-form-darkmode"
-//           />
-//         </div>
-
-//         <div className="flex flex-row items-center gap-2 uppercase">
-//           <label className="w-40">Order Status</label>
-//           <input
-//             type="text"
-//             disabled={true}
-//             defaultValue={(viewOrderDetails as Order).order_status}
-//             className="w-full text-left standard-form-darkmode"
-//           />
-//         </div>
-//       </form>
-
-//       <ViewInDetailCancelBtn />
-      
-//     </div>
-//   );
-// };
-
-// export default MyOrders;
+export default MyOrders;

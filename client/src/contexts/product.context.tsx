@@ -87,8 +87,7 @@ function ProductProvider({ children }: PropsWithChildren) {
     }
   };
 
-  //STATES TO STORE UPDATED INFO WHEN IN EDIT MODE
-
+  //STATE TO STORE UPDATED INFO WHEN IN EDIT MODE
   const [newUpdatedProduct, setNewUpdatedProduct] = useState<object | null>(
     null
   );
@@ -110,6 +109,28 @@ function ProductProvider({ children }: PropsWithChildren) {
     }));
   };
 
+  const updateProductDatabase = async (updateProductObject: object, id: string) => {
+    try {
+      const res = await fetch(`/api/products/edit-product/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateProductObject),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        console.log('this is from the response', data);
+        setViewProductDetails(data);
+        getProducts();
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("Error fetching product", err.message);
+      }
+    }
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -127,6 +148,7 @@ function ProductProvider({ children }: PropsWithChildren) {
         newUpdatedProduct,
         setNewUpdatedProduct,
         updateProduct,
+        updateProductDatabase
       }}
     >
       {children}

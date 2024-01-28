@@ -9,6 +9,7 @@ export interface ProductContext {
   newUpdatedProduct: object | null,
   setNewUpdatedProduct: React.Dispatch<React.SetStateAction<object | null>>,
   updateProduct: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>, property: string) => void
+  updateProductDatabase: (updateProductObject: object, id: string) => void;
 }
 
 export const defaultValues = {
@@ -22,6 +23,7 @@ export const defaultValues = {
   newUpdatedProduct: null,
   setNewUpdatedProduct: () => {},
   updateProduct:  () => {},
+  updateProductDatabase: () => {}
 };
 
 export interface iProductVhs {

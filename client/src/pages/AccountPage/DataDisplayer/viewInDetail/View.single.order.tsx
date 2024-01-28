@@ -8,7 +8,8 @@ import SingleOrderDiscount from "./components/order/Single.order.discount";
 import SingleOrderAddress from "./components/order/Single.order.address";
 import { useSocket as orderSocket } from "../../../../contexts/order.context";
 import EditForm from "../_sharedComponents/Edit.form";
-import ViewInDetailCancelBtn from "../_sharedComponents/view.in.detail.cancelBtn";
+import ViewInDetailCancelBtn from "../_sharedComponents/View.in.detail.cancelBtn";
+
 
 interface ViewSingleOrderProps {
   disableForm: boolean;

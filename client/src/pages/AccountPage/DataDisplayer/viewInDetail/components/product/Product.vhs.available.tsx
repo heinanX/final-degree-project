@@ -1,6 +1,7 @@
 import { IoIosCheckbox } from "react-icons/io";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import { iProductVhs } from "../../../../../../interfaces/product.interface";
+import { useSocket as productSocket } from "../../../../../../contexts/product.context";
 
 interface ProductVhsAvailableProps {
   available: boolean;
@@ -18,11 +19,15 @@ const ProductVhsAvailable = ({
   newVhs,
   setNewVhs,
 }: ProductVhsAvailableProps) => {
+
+  const { setNewUpdatedProduct } = productSocket();
+
   const setAvailability = () => {
     setNewVhs((prevVhs) => ({
       ...prevVhs,
       available: !prevVhs.available,
     }));
+    setNewUpdatedProduct((prev) => ({...prev, vhs: newVhs}))
   };
 
   /* function that sets content of checkbox [available] based on current state */

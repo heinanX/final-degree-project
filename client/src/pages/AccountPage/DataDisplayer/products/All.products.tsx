@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { useSocket as productSocket } from "../../../../contexts/product.context";
 import FormSearch from "../_sharedComponents/Form.search";
@@ -28,7 +29,8 @@ const AllProducts = ({ displayComponent }: AllProductsProps) => {
           <div
             key={index}
             onClick={() => {setViewProductDetails(productItem)
-            setNewUpdatedProduct(productItem)}}
+              const { _id, vhs, digital, ...productWithoutId } = productItem;
+            setNewUpdatedProduct(productWithoutId)}}
             className="flex flex-row items-center pb-2 odd:bg-teal-900"
           >
             {/* renders component for each productItem and passes it as a prop */}

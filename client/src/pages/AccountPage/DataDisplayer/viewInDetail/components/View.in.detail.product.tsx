@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSocket as productSocket } from "../../../../../contexts/product.context";
 import { Product } from "../../../../../interfaces/product.interface";
 import EditForm from "../../_sharedComponents/Edit.form";
 import ProductDigital from "./product/Product.Digital";
 import ProductVhs from "./product/Product.vhs";
-import ViewInDetailCancelBtn from "../../_sharedComponents/view.in.detail.cancelBtn";
+import ViewInDetailCancelBtn from "../../_sharedComponents/View.in.detail.cancelBtn";
 import ProductCategories from "./Product.categories";
 import ProductTags from "./Product.tags";
 
@@ -17,7 +17,7 @@ const ViewInDetailProduct = ({
   disableForm,
   setDisableForm,
 }: ViewInDetailProductProps) => {
-  const { viewProductDetails, updateProduct, newUpdatedProduct, setNewUpdatedProduct } = productSocket();
+  const { viewProductDetails, updateProduct, newUpdatedProduct, updateProductDatabase } = productSocket();
 
   const [newVhs, setNewVhs] = useState<Partial<Product['vhs']>>({
     price: (viewProductDetails as Product).vhs.price,
@@ -29,10 +29,10 @@ const ViewInDetailProduct = ({
   });
 
   const [newDigital, setNewDigital] = useState<Partial<Product['digital']>>({
-    price: (viewProductDetails as Product).vhs.price,
-    available: (viewProductDetails as Product).vhs.available,
-    stripe_price_id: (viewProductDetails as Product).vhs.stripe_price_id,
-    stripe_prod_id: (viewProductDetails as Product).vhs.stripe_prod_id,
+    price: (viewProductDetails as Product).digital.price,
+    available: (viewProductDetails as Product).digital.available,
+    stripe_price_id: (viewProductDetails as Product).digital.stripe_price_id,
+    stripe_prod_id: (viewProductDetails as Product).digital.stripe_prod_id,
   });
 
   const handleProductForm = (
@@ -40,18 +40,8 @@ const ViewInDetailProduct = ({
   ) => {
     e.preventDefault();
     setDisableForm(true);
-    console.log("its done");
-
-    //updateOrderDatabase(updateProductObject, (viewProductDetails as Product)._id);
+    updateProductDatabase({...(newUpdatedProduct as object), vhs: newVhs, digital: newDigital}, (viewProductDetails as Product)._id);
   };
-
-  useEffect(() => {
-    console.log(newUpdatedProduct);
-  }, [newUpdatedProduct]);
-
-  useEffect(() => {
-    setNewUpdatedProduct((prev) => ({...prev, vhs: newVhs, digital: newDigital}))
-  }, [newVhs, newDigital]);
 
   return (
     <>

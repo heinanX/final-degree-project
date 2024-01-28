@@ -5,6 +5,7 @@ import AllProducts from "./products/All.products";
 import DeleteProduct from "./products/Delete.product";
 import MyOrders from "./MyOrders/My.orders";
 import { useSocket as orderSocket } from "../../../contexts/order.context";
+import { useSocket as productSocket } from "../../../contexts/product.context";
 import ViewInDetail from "./viewInDetail/View.in.detail";
 
 interface dataDisplayerProps {
@@ -13,10 +14,11 @@ interface dataDisplayerProps {
 
 const DataDisplayer = ({ displayComponent }: dataDisplayerProps) => {
   const { viewOrderDetails } = orderSocket();
+  const { viewProductDetails } = productSocket();
 
   return (
-    <div className="right w-full sm:w-2/3 p-5">
-      {viewOrderDetails ? (
+    <div id="DataDisplayer" className="right w-full sm:w-2/3 p-5">
+      {viewOrderDetails || viewProductDetails ? (
         <ViewInDetail />
       ) : (
         <>

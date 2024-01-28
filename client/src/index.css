@@ -30,6 +30,14 @@ ul {
   color: black;
   padding: 3px 15px;
 }
+
+.standard-btn-red {
+  border-radius: 5px;
+  background-color: rgba(239, 178, 11, 0.509);
+  color: rgb(224, 224, 224);
+  padding: 3px 15px;
+}
+
 .standard-btn:hover {
   background-color: hotpink;
 }
@@ -46,6 +54,7 @@ ul {
 .text-10px {
   font-size: 10px;
 }
+
 input {
   outline: none;
 }

@@ -29,7 +29,7 @@ const AllOrders = ({ displayComponent }: AllOrdersProps) => {
   }, []);
 
   return (
-    <div className="h-5/6 overflow-y-auto cart-scrollbar w-full p-2 text-xs">
+    <div className="h-5/6 overflow-y-auto primary-scrollbar w-full p-2 text-xs">
       <FormSearch
         setShowState={setShowOrders}
         displayComponent={displayComponent}

@@ -5,7 +5,7 @@ const CheckoutDetails = () => {
   const { newCart } = cartSocket();
   return (
     <div className="w-1/2">
-      <ul className="max-h-96 p-4 overflow-y-auto cart-scrollbar border border-teal-600 text-white">
+      <ul className="max-h-96 p-4 overflow-y-auto primary-scrollbar border border-teal-600 text-white">
         {newCart.cart.map((item, index) => (
           <li key={index} className="pb-4 flex flex-row">
             <img

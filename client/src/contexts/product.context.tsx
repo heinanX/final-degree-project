@@ -6,17 +6,11 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Product, ProductContext } from "../interfaces/product.interface";
+import { Product, ProductContext, defaultValues } from "../interfaces/product.interface";
 import { CategoryTwo } from "../interfaces/category.interface";
 import { Tags } from "../interfaces/tags.interface";
 
-const defaultValues = {
-  products: [],
-  setProducts: () => {},
-  getProducts: () => {},
-  getProduct: () => {},
-  getMovie: null,
-};
+
 
 export const ProductContextValues =
   createContext<ProductContext>(defaultValues);
@@ -28,6 +22,7 @@ export const useSocket = () => useContext(ProductContextValues);
 function ProductProvider({ children }: PropsWithChildren) {
   const [products, setProducts] = useState<Product[]>([]);
   const [getMovie, setgetMovie] = useState<Product | null>(null);
+  const [viewProductDetails, setViewProductDetails] = useState<Product | null>(null);
   // const {getCategory } = categorySocket();
 
   const getProducts = async () => {
@@ -100,6 +95,8 @@ function ProductProvider({ children }: PropsWithChildren) {
         getProducts,
         getProduct,
         getMovie,
+        viewProductDetails,
+        setViewProductDetails
       }}
     >
       {children}

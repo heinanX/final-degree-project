@@ -35,6 +35,8 @@ function OrderProvider({ children }: PropsWithChildren) {
     order_status: "",
     _id: ''
   });
+
+  // state used to store order item in: [View.single.Order] component
   const [viewOrderDetails, setViewOrderDetails] = useState<Order | null>(null);
 
   const getOrdersDatabase = async () => {

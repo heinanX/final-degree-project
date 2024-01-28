@@ -1,17 +1,34 @@
-import ViewSingleOrder from './View.single.order';
-import ViewSingleProduct from './View.single.product';
-import { useSocket as orderSocket } from '../../../../contexts/order.context';
+import ViewSingleOrder from "./View.single.order";
+import ViewInDetailProduct from "./components/View.in.detail.product";
+import { useSocket as orderSocket } from "../../../../contexts/order.context";
+import { useSocket as productSocket } from "../../../../contexts/product.context";
+import { useState } from "react";
 
-
-const ViewInDetail= () => {
+const ViewInDetail = () => {
   const { viewOrderDetails } = orderSocket();
-    console.log(viewOrderDetails);
-    
+  const { viewProductDetails } = productSocket();
+  const [disableForm, setDisableForm] = useState<boolean>(true);
+
   return (
     <div>
-        {viewOrderDetails ? <ViewSingleOrder /> : <ViewSingleProduct /> }
+      {viewOrderDetails ? (
+        <ViewSingleOrder
+          disableForm={disableForm}
+          setDisableForm={setDisableForm}
+        />
+      ) : (
+        <></>
+      )}
+      {viewProductDetails ? (
+        <ViewInDetailProduct
+          disableForm={disableForm}
+          setDisableForm={setDisableForm}
+        />
+      ) : (
+        <></>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default ViewInDetail
+export default ViewInDetail;

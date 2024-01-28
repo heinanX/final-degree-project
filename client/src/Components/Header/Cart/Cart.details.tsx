@@ -7,7 +7,7 @@ const CartDetails = () => {
   const { newCart, handleQuantity } = cartSocket();
 
   return (
-    <div className=" py-8 max-h-96 overflow-y-auto cart-scrollbar">
+    <div className=" py-8 max-h-96 overflow-y-auto primary-scrollbar">
       <ul>
         {newCart.cart.map((item, index) => (
           <li key={index} className="flex items-center">

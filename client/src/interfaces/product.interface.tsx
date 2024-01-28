@@ -3,8 +3,20 @@ export interface ProductContext {
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
   getProducts: () => void;
   getProduct: (id:string) => void;
-  getMovie: Product | null
+  getMovie: Product | null;
+  viewProductDetails: Product | null;
+  setViewProductDetails: React.Dispatch<React.SetStateAction<Product | null>>
 }
+
+export const defaultValues = {
+  products: [],
+  setProducts: () => {},
+  getProducts: () => {},
+  getProduct: () => {},
+  getMovie: null,
+  viewProductDetails: null,
+  setViewProductDetails: () => {}
+};
 
 export interface Product {
   _id: string;

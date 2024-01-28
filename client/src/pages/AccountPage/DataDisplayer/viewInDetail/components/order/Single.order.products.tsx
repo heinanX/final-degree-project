@@ -8,7 +8,7 @@ const SingleOrderProducts = ({singleOrder}:SingleOrderProductsProps) => {
   return (
     <div className="flex flex-col sm:flex-row gap-2 uppercase w-full">
     <label className="w-2/5 pt-1">Products</label>
-    <div className="pr-5 py-2 overflow-y-auto cart-scrollbar h-40 w-full">
+    <div className="pr-5 py-2 overflow-y-auto primary-scrollbar h-40 w-full">
       {singleOrder.map((orderItem, index) => (
         <div
           key={index}

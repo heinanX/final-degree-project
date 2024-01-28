@@ -1,5 +1,5 @@
-import profilePic from "../../../assets/images/admin-profile-picture.png";
-
+import profilePic from "../../../../assets/images/admin-profile-picture.png";
+//fix this
 const AdminDashboard = () => {
   return (
     <div className="w-full text-sm flex justify-center">

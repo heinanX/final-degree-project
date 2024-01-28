@@ -8,13 +8,19 @@ import SingleOrderDiscount from "./components/order/Single.order.discount";
 import SingleOrderAddress from "./components/order/Single.order.address";
 import { useSocket as orderSocket } from "../../../../contexts/order.context";
 import EditForm from "../_sharedComponents/Edit.form";
+import ViewInDetailCancelBtn from "../_sharedComponents/view.in.detail.cancelBtn";
+
+interface ViewSingleOrderProps {
+  disableForm: boolean;
+  setDisableForm: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 /* COMPONENT THAT RENDERS OUT A COMPLETE ORDER */
 
-const ViewSingleOrder = () => {
+const ViewSingleOrder = ({disableForm, setDisableForm}: ViewSingleOrderProps) => {
 
-  const { viewOrderDetails, setViewOrderDetails, updateOrderDatabase } = orderSocket();
-  const [disableForm, setDisableForm] = useState<boolean>(true);
+  const { viewOrderDetails, updateOrderDatabase } = orderSocket();
+  // const [disableForm, setDisableForm] = useState<boolean>(true);
   const [newShipped, setNewShipped] = useState<boolean>((viewOrderDetails as Order).shipped);
   const [newReturned, setNewReturned] = useState<boolean>((viewOrderDetails as Order).returned);
   const [newCustName, setCustName] = useState<string>((viewOrderDetails as Order).address.cust_name);
@@ -151,14 +157,8 @@ const ViewSingleOrder = () => {
         </div>
       </form>
 
-      <div className="flex flex-row w-full justify-end gap-4">
-        <button
-          className="standard-btn"
-          onClick={() => setViewOrderDetails(null)}
-        >
-          return
-        </button>
-      </div>
+      <ViewInDetailCancelBtn />
+      
     </div>
   );
 };

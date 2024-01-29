@@ -21,9 +21,12 @@ const authorization = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         if (customerId && sessionCustomerId && customerId === sessionCustomerId) {
             return next();
         }
+        // ALLOW ACCESS IF USER IS FETCHING OWN DATA
+        if (sessionCustomerId) {
+            return next();
+        }
         // CHECK IF USER IS ADMIN
         return (0, isAdmin_1.isAdmin)(req, res, next);
-        return res.status(404).json('Access denied. Only Admins allowed.');
     }
     catch (error) {
         next(error);

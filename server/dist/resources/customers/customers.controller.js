@@ -81,7 +81,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         const customer = existingCustomer.toJSON();
         delete customer.password;
         req.session.customer = customer;
-        res.status(200).json(customer.mail + ' is logged in');
+        res.status(200).json({ mail: customer.mail, isAdmin: customer.isAdmin });
     }
     catch (error) {
         next(error);
@@ -89,9 +89,13 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.login = login;
 const activeLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d, _e;
+    var _d, _e, _f, _g;
     try {
-        res.status(200).json(((_e = (_d = req.session) === null || _d === void 0 ? void 0 : _d.customer) === null || _e === void 0 ? void 0 : _e.mail) + " is logged in");
+        const activeLoginRes = {
+            response: ((_e = (_d = req.session) === null || _d === void 0 ? void 0 : _d.customer) === null || _e === void 0 ? void 0 : _e.mail) + " is logged in",
+            isAdmin: (_g = (_f = req.session) === null || _f === void 0 ? void 0 : _f.customer) === null || _g === void 0 ? void 0 : _g.isAdmin
+        };
+        res.status(200).json(activeLoginRes);
     }
     catch (error) {
         next(error);

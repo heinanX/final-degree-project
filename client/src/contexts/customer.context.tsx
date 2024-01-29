@@ -10,6 +10,7 @@ export const useSocket = () => useContext(CustomerContextValues);
 
 function CustomerProvider({ children }: PropsWithChildren) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [activeCustomer, setActiveCustomer] = useState<string>('');
   const navigate = useNavigate();
 
@@ -28,8 +29,9 @@ function CustomerProvider({ children }: PropsWithChildren) {
         }),
       });
       if (res.ok) {
-        setIsLoggedIn(true);
         const data = await res.json();
+        setIsLoggedIn(true);
+        setIsAdmin(data.isAdmin)
         console.log(data);
         navigate('/customer/account')
       } else {
@@ -93,8 +95,11 @@ function CustomerProvider({ children }: PropsWithChildren) {
   const checkLoginStatus = async () => {
     try {
       const res = await fetch("/api/customers/active");
+      const data = await res.json()
       if (res.ok) {
-        setIsLoggedIn(true);
+        if (!isLoggedIn) return setIsLoggedIn(true);
+
+        return data;
       }
     } catch (error) {
       console.error(error)
@@ -107,6 +112,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
         const res = await fetch("/api/customers/customer-details");
         const data = await res.json();
         setActiveCustomer(data)
+        setIsAdmin(data.isAdmin)
       return data;    
       } catch (err) {
         if (err instanceof Error) {
@@ -124,6 +130,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
       value={{
         isLoggedIn,
         setIsLoggedIn,
+        isAdmin,
         login,
         signUp,
         logOut,

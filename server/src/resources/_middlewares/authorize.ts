@@ -17,10 +17,13 @@ export const authorization = async (
       return next();
     }
 
+    // ALLOW ACCESS IF USER IS FETCHING OWN DATA
+    if (sessionCustomerId) {
+      return next();
+    }
+
     // CHECK IF USER IS ADMIN
     return isAdmin(req, res, next);
-
-    return res.status(404).json('Access denied. Only Admins allowed.');
   } catch (error) {
     next(error);
   }

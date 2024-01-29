@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 export interface CustomerContext {
     isLoggedIn: boolean;
+    isAdmin: boolean;
     setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
     login: (mail: string, pass: string) => Promise<void>;
     signUp: (mail: string, pass: string) => Promise<void>;
@@ -13,8 +13,10 @@ export interface CustomerContext {
   export const defaultValues = {
     isLoggedIn: false,
     setIsLoggedIn: () => {},
-    login: async (mail: string, pass: string) => {},
-    signUp: async (mail: string, pass: string) => {},
+    isAdmin: false,
+    setIsAdmin: () => {},
+    login: async () => {},
+    signUp: async () => {},
     logOut: async () => {},
     checkLoginStatus: async () => {},
     activeCustomer: '',

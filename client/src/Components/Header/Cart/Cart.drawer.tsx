@@ -8,6 +8,7 @@ import { LuVideotape } from "react-icons/lu";
 import CartDetails from "./Cart.details";
 import { NavLink } from "react-router-dom";
 import LoginBtn from "./Login.btn";
+import CartIndicator from "./Cart.indicator";
 
 
 type Anchor = "right";
@@ -93,8 +94,9 @@ const CartDrawer = () => {
     <div>
       {(["right"] as const).map((anchor) => (
         <Fragment key={anchor}>
-          <div className="text-2xl" onClick={toggleDrawer(anchor, true)}>
+          <div className="text-2xl relative" onClick={toggleDrawer(anchor, true)}>
             <LuVideotape />
+            <CartIndicator />
           </div>
           <Drawer
             anchor={anchor}

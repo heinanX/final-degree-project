@@ -1,9 +1,7 @@
-import logo from '../../../assets/images/logo-videoshack.png'
+import logo from '../../../assets/images/logo-videoshack-spread.png'
 
 const Greeting = () => {
-    <div className=' h-80 flex flex-row w-full justify-center'>
-    <img src={logo} alt="" className='h-40' />
-</div>
+
     return (
         <div className='w-full h-72 flex flex-row'>
         <div className='w-2/5 flex flex-col justify-center items-center pl-20 uppercase'>
@@ -20,8 +18,6 @@ const Greeting = () => {
             </span>
             <span>
             <p className='pt-4 text-sm'>Order online by 4 pm for Early Bird delivery the next morning or visit us at Götgatan 33</p>
-{/*             <p className='pt-4 text-sm'>Place your online order before 4 pm and receive your delivery with Early Bird the next morning,</p>
-            <p className='text-sm'>or better yet, come down and browse our shelves at Götgatan 33 </p> */}
             </span>
             
         </div>

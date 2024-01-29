@@ -2,6 +2,7 @@ import logo from "../../assets/images/vhs-tape-logo.png";
 import { useSocket as customerSocket } from "../../contexts/customer.context";
 import LoggedOutUi from "./Login/LoggedOut.ui";
 import LoggedInUi from "./Login/LoggedIn.ui";
+import './header.css'
 
 import { useState } from "react";
 import TemporaryDrawer from "./Cart/Cart.drawer";

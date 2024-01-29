@@ -13,7 +13,7 @@ interface ProductDigitalProps {
 - ie. price, ids, and availability*/
 
 const ProductDigital = ({ disableForm, newDigital,setNewDigital }: ProductDigitalProps) => {
-  const { viewProductDetails } = productSocket(); //destructs state from product context
+  const { viewProductDetails } = productSocket(); //destructures state from product context
 
   //states to hold updated values if they're edited.
     const updateDigitalProduct = (e: React.ChangeEvent<HTMLInputElement>, property: string) => {

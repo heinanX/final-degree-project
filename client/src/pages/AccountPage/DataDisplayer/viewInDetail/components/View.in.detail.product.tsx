@@ -54,7 +54,7 @@ const ViewInDetailProduct = ({
       <div className="py-2">
         <form
           id="ViewInDetailProduct"
-          className="w-full text-sm flex flex-col gap-2  pr-4 text-gray-400 overflow-y-auto primary-scrollbar"
+          className="w-full text-sm flex flex-col gap-2  py-2 pr-4 text-gray-400 overflow-y-auto primary-scrollbar"
         >
           <div className="flex flex-row items-center gap-2 uppercase">
             <label className="w-20">id</label>

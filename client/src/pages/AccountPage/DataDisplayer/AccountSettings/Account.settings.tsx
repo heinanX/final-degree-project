@@ -2,7 +2,7 @@ import React from 'react'
 
 const AccountSettings = () => {
   return (
-    <div>AccountSettings</div>
+    <div>AccountSettings coming soon</div>
   )
 }
 

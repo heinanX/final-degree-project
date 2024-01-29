@@ -87,6 +87,28 @@ function ProductProvider({ children }: PropsWithChildren) {
     }
   };
 
+  const getProductBySearchCriteria = async (id: string, criteria: string) => {
+try {
+  const res = await fetch(`/api/products/search`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+            [criteria]: {  $in: [id] }
+          }),
+  });
+  const data = await res.json();
+  if (res.ok) {
+    console.log('this is from the response', data);
+  }
+} catch (err) {
+  if (err instanceof Error) {
+    console.error(err);
+  }
+}
+  }
+
   //STATE TO STORE UPDATED INFO WHEN IN EDIT MODE
   const [newUpdatedProduct, setNewUpdatedProduct] = useState<object | null>(
     null
@@ -133,6 +155,8 @@ function ProductProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     getProducts();
+
+    // getProductBySearchCriteria('65a2af52719aaaf33cdf52d3','category')
   }, []);
 
   return (
@@ -143,6 +167,7 @@ function ProductProvider({ children }: PropsWithChildren) {
         getProducts,
         getProduct,
         getMovie,
+        getProductBySearchCriteria,
         viewProductDetails,
         setViewProductDetails,
         newUpdatedProduct,

@@ -14,35 +14,33 @@ export const getProducts = async (
   }
 };
 
-export const getProductsByCategory = async (
+export const getProductBySearchCriteria = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const orders = await ProductModel.find({
-      category: {  $in: req.params.id }
-    });
+    const orders = await ProductModel.find(req.body);
     res.status(200).json(orders);
   } catch (error) {
     next(error);
   }
 };
 
-export const getProductsByTag = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const orders = await ProductModel.find({
-      tags: {  $in: req.params.id }
-    });
-    res.status(200).json(orders);
-  } catch (error) {
-    next(error);
-  }
-};
+// export const getProductsByTag = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const orders = await ProductModel.find({
+//       tags: {  $in: req.params.id }
+//     });
+//     res.status(200).json(orders);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 export const getProduct = async (
   req: Request,

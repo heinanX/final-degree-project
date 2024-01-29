@@ -1,4 +1,4 @@
-import logo from "../../assets/images/logo-videoshack_tape.png";
+import logo from "../../assets/images/vhs-tape-logo.png";
 import { useSocket as customerSocket } from "../../contexts/customer.context";
 import LoggedOutUi from "./Login/LoggedOut.ui";
 import LoggedInUi from "./Login/LoggedIn.ui";
@@ -6,7 +6,6 @@ import LoggedInUi from "./Login/LoggedIn.ui";
 import { useState } from "react";
 import TemporaryDrawer from "./Cart/Cart.drawer";
 import { NavLink } from "react-router-dom";
-//import Checkout from "../../pages/CheckoutPage/Checkout.page";
 
 const Header = () => {
   const { isLoggedIn } = customerSocket();
@@ -19,7 +18,7 @@ const Header = () => {
   return (
     <div className="fixed top-0 left-0 text-white z-10 px-10 py-2 flex flex-row justify-between items-center w-full">
       <NavLink to={"/"}>
-        <img src={logo} style={{ width: "120px" }} alt="" />
+        <img src={logo} style={{ width: "70px" }} alt="" />
       </NavLink>
 
       <nav>

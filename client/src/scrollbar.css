@@ -1,13 +1,30 @@
-/* Custom styles for scrollbar */
-.cart-scrollbar::-webkit-scrollbar {
-    width: 6px; /* Adjust the width as needed */
+/* Custom styles for primary scrollbar */
+.primary-scrollbar::-webkit-scrollbar {
+    width: 6px;
 }
 
-.cart-scrollbar::-webkit-scrollbar-thumb {
+.primary-scrollbar::-webkit-scrollbar-thumb {
     background-color: hotpink;
-    border-radius: 4px;
+    border-radius: 99px;
 }
 
-.cart-scrollbar::-webkit-scrollbar-track {
-    background-color: #cbe0e0; /* Adjust the color as needed */
+.primary-scrollbar::-webkit-scrollbar-track {
+    background-color: #cbe0e0;
+    border-radius: 99px;
 }
+
+/* Custom styles for secondary scrollbar */
+.secondary-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.secondary-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgb(250 204 21);
+    border-radius: 99px;
+}
+
+.secondary-scrollbar::-webkit-scrollbar-track {
+    background-color: #cbe0e0;
+    border-radius: 99px;
+}
+

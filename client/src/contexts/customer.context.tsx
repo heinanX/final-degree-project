@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 import { CustomerContext, defaultValues } from "../interfaces/customer.interface";
+import { useNavigate } from "react-router-dom";
 
 export const CustomerContextValues =
   createContext<CustomerContext>(defaultValues);
@@ -9,7 +10,9 @@ export const useSocket = () => useContext(CustomerContextValues);
 
 function CustomerProvider({ children }: PropsWithChildren) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [activeCustomer, setActiveCustomer] = useState<string>('');
+  const navigate = useNavigate();
 
 
   // LOG IN FUNCTION THAT ACCEPTS 2 PARAMETERS FROM COMPONENT Login.form
@@ -26,9 +29,11 @@ function CustomerProvider({ children }: PropsWithChildren) {
         }),
       });
       if (res.ok) {
-        setIsLoggedIn(true);
         const data = await res.json();
+        setIsLoggedIn(true);
+        setIsAdmin(data.isAdmin)
         console.log(data);
+        navigate('/customer/account')
       } else {
         alert("incorrect mail or password");
       }
@@ -68,7 +73,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
   // LOGOUT FUNCTION THAT SENDS A POST TO LOGOUT ENDPOINT, IF OK, CUSTOMER HAS LOGGED OUT
   const logOut = async () => {
     try {
-      const res = await fetch("api/customers/logout", {
+      const res = await fetch("/api/customers/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,9 +94,12 @@ function CustomerProvider({ children }: PropsWithChildren) {
   // FUNCTION THAT CHECKS FOR USER IN SESSION.
   const checkLoginStatus = async () => {
     try {
-      const res = await fetch("api/customers/active");
+      const res = await fetch("/api/customers/active");
+      const data = await res.json()
       if (res.ok) {
-        setIsLoggedIn(true);
+        if (!isLoggedIn) return setIsLoggedIn(true);
+
+        return data;
       }
     } catch (error) {
       console.error(error)
@@ -101,9 +109,10 @@ function CustomerProvider({ children }: PropsWithChildren) {
     // A FUNCTION THAT FETCHES CUSTOMER'S DETAILS 
     const fetchCustomerDetails = async () => {
       try {
-        const res = await fetch("api/customers/customer-details");
+        const res = await fetch("/api/customers/customer-details");
         const data = await res.json();
         setActiveCustomer(data)
+        setIsAdmin(data.isAdmin)
       return data;    
       } catch (err) {
         if (err instanceof Error) {
@@ -121,6 +130,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
       value={{
         isLoggedIn,
         setIsLoggedIn,
+        isAdmin,
         login,
         signUp,
         logOut,

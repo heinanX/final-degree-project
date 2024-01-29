@@ -24,7 +24,7 @@ const addressSchema = new mongoose_1.Schema({
 }, { _id: false });
 exports.orderSchema = new mongoose_1.Schema({
     customer: { type: mongoose_1.Schema.Types.ObjectId, ref: "customers", require: true },
-    address: [addressSchema],
+    address: addressSchema,
     order: [subOrderSchema],
     total_price: { type: Number, default: 0, require: true },
     discount: { type: Number, default: 0 },
@@ -35,12 +35,6 @@ exports.orderSchema = new mongoose_1.Schema({
     order_status: { type: String, default: "active" },
     session_id: String
 }, { versionKey: false });
-exports.markOrderJoiSchema = joi_1.default.object({
-    shipped: joi_1.default.boolean(),
-    returned: joi_1.default.boolean(),
-    payment_status: joi_1.default.string(),
-    order_status: joi_1.default.string()
-});
 const subOrderJoiSchema = joi_1.default.object({
     product: joi_1.default.string(),
     quantity: joi_1.default.number(),
@@ -52,6 +46,13 @@ const addressJoiSchema = joi_1.default.object({
     street: joi_1.default.string(),
     zip_code: joi_1.default.string(),
     city: joi_1.default.string()
+});
+exports.markOrderJoiSchema = joi_1.default.object({
+    shipped: joi_1.default.boolean(),
+    returned: joi_1.default.boolean(),
+    payment_status: joi_1.default.string(),
+    order_status: joi_1.default.string(),
+    address: addressJoiSchema
 });
 exports.orderJoiSchema = joi_1.default.object({
     customer: joi_1.default.string().required(),

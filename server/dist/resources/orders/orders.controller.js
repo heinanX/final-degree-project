@@ -28,11 +28,12 @@ const getOrders = (req, res, next) => __awaiter(void 0, void 0, void 0, function
 exports.getOrders = getOrders;
 /* FUNCTION THAT FETCHES ALL ORDERS FOR ONE USER FROM DATABASE */
 const getUserOrders = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _a, _b, _c, _d;
     try {
+        console.log((_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b._id);
         // Fetch all orders for the specific user from the database
         const orders = yield orders_model_1.OrderModel.find({
-            customer: (_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b._id,
+            customer: (_d = (_c = req.session) === null || _c === void 0 ? void 0 : _c.customer) === null || _d === void 0 ? void 0 : _d._id,
         });
         // Respond with a JSON array of user-specific orders
         res.status(200).json(orders);
@@ -46,7 +47,7 @@ exports.getUserOrders = getUserOrders;
   It checks if the order exists and if the requester has permission to access it.
   */
 const getOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c, _d, _e, _f;
+    var _e, _f, _g, _h;
     try {
         // Attempt to find the order in the database using the OrderModel and the specified order ID
         const order = yield orders_model_1.OrderModel.findOne({ _id: req.params.id });
@@ -55,8 +56,8 @@ const getOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
             return res.status(404).json({ error: "Unknown Order ID" });
         }
         // Check if requester has permission to access order data
-        if (order.customer === ((_d = (_c = req.session) === null || _c === void 0 ? void 0 : _c.customer) === null || _d === void 0 ? void 0 : _d._id) ||
-            ((_f = (_e = req.session) === null || _e === void 0 ? void 0 : _e.customer) === null || _f === void 0 ? void 0 : _f.isAdmin)) {
+        if (order.customer === ((_f = (_e = req.session) === null || _e === void 0 ? void 0 : _e.customer) === null || _f === void 0 ? void 0 : _f._id) ||
+            ((_h = (_g = req.session) === null || _g === void 0 ? void 0 : _g.customer) === null || _h === void 0 ? void 0 : _h.isAdmin)) {
             // if permission, respond with order data
             return res.status(200).json(order);
         }
@@ -74,7 +75,7 @@ const getOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 exports.getOrder = getOrder;
 /*  CREATES NEW CHECKOUT WITH STRIPE API TO PROCESS PAYMENT */
 const createCheckoutSession = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _g;
+    var _j;
     try {
         // Use Stripe API to create a new checkout session
         const session = yield stripe.checkout.sessions.create({
@@ -84,7 +85,7 @@ const createCheckoutSession = (req, res, next) => __awaiter(void 0, void 0, void
             mode: "payment", //accept one-time payments for cards
             currency: "sek", // sets currencies
             allow_promotion_codes: true, // allows for discount codes
-            customer: (_g = req.session.customer) === null || _g === void 0 ? void 0 : _g.stripe_id, // customer's id that's saved in sessions
+            customer: (_j = req.session.customer) === null || _j === void 0 ? void 0 : _j.stripe_id, // customer's id that's saved in sessions
             line_items: req.body, // object with the order
         });
         // Respond with the URL of the created checkout session

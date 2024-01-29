@@ -1,9 +1,58 @@
-
+import { useEffect, useState } from "react";
+import AdminDashboard from "./Dashboard/AdminDashboard/Admin.dashboard";
+import AdminListItems from "./Dashboard/AdminListItems/Admin.list.items";
+import DataDisplayer from "./DataDisplayer/DataDisplayer";
+import UserDashboard from "./Dashboard/UserDashboard/UserDashboard";
+import ListItems from "./ListItems/List.items";
+import { useSocket as orderSocket } from "../../contexts/order.context";
+import { useSocket as productSocket } from "../../contexts/product.context";
+import { useSocket as customerSocket } from "../../contexts/customer.context";
+import "./accountPage.css";
 
 const AccountPage = () => {
-  return (
-    <div>CustomerPage</div>
-  )
-}
+  const [ displayComponent, setDistplayComponent ] = useState<string>('');
+  const { viewOrderDetails, setViewOrderDetails } = orderSocket();
+  const { viewProductDetails, setViewProductDetails } = productSocket();
+  const { isLoggedIn, isAdmin} = customerSocket();
 
-export default AccountPage
+  
+  const handleDisplayComment = (component: string) => {
+    if (viewOrderDetails || viewProductDetails) {
+      setViewOrderDetails(null)
+      setViewProductDetails(null)
+    }
+    setDistplayComponent(component)
+  }
+
+  useEffect(() => {
+   if (!isLoggedIn) {
+     window.location.href = "/customer/login"
+   }
+  },[isLoggedIn])
+
+  return (
+    <>
+    {isLoggedIn ? (
+      <div className="mt-20 w-full p-6 flex justify-center">
+      <div id="account-page-border-div" className="border border-teal-600 flex flex-col sm:flex-row w-full max-w-7xl">
+        
+        {/* Left side content */}
+        <div className="w-full sm:w-1/3 p-5 md:p-10 uppercase tracking-widest">
+          {isAdmin ? <AdminDashboard /> : <UserDashboard />}
+          <ul className="account-page-ul pb-20">
+            <ListItems handleDisplayComment={handleDisplayComment} />
+            {isAdmin ? <AdminListItems handleDisplayComment={handleDisplayComment} /> : <></>}
+          </ul>
+        </div>
+
+        {/* right side content */}
+        {/* <DataDisplayer displayComponent={displayComponent} /> */}
+        <DataDisplayer displayComponent={displayComponent} />
+      </div>
+    </div>
+    ) : <></>}
+   </>
+  );
+};
+
+export default AccountPage;

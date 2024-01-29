@@ -6,17 +6,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Product, ProductContext } from "../interfaces/product.interface";
+import {
+  Product,
+  ProductContext,
+  defaultValues,
+} from "../interfaces/product.interface";
 import { CategoryTwo } from "../interfaces/category.interface";
 import { Tags } from "../interfaces/tags.interface";
-
-const defaultValues = {
-  products: [],
-  setProducts: () => {},
-  getProducts: () => {},
-  getProduct: () => {},
-  getMovie: null,
-};
 
 export const ProductContextValues =
   createContext<ProductContext>(defaultValues);
@@ -28,6 +24,9 @@ export const useSocket = () => useContext(ProductContextValues);
 function ProductProvider({ children }: PropsWithChildren) {
   const [products, setProducts] = useState<Product[]>([]);
   const [getMovie, setgetMovie] = useState<Product | null>(null);
+  const [viewProductDetails, setViewProductDetails] = useState<Product | null>(
+    null
+  );
   // const {getCategory } = categorySocket();
 
   const getProducts = async () => {
@@ -88,6 +87,50 @@ function ProductProvider({ children }: PropsWithChildren) {
     }
   };
 
+  //STATE TO STORE UPDATED INFO WHEN IN EDIT MODE
+  const [newUpdatedProduct, setNewUpdatedProduct] = useState<object | null>(
+    null
+  );
+
+  const updateProduct = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | object,
+    property: string
+  ) => {
+    const targetValue =
+      property === "description"
+        ? (e as React.ChangeEvent<HTMLTextAreaElement>).target.value
+        : (e as React.ChangeEvent<HTMLInputElement>).target.value;
+    setNewUpdatedProduct((prevState) => ({
+      ...prevState,
+      [property]: targetValue,
+    }));
+  };
+
+  const updateProductDatabase = async (updateProductObject: object, id: string) => {
+    try {
+      const res = await fetch(`/api/products/edit-product/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateProductObject),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        console.log('this is from the response', data);
+        setViewProductDetails(data);
+        getProducts();
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("Error fetching product", err.message);
+      }
+    }
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -100,6 +143,12 @@ function ProductProvider({ children }: PropsWithChildren) {
         getProducts,
         getProduct,
         getMovie,
+        viewProductDetails,
+        setViewProductDetails,
+        newUpdatedProduct,
+        setNewUpdatedProduct,
+        updateProduct,
+        updateProductDatabase
       }}
     >
       {children}

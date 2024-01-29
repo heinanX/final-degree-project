@@ -10,7 +10,7 @@
 
 #root {
   width: 100%;
-  min-height: 100vh;
+/*   min-height: 100vh; */
   /* background-color: rgb(34, 32, 34); */
   background-color: rgb(23, 36, 38);
   display: flex;
@@ -20,12 +20,24 @@
   color: rgb(243, 244, 246) ;
 }
 
+ul {
+  cursor: default;
+}
+
 .standard-btn {
   border-radius: 5px;
   background-color: teal;
   color: black;
   padding: 3px 15px;
 }
+
+.standard-btn-red {
+  border-radius: 5px;
+  background-color: rgba(239, 178, 11, 0.509);
+  color: rgb(224, 224, 224);
+  padding: 3px 15px;
+}
+
 .standard-btn:hover {
   background-color: hotpink;
 }
@@ -41,4 +53,8 @@
 
 .text-10px {
   font-size: 10px;
+}
+
+input {
+  outline: none;
 }

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import AddTag from "./Add.tag";
 import AddCategory from "./Add.category";
 
-const ProductForm = () => {
+const AddProduct = () => {
   const [frmTitle, setNewTitle] = useState("");
   const [frmDescription, setNewDescription] = useState("");
   const [frmYear, setFrmYear] = useState(1990);
@@ -14,11 +14,9 @@ const ProductForm = () => {
   const [frmCategories, setFrmCategories] = useState<string[]>([]);
   const [frmTags, setFrmTags] = useState<string[]>([]);
 
-
   const [checkVideo, setCheckVideo] = useState(false);
   const [checkDigital, setCheckDigital] = useState(false);
   const years = Array.from({ length: 151 }, (_, index) => 1900 + index);
-
 
   const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,14 +24,23 @@ const ProductForm = () => {
 
   useEffect(() => {
     console.log(frmCategories);
-  }, [frmTitle, frmDescription, frmYear, frmImage, frmVhsPrice, frmCategories, frmVhsQuantity, frmDigitalPrice]);
+  }, [
+    frmTitle,
+    frmDescription,
+    frmYear,
+    frmImage,
+    frmVhsPrice,
+    frmCategories,
+    frmVhsQuantity,
+    frmDigitalPrice,
+  ]);
 
   return (
     <form
-      className="flex flex-col gap-2 py-2 px-4"
+      className="flex flex-col gap-2 py-2 px-4 text-sm"
       onSubmit={(e) => handleForm(e)}
     >
-      <div>
+      <div className="flex">
         <label>VHS</label>
         <input
           className="ml-2"
@@ -51,51 +58,45 @@ const ProductForm = () => {
           onChange={() => setCheckDigital(!checkDigital)}
         />
       </div>
-      <div className="flex flex-row">
-        <div className="bg-red-400 w-1/3">
+      <div className="flex">
+        <div className="w-1/2">
           {checkVideo ? (
             <>
-              <div className="flex flex-col gap-2">
-                <label>
-                  <input
-                    type="number"
-                    name="frmVhsPrice"
-                    className="rounded-sm text-black pl-2 w-16"
-                    placeholder="price"
-                    onChange={(e) => setFrmVhsPrice(parseInt(e.target.value))}
-                  />
-                  VHS Price
-                </label>
-                <label>
-                  <input
-                    type="number"
-                    name="vhsQuant"
-                    className="rounded-sm text-black pl-2 w-16"
-                    placeholder="quantity"
-                    onChange={(e) => setFrmVhsQuantity(parseInt(e.target.value))}
-                  />
-                  VHS Quantity
-                </label>
+              <div className="flex flex-col gap-1">
+                <label>VHS Price</label>
+                <input
+                  type="number"
+                  name="frmVhsPrice"
+                  className="rounded-sm text-black pl-2 w-4/5"
+                  placeholder="price"
+                  onChange={(e) => setFrmVhsPrice(parseInt(e.target.value))}
+                />
+                <label>VHS Quantity</label>
+                <input
+                  type="number"
+                  name="vhsQuant"
+                  className="rounded-sm text-black pl-2 w-4/5"
+                  placeholder="quantity"
+                  onChange={(e) => setFrmVhsQuantity(parseInt(e.target.value))}
+                />
               </div>
             </>
           ) : (
             <></>
           )}
         </div>
-        <div className="bg-green-400 w-1/3">
+        <div className="w-1/2">
           {checkDigital ? (
             <>
-              <div className="flex flex-col gap-2">
-                <label>
-                  <input
-                    type="number"
-                    name="digital.price"
-                    className="rounded-sm text-black pl-2 w-16"
-                    placeholder="price"
-                    onChange={(e) => setFrmDigitalPrice(parseInt(e.target.value))}
-                  />
-                  Digital Price
-                </label>
+              <div className="flex flex-col gap-1">
+                <label> Digital Price</label>
+                <input
+                  type="number"
+                  name="digital.price"
+                  className="rounded-sm text-black pl-2 w-4/5"
+                  placeholder="price"
+                  onChange={(e) => setFrmDigitalPrice(parseInt(e.target.value))}
+                />
               </div>
             </>
           ) : (
@@ -105,22 +106,23 @@ const ProductForm = () => {
       </div>
 
       {/* ------------------------ IMAGE INPUT */}
-      <div>
-        <label className="pr-4">frmImage</label>
+      <div className="flex flex-col">
+        <label>frmImage</label>
         <input
           type="text"
           placeholder="http://"
+          className="px-2"
           onChange={(e) => setFrmImage(e.target.value)}
         />
       </div>
-            
+
       {/* ------------------------ YEAR INPUT */}
 
-      <div>
+      <div className="flex flex-col">
         <label className="pr-4">Year</label>
         <select
           value={frmYear}
-          className="px-2"
+          className="px-2 text-black"
           onChange={(e) => setFrmYear(parseInt(e.target.value))}
         >
           {years.map((year) => (
@@ -133,17 +135,18 @@ const ProductForm = () => {
 
       {/* ------------------------ CATEGORY INPUT */}
 
-      <AddCategory frmCategories={frmCategories} setFrmCategories={setFrmCategories} />
+      <AddCategory
+        frmCategories={frmCategories}
+        setFrmCategories={setFrmCategories}
+      />
 
-     
       {/* ------------------------ TAG INPUT */}
 
-            <AddTag frmTags={frmTags} setFrmTags={setFrmTags} />
-
+      <AddTag frmTags={frmTags} setFrmTags={setFrmTags} />
 
       {/* ------------------------ TITLE INPUT */}
 
-      <div className="">
+      <div className="flex flex-col">
         <label className="pr-4">Title</label>
         <input
           className="rounded-sm text-black px-2"
@@ -155,10 +158,10 @@ const ProductForm = () => {
 
       {/* ------------------------ DESCRIPTION */}
 
-      <div>
+      <div className="flex flex-col">
         <label className="pr-4">frmDescription</label>
         <textarea
-          className="p-2"
+          className="p-2 text-black"
           rows={3}
           placeholder="add a frmDescription"
           style={{ resize: "none" }}
@@ -170,10 +173,12 @@ const ProductForm = () => {
       {/* ------------------------ SUBMIT INPUT */}
 
       <div>
-        <button className="standard-btn" type="submit">Send data</button>
+        <button className="standard-btn" type="submit">
+          Create Product
+        </button>
       </div>
     </form>
   );
 };
 
-export default ProductForm;
+export default AddProduct;

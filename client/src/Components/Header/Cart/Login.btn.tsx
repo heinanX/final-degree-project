@@ -8,10 +8,11 @@ const LoginBtn = ({setMsg}: props) => {
   return (
     <>
       <p className="text-md pr-6 text-red-400">Login to place order</p>
-      <NavLink to={"/login"}>
+      <NavLink to={"/customer/login"}>
         <button
           onMouseEnter={() => setMsg(true)}
           onMouseLeave={() => setMsg(false)}
+          onClick={() => setMsg(false)}
           className="standard-btn w-32"
         >
           Login

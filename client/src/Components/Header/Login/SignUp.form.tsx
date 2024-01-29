@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSocket as customerSocket } from "../../contexts/customer.context";
+import { useSocket as customerSocket } from "../../../contexts/customer.context";
 interface props {
   handleSwitch: () => void;
 }
@@ -24,33 +24,30 @@ const SignUpForm = ({ handleSwitch }: props) => {
   };
 
   return (
-    <form
-      className="bg-red-200 py-4 px-2 flex flex-col items-end gap-1 rounded-sm text-sm"
-      onSubmit={(e) => handleSignUp(e)}
-    >
-      <span>
-        <label className="pl-1">Enter Email</label>
+    <form onSubmit={(e) => handleSignUp(e)}>
+      <div className="flex flex-col pb-2">
+        <label className="pl-1 pb-1">Enter Email</label>
         <input
           type="text"
           className="standard-input"
           placeholder="user@mail.com"
           onChange={(e) => saveToState(setNewMail, e.target.value)}
         />
-      </span>
-      <span>
-        <label className="text-sm pl-1">Enter Password</label>
+      </div>
+      <div className="flex flex-col pb-2">
+        <label className="pl-1 pb-1">Enter Password</label>
         <input
           type="password"
           className="standard-input"
           placeholder="passowrd"
           onChange={(e) => saveToState(setNewPass, e.target.value)}
         />
-      </span>
-      <span className="text-10px flex flex-row gap-1 pl-2 text-left w-full">
+      </div>
+      <div className="text-10px flex flex-row gap-1 pl-2 text-left w-full">
         <input type="checkbox" onChange={() => setTickedBox(!tickedBox)} />
         <p>I agree to Terms & Conditions</p>
-      </span>
-      <span className="text-10px flex flex-row gap-1 pl-2 text-left w-full">
+      </div>
+      <div className="text-10px flex flex-row gap-1 pl-2 text-left w-full">
         <p>Already a customer?</p>
         <button
           className="text-red-800 hover:text-blue-600"
@@ -58,10 +55,12 @@ const SignUpForm = ({ handleSwitch }: props) => {
         >
           Go back
         </button>
-      </span>
-      <button className="standard-btn w-1/2 mt-2 mr-1" type="submit">
-        Sign Up
-      </button>
+      </div>
+      <div className="w-full flex justify-end">
+        <button className="standard-btn w-1/2 mt-2 mr-1" type="submit">
+          Sign Up
+        </button>
+      </div>
     </form>
   );
 };

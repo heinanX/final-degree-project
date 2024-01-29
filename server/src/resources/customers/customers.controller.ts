@@ -90,7 +90,7 @@ export const login = async (
     delete customer.password;
     req.session.customer = customer;
 
-    res.status(200).json(customer.mail + ' is logged in');
+    res.status(200).json({mail: customer.mail, isAdmin: customer.isAdmin });
   } catch (error) {
     next(error);
   }
@@ -102,7 +102,11 @@ export const activeLogin = async (
   next: NextFunction
 ) => {
   try {
-    res.status(200).json(req.session?.customer?.mail + " is logged in");
+    const activeLoginRes = {
+      response: req.session?.customer?.mail + " is logged in",
+      isAdmin: req.session?.customer?.isAdmin
+    }
+    res.status(200).json(activeLoginRes);
   } catch (error) {
     next(error);
   }

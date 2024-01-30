@@ -35,7 +35,7 @@ const Home = () => {
     <>
       <Hero />
       <Navigation />
-      <div className="w-full max-w-7xl">
+      <div className="w-full max-w-7xl flex flex-col gap-10">
         <Shelf arr={products} category={"Recently Added"} windowSize={windowSize} />
         <Greeting />
         <Shelf arr={fantasy} category={"Hot Rentals"} windowSize={windowSize} />

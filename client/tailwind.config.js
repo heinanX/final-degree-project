@@ -11,6 +11,9 @@ export default {
         vhsBlue: '#00bfc3',
         vhsPink: '#ff2273'
       },
+      fontFamily: {
+        notoSans: ['Noto Sans', 'sans-serif'],
+      }
     },
   },
   plugins: [],

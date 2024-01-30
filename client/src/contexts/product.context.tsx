@@ -161,7 +161,7 @@ try {
 
   useEffect(() => {
     if (getMovie && Array.isArray(getMovie.category) && getMovie.category.length > 0) {
-      //@ts-expect-error: the array has an index of 0 as it is already checking that it has as lenght over 0
+      //@ts-expect-error: the array has an index of 0 as it has a length bigger than 0
       const firstCategory = getMovie.category[0]._id
       getProductBySearchCriteria(firstCategory, 'category');
     }

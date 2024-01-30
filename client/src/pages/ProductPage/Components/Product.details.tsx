@@ -21,7 +21,7 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div className="w-1/2 bg-red-200 flex flex-col justify-center p-4 ">
+      <div className="w-1/2 flex flex-col justify-center p-4 ">
         <h1
           data-info="Movie-title"
           className="text-5xl uppercase tracking-wide"

@@ -13,35 +13,43 @@ const ProductPage = () => {
   const { id } = useParams();
   const windowSize = useWindowSize();
 
+  //effect to load product details when the 'id' parameter changes
   useEffect(() => {
     if (id) {
-      console.log(id);
-      
-    getProduct(id);
-    window.scrollTo(0, 0);
-  }
+      setLoadProduct(true)
+      getProduct(id);
+      window.scrollTo(0, 0);
+    }
   }, [id]);
 
+  //effect to update the loading state when 'getMovie' changes
   useEffect(() => {
+
     setLoadProduct(false);
   }, [getMovie]);
 
   return (
     <div className="w-full max-w-7xl flex flex-col py-40">
-     <div className=" flex flex-row " >
-     {loadProduct ? (
-        <p>loading</p>
-      ) : (
-        <>
-          <LeftPanel />
-          <RightPanel />
-        </>
-      )}
-     </div>
-        <div className="py-4">
-        <Shelf arr={products} category={"Related titles"} windowSize={windowSize} />
-        </div>
+      <div className=" flex flex-row ">
+        {/* a conditional render that displays loading message while fetching product */}
+        {loadProduct ? (
+          <p>loading</p>
+        ) : (
+          <>
+            <LeftPanel />
+            <RightPanel />
+          </>
+        )}
+      </div>
 
+      {/* Related Titles Shelf Section utilizing Shelf component*/}
+      <div className="py-4">
+        <Shelf
+          arr={products} //provides array with movies
+          category={"Related titles"} //provides title for shelf label
+          windowSize={windowSize} //provides windowSize hook
+        />
+      </div>
     </div>
   );
 };

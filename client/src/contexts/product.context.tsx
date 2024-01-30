@@ -24,6 +24,7 @@ export const useSocket = () => useContext(ProductContextValues);
 function ProductProvider({ children }: PropsWithChildren) {
   const [products, setProducts] = useState<Product[]>([]);
   const [getMovie, setgetMovie] = useState<Product | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [viewProductDetails, setViewProductDetails] = useState<Product | null>(
     null
   );
@@ -101,6 +102,7 @@ try {
   const data = await res.json();
   if (res.ok) {
     console.log('this is from the response', data);
+    setRelatedProducts(data)
   }
 } catch (err) {
   if (err instanceof Error) {
@@ -155,9 +157,17 @@ try {
 
   useEffect(() => {
     getProducts();
-
-    // getProductBySearchCriteria('65a2af52719aaaf33cdf52d3','category')
   }, []);
+
+  useEffect(() => {
+    if (getMovie && Array.isArray(getMovie.category) && getMovie.category.length > 0) {
+      //@ts-expect-error: the array has an index of 0 as it is already checking that it has as lenght over 0
+      const firstCategory = getMovie.category[0]._id
+      getProductBySearchCriteria(firstCategory, 'category');
+    }
+  }, [getMovie]);
+  
+  
 
   return (
     <ProductContextValues.Provider
@@ -173,7 +183,9 @@ try {
         newUpdatedProduct,
         setNewUpdatedProduct,
         updateProduct,
-        updateProductDatabase
+        updateProductDatabase,
+        relatedProducts,
+        setRelatedProducts,
       }}
     >
       {children}

@@ -11,6 +11,8 @@ export interface ProductContext {
   setNewUpdatedProduct: React.Dispatch<React.SetStateAction<object | null>>,
   updateProduct: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>, property: string) => void
   updateProductDatabase: (updateProductObject: object, id: string) => void;
+  relatedProducts: Product[];
+  setRelatedProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 }
 
 export const defaultValues = {
@@ -25,7 +27,9 @@ export const defaultValues = {
   newUpdatedProduct: null,
   setNewUpdatedProduct: () => {},
   updateProduct:  () => {},
-  updateProductDatabase: () => {}
+  updateProductDatabase: () => {},
+  relatedProducts: [],
+  setRelatedProducts: () => {}
 };
 
 export interface iProductVhs {

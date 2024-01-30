@@ -8,7 +8,7 @@ import useWindowSize from "../../customHooks/windowSize";
 
 const ProductPage = () => {
   const [loadProduct, setLoadProduct] = useState(true);
-  const { getProduct, getMovie, products } = productSocket();
+  const { getProduct, getMovie, relatedProducts } = productSocket();
 
   const { id } = useParams();
   const windowSize = useWindowSize();
@@ -24,7 +24,6 @@ const ProductPage = () => {
 
   //effect to update the loading state when 'getMovie' changes
   useEffect(() => {
-
     setLoadProduct(false);
   }, [getMovie]);
 
@@ -43,13 +42,14 @@ const ProductPage = () => {
       </div>
 
       {/* Related Titles Shelf Section utilizing Shelf component*/}
-      <div className="py-4">
+      {relatedProducts.length > 0 ? (<div className="py-4">
         <Shelf
-          arr={products} //provides array with movies
+          arr={relatedProducts} //provides array with movies
           category={"Related titles"} //provides title for shelf label
           windowSize={windowSize} //provides windowSize hook
         />
-      </div>
+      </div>): <></>}
+      
     </div>
   );
 };

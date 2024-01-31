@@ -6,10 +6,13 @@ export interface CustomerContext {
   signUp: (mail: string, pass: string) => Promise<void>;
   logOut: () => Promise<void>;
   checkLoginStatus: () => Promise<void>;
-  activeCustomer: string;
   loadingIsLoggedIn: boolean;
   setLoadingIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  showLoginDrawer: boolean;
+  setShowLoginDrawer: React.Dispatch<React.SetStateAction<boolean>>;
+  activeCustomer: string;
 }
+
 
 export const defaultValues = {
   isLoggedIn: false,
@@ -20,7 +23,9 @@ export const defaultValues = {
   signUp: async () => {},
   logOut: async () => {},
   checkLoginStatus: async () => {},
-  activeCustomer: "",
   loadingIsLoggedIn: true,
-  setLoadingIsLoggedIn: () => {}
+  setLoadingIsLoggedIn: () => {},
+  showLoginDrawer: false,
+  setShowLoginDrawer: () => {},
+  activeCustomer: ""
 };

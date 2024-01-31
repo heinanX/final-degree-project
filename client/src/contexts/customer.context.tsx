@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import {
@@ -30,8 +29,9 @@ function CustomerProvider({ children }: PropsWithChildren) {
   // Initializing state for customer-related information
   const [loadingIsLoggedIn, setLoadingIsLoggedIn] = useState<boolean>(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [activeCustomer, setActiveCustomer] = useState<string>("");
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [showLoginDrawer, setShowLoginDrawer] = useState<boolean>(false);
   const navigate = useNavigate();
 
   // Function to log in a customer
@@ -50,8 +50,12 @@ function CustomerProvider({ children }: PropsWithChildren) {
 
       if (res.ok) {
         const data = await res.json();
+        if (showLoginDrawer) {
+          return setShowLoginDrawer(!showLoginDrawer);
+        }
         setIsLoggedIn(true);
         setIsAdmin(data.isAdmin);
+        setActiveCustomer(data.mail)
         navigate("/customer/account");
       } else {
         alert("Incorrect email or password");
@@ -75,9 +79,12 @@ function CustomerProvider({ children }: PropsWithChildren) {
         }),
       });
 
+      const data = await res.json();
+
       if (res.ok) {
         setIsLoggedIn(true);
-        // Add 'customer reward' logic here
+        setIsAdmin(data.isAdmin);
+        setActiveCustomer(data.mail)
       } else {
         alert("User already exists");
       }
@@ -98,6 +105,8 @@ function CustomerProvider({ children }: PropsWithChildren) {
       });
       if (res.ok) {
         setIsLoggedIn(false);
+        setIsAdmin(false);
+        setActiveCustomer("")
       }
     } catch (error) {
       console.error("Logout failed", error);
@@ -108,11 +117,12 @@ function CustomerProvider({ children }: PropsWithChildren) {
   const checkLoginStatus = async () => {
     try {
       const res = await fetch("/api/customers/active");
-      const data = await res.json();
+      const data: {mail: string, isAdmin: boolean} = await res.json();
 
       if (res.ok) {
         setIsLoggedIn(true);
         setIsAdmin(data.isAdmin);
+        setActiveCustomer(data.mail)
         setLoadingIsLoggedIn(false);
       } else {
         setLoadingIsLoggedIn(false);
@@ -124,7 +134,6 @@ function CustomerProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     checkLoginStatus();
-    
   }, [isLoggedIn]);
 
   // Render the CustomerContextValues.Provider with the customer-related functions and state as values
@@ -138,9 +147,11 @@ function CustomerProvider({ children }: PropsWithChildren) {
         signUp,
         logOut,
         checkLoginStatus,
-        activeCustomer,
         loadingIsLoggedIn,
         setLoadingIsLoggedIn,
+        showLoginDrawer,
+        setShowLoginDrawer,
+        activeCustomer
       }}
     >
       {children}

@@ -7,10 +7,11 @@ import { useSocket as customerSocket } from "../../../contexts/customer.context"
 
 const LoginDrawer = () => {
   // Accessing logOut function from customerSocket
-  const { logOut } = customerSocket();
+  const { logOut, setShowLoginDrawer } = customerSocket();
 
   // Function to handle logout
   const handleLogout = () => {
+    setShowLoginDrawer(false)
     logOut();
   };
 

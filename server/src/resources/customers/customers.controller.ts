@@ -59,7 +59,7 @@ export const createCustomer = async (
     delete jsonCust.password;
 
     req.session.customer = jsonCust;
-    res.status(201).json('customer ' + jsonCust.mail + ' is created');
+    res.status(201).json({mail: jsonCust.mail, isAdmin:jsonCust.isAdmin});
   } catch (error) {
     next(error);
   }
@@ -103,7 +103,7 @@ export const activeLogin = async (
 ) => {
   try {
     const activeLoginRes = {
-      response: req.session?.customer?.mail + " is logged in",
+      mail: req.session?.customer?.mail,
       isAdmin: req.session?.customer?.isAdmin
     }
     res.status(200).json(activeLoginRes);

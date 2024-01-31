@@ -19,10 +19,10 @@ const Shelf = ({ arr, category, windowSize }: shelfProps) => {
   // slice array based on window width to adjust the number of displayed items
   let newArr = arr.slice(0, 5);
 
-  if (windowSize.width < 1100) {
+  if (windowSize.width < 1182) {
     newArr = arr.slice(0, 4);
   }
-  if (windowSize.width < 950) {
+  if (windowSize.width < 990) {
     newArr = arr.slice(0, 3);
   }
   if (windowSize.width < 776) {

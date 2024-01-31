@@ -23,10 +23,6 @@ const PurchaseDetails = () => {
     handleCheckout(addressee);
   };
 
-/*   useEffect(() => {
-    fetchCustomerDetails()
-  }, []) */
-
   const labelCss = "text-white";
   const inputCss = "h-8 py-1 px-2 mb-2 text-black";
   return (

@@ -36,7 +36,7 @@ const Checkout = () => {
           {/* Horizontal rule for visual separation */}
           <hr className="pb-10 border-teal-600" />
           {/* Flex container for checkout and purchase details */}
-          <div className="flex flex-row gap-8 items-center">
+          <div className="flex flex-col lg:flex-row gap-8 items-center">
             <CheckoutDetails />
             <PurchaseDetails />
           </div>

@@ -26,7 +26,7 @@ const PurchaseDetails = () => {
   const labelCss = "text-white";
   const inputCss = "h-8 py-1 px-2 mb-2 text-black";
   return (
-    <form className="w-1/2 flex flex-col px-4" onSubmit={(e) => submitForm(e)}>
+    <form className="w-full md:w-1/2 flex flex-col px-4" onSubmit={(e) => submitForm(e)}>
       <label className={labelCss}>Mail</label>
       <input type="text" placeholder="mail" className={inputCss} defaultValue={activeCustomer} disabled />
       <label className={labelCss}>Name</label>

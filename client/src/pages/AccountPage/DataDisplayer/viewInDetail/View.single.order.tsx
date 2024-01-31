@@ -21,7 +21,6 @@ interface ViewSingleOrderProps {
 const ViewSingleOrder = ({disableForm, setDisableForm}: ViewSingleOrderProps) => {
 
   const { viewOrderDetails, updateOrderDatabase } = orderSocket();
-  // const [disableForm, setDisableForm] = useState<boolean>(true);
   const [newShipped, setNewShipped] = useState<boolean>((viewOrderDetails as Order).shipped);
   const [newReturned, setNewReturned] = useState<boolean>((viewOrderDetails as Order).returned);
   const [newCustName, setCustName] = useState<string>((viewOrderDetails as Order).address.cust_name);
@@ -43,7 +42,9 @@ const ViewSingleOrder = ({disableForm, setDisableForm}: ViewSingleOrderProps) =>
         zip_code: newZipCode,
         city: newCity,
       },
+      order_status: newShipped && newReturned ? "completed" : (viewOrderDetails as Order).address.street
     };
+
     updateOrderDatabase(updateOrderObject, (viewOrderDetails as Order)._id);
   };
 

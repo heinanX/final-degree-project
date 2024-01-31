@@ -1,13 +1,12 @@
 export interface TagContext {
-  tags: Tag[]
+  tags: Tag[];
   getTags: () => void;
   getTag: (tag: string) => void;
 }
 
-
 export interface Tags {
-  id: string,
-  tag: string
+  id: string;
+  tag: string;
 }
 export interface Tag {
   tags: [];

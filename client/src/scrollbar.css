@@ -1,30 +1,29 @@
 /* Custom styles for primary scrollbar */
 .primary-scrollbar::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 
 .primary-scrollbar::-webkit-scrollbar-thumb {
-    background-color: hotpink;
-    border-radius: 99px;
+  background-color: hotpink;
+  border-radius: 99px;
 }
 
 .primary-scrollbar::-webkit-scrollbar-track {
-    background-color: #cbe0e0;
-    border-radius: 99px;
+  background-color: #cbe0e0;
+  border-radius: 99px;
 }
 
 /* Custom styles for secondary scrollbar */
 .secondary-scrollbar::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 .secondary-scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgb(250 204 21);
-    border-radius: 99px;
+  background-color: rgb(250 204 21);
+  border-radius: 99px;
 }
 
 .secondary-scrollbar::-webkit-scrollbar-track {
-    background-color: #cbe0e0;
-    border-radius: 99px;
+  background-color: #cbe0e0;
+  border-radius: 99px;
 }
-

@@ -5,7 +5,9 @@ import {
   useContext,
   useState,
 } from "react";
+
 import { TagContext, Tag, Tags } from "../interfaces/tags.interface";
+// importing custom types/interfaces from the tags interface file
 
 const defaultValues = {
   tags: [],
@@ -13,47 +15,68 @@ const defaultValues = {
   getTags: () => {},
   getTag: () => {},
 };
+// default values for the tag context, including empty arrays and placeholder functions
 
 export const TagContextValues = createContext<TagContext>(defaultValues);
+// creating a context to manage tag-related state
 
 export const useSocket = () => useContext(TagContextValues);
+// custom hook to access the tag context
 
 //---------------------- Provider begins here
 
 function TagProvider({ children }: PropsWithChildren) {
+  // initializing state for tag-related information
   const [tags, setTags] = useState<Tag[]>([]);
 
+  /*
+   * function to fetch all tags from the server
+   */
   const getTags = async () => {
-    const res = await fetch("http://localhost:3000/api/tags");
-    const data = await res.json();
+    try {
+      const res = await fetch("http://localhost:3000/api/tags");
+      const data = await res.json();
 
-    setTags(data);
-  };
-
-  const getTag = async (tag: string) => {
-    const res = await fetch("http://localhost:3000/api/tags");
-    const data = await res.json();
-
-    const collected = data.find((item: Tags) => item.tag === tag);
-
-    if (!collected) {
-      const createTagRes = await fetch("/api/tags/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          tag: tag,
-        }),
-      });
-      if (createTagRes.ok) {
-        const newTag = await createTagRes.json();
-        console.log(newTag);
-      }
+      setTags(data);
+    } catch (err) {
+      console.error("Error fetching tags", err);
     }
-    console.log(collected);
   };
 
+  /*
+   * function to fetch a specific tag or create it if it doesn't exist
+   */
+  const getTag = async (tag: string) => {
+    try {
+      const res = await fetch("http://localhost:3000/api/tags");
+      const data = await res.json();
+
+      const collected = data.find((item: Tags) => item.tag === tag);
+
+      if (!collected) {
+        const createTagRes = await fetch("/api/tags/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            tag: tag,
+          }),
+        });
+
+        if (createTagRes.ok) {
+          const newTag = await createTagRes.json();
+          console.log(newTag);
+        }
+      }
+
+      console.log(collected);
+    } catch (err) {
+      console.error("Error fetching or creating tag", err);
+    }
+  };
+
+  // Render the TagContextValues.Provider with the tag-related functions and state as values
   return (
     <TagContextValues.Provider
       value={{

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProduct = exports.editProduct = exports.createProduct = exports.getProduct = exports.getProducts = void 0;
+exports.deleteProduct = exports.editProduct = exports.createProduct = exports.getProduct = exports.getProductBySearchCriteria = exports.getProducts = void 0;
 const product_model_1 = require("./product.model");
 const getProducts = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -21,6 +21,30 @@ const getProducts = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.getProducts = getProducts;
+const getProductBySearchCriteria = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const orders = yield product_model_1.ProductModel.find(req.body);
+        res.status(200).json(orders);
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.getProductBySearchCriteria = getProductBySearchCriteria;
+// export const getProductsByTag = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const orders = await ProductModel.find({
+//       tags: {  $in: req.params.id }
+//     });
+//     res.status(200).json(orders);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 const getProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const product = yield product_model_1.ProductModel.findOne({ _id: req.params.id });

@@ -10,14 +10,19 @@ interface shelfProps {
   };
 }
 
+/* A COMPONENT THAT RENDERS A SHELF WITH A SET OF MOVIES LINED OVER IT
+  - depending on the size of the screen the shelf contains more or less titles
+*/
+
 const Shelf = ({ arr, category, windowSize }: shelfProps) => {
 
+  // slice array based on window width to adjust the number of displayed items
   let newArr = arr.slice(0, 5);
 
-  if (windowSize.width < 1100) {
+  if (windowSize.width < 1182) {
     newArr = arr.slice(0, 4);
   }
-  if (windowSize.width < 950) {
+  if (windowSize.width < 990) {
     newArr = arr.slice(0, 3);
   }
   if (windowSize.width < 776) {
@@ -31,32 +36,27 @@ const Shelf = ({ arr, category, windowSize }: shelfProps) => {
   }
 
   return (
-    <div className="relative my-10 mx-10 border border-teal-700 h-96 flex flex-col justify-end rounded-sm">
+    <div className="relative my-10 mx-10 border border-vhsBlue h-96 flex flex-col justify-end rounded-sm">
+      {/* shelf label containing a specific category title */}
       <div
-        className="absolute border border-teal-700 px-10 text-teal-700 text-sm uppercase tracking-wider overflow-hidden"
-        style={{
-          top: "-26px",
-          left: "-1px",
-          paddingTop: "2px",
-          paddingBottom: "2px",
-        }}
+        id="shelf-label"
+        className="absolute border border-vhsBlue px-10 py-1 text-vhsBlue text-sm uppercase tracking-wider overflow-hidden"
       >
         {category}
       </div>
+
+      {/*  maps over sliced array to render NavLink for each product */}
       <div className="h-80 w-full flex gap-4 justify-center">
         {newArr.map((item, index) => (
-          <NavLink to={`/product/${item._id}`} key={index} >
-          <div className="h-80 relative">
-            <img
-              src={item.image}
-              alt="item.title"
-              className="h-full"
-            />
-          </div>
+          <NavLink to={`/product/${item._id}`} key={index}>
+            <div className="h-80 relative">
+              <img src={item.image} alt="item.title" className="h-full" />
+            </div>
           </NavLink>
         ))}
       </div>
-      <div className="mb-2 mx-2 border border-teal-900 h-5  rounded-sm"></div>
+      {/* the "actual" shelf supporting the movies */}
+      <div className="mb-2 mx-2 border border-teal-600 h-5  rounded-sm"></div>
     </div>
   );
 };

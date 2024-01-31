@@ -8,8 +8,7 @@ const validate = (schema) => {
             next();
         }
         else {
-            //next(error);
-            console.log(error);
+            next(error);
         }
     };
 };

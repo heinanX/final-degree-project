@@ -58,7 +58,7 @@ const createCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         const jsonCust = customer.toJSON();
         delete jsonCust.password;
         req.session.customer = jsonCust;
-        res.status(201).json('customer ' + jsonCust.mail + ' is created');
+        res.status(201).json({ mail: jsonCust.mail, isAdmin: jsonCust.isAdmin });
     }
     catch (error) {
         next(error);
@@ -92,7 +92,7 @@ const activeLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     var _d, _e, _f, _g;
     try {
         const activeLoginRes = {
-            response: ((_e = (_d = req.session) === null || _d === void 0 ? void 0 : _d.customer) === null || _e === void 0 ? void 0 : _e.mail) + " is logged in",
+            mail: (_e = (_d = req.session) === null || _d === void 0 ? void 0 : _d.customer) === null || _e === void 0 ? void 0 : _e.mail,
             isAdmin: (_g = (_f = req.session) === null || _f === void 0 ? void 0 : _f.customer) === null || _g === void 0 ? void 0 : _g.isAdmin
         };
         res.status(200).json(activeLoginRes);

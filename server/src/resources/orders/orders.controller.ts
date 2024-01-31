@@ -27,8 +27,6 @@ export const getUserOrders = async (
   next: NextFunction
 ) => {
   try {
-    console.log(req.session?.customer?._id);
-    
     // Fetch all orders for the specific user from the database
     const orders = await OrderModel.find({
       customer: req.session?.customer?._id,
@@ -109,7 +107,7 @@ export const createOrderDB = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {    
+  try {
     // Attempt to create a new order in database using the OrderModel
     const newProduct = await OrderModel.create(req.body);
 

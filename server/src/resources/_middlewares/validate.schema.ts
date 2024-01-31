@@ -7,9 +7,7 @@ export const validate = (schema: ObjectSchema) => {
     if (!error) {
         next();
     } else {
-        //next(error);
-        console.log(error);
-        
+        next(error);        
     }
   };
 };

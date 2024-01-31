@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSocket as productSocket } from "../../../../../../contexts/product.context";
 import { Product, iProductDigital } from "../../../../../../interfaces/product.interface";
 import ProductDigitalAvailable from "./Product.Digital.available";
@@ -13,7 +12,7 @@ interface ProductDigitalProps {
 - ie. price, ids, and availability*/
 
 const ProductDigital = ({ disableForm, newDigital,setNewDigital }: ProductDigitalProps) => {
-  const { viewProductDetails } = productSocket(); //destructs state from product context
+  const { viewProductDetails } = productSocket(); //destructures state from product context
 
   //states to hold updated values if they're edited.
     const updateDigitalProduct = (e: React.ChangeEvent<HTMLInputElement>, property: string) => {
@@ -22,11 +21,6 @@ const ProductDigital = ({ disableForm, newDigital,setNewDigital }: ProductDigita
         [property]: e.target.value,
       }));
     }
-
-    useEffect(() => {
-      console.log(newDigital);
-      
-    },[newDigital])
 
   return (
     <div>

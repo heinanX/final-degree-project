@@ -6,6 +6,10 @@ GET http://localhost:3000/api/products/65982502e138d6b4a7377d66
 
 ###
 
+GET http://localhost:3000/api/products/category/6593efdfa62dd39fcfa68fc2
+
+###
+
 POST http://localhost:3000/api/products/create
 Content-Type: application/json
 

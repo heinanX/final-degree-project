@@ -5,27 +5,33 @@ import {
   Order,
   defaultValues,
 } from "../interfaces/order.interface";
-import { Cart, CartItem} from "../interfaces/cart.interface";
-//import { useSocket as cartSocket } from "./cart.context";
+import { Cart, CartItem } from "../interfaces/cart.interface";
+// importing custom hook from the cart context
+import { useSocket as cartSocket } from "./cart.context";
 
+// creating a context to manage order-related state
 export const OrderContextValues = createContext<OrderContext>(defaultValues);
 
+// custom hook to access the order context
 export const useSocket = () => useContext(OrderContextValues);
 
 //---------------------- Provider begins here
 
 function OrderProvider({ children }: PropsWithChildren) {
+  // accessing the setNewCart function from the cart context
+  const { setNewCart } = cartSocket();
 
-
-  const [ userOrders, setUserOrders ] = useState<Order[]>([]);
-  const [ getOrders, setGetOrders ] = useState<Order[]>([]);
+  // initializing state for order-related information
+  const [userOrders, setUserOrders] = useState<Order[]>([]);
+  const [getOrders, setGetOrders] = useState<Order[]>([]);
+  const [isOrderLoading, setIsOrderLoading] = useState<boolean>(false);
   const [order, setOrder] = useState<Order>({
     customer: "",
     address: {
-      cust_name: '',
-      street: '',
-      zip_code: '',
-      city: ''
+      cust_name: "",
+      street: "",
+      zip_code: "",
+      city: "",
     },
     order: [],
     total_price: 0,
@@ -35,38 +41,43 @@ function OrderProvider({ children }: PropsWithChildren) {
     returned: false,
     payment_status: "",
     order_status: "",
-    _id: ''
+    _id: "",
   });
 
-  // state used to store order item in: [View.single.Order] component
+  // state used to store order item for the [View.single.Order] component
   const [viewOrderDetails, setViewOrderDetails] = useState<Order | null>(null);
 
+  // function to fetch all orders from the server
   const getOrdersDatabase = async () => {
     try {
-      const res = await fetch('/api/orders');
+      const res = await fetch("/api/orders");
       const data = await res.json();
-      if (!res.ok) throw new Error("Failed to fetch product");
-      setGetOrders(data)
+
+      if (!res.ok) throw new Error("Failed to fetch orders");
+      setGetOrders(data);
     } catch (err) {
       if (err instanceof Error) {
-        console.error("Error fetching product", err.message);
+        console.error("Error fetching orders", err.message);
       }
     }
-  }
+  };
 
+  // function to fetch user-specific orders from the server
   const getUserOrdersDatabase = async () => {
     try {
       const res = await fetch(`/api/orders/user-orders`);
       const data = await res.json();
-      if (!res.ok) throw new Error("Failed to fetch product");
-      setUserOrders(data)
+
+      if (!res.ok) throw new Error("Failed to fetch user orders");
+      setUserOrders(data);
     } catch (err) {
       if (err instanceof Error) {
-        console.error("Error fetching product", err.message);
+        console.error("Error fetching user orders", err.message);
       }
     }
-  }
+  };
 
+  // function to create an order in the database based on cart data and session ID
   const createOrderDatabase = async (cartData: Cart, sessionId: string) => {
     const itemsInCart = cartData.cart.map((item: CartItem) => {
       const { product, quantity, digital, vhs } = item;
@@ -78,7 +89,7 @@ function OrderProvider({ children }: PropsWithChildren) {
       };
       return newObject;
     });
- 
+
     try {
       const res = await fetch("/api/orders/create", {
         method: "POST",
@@ -92,19 +103,33 @@ function OrderProvider({ children }: PropsWithChildren) {
           total_price: cartData.total_price,
         }),
       });
+
       const data = await res.json();
+      
       if (res.ok) {
-        console.log(data);
+        setIsOrderLoading(false)
         setOrder(data);
+        localStorage.removeItem("cart");
+        setNewCart({
+          cart: [],
+          total_price: 0,
+          address: {
+            cust_name: "",
+            street: "",
+            zip_code: "",
+            city: "",
+          },
+        });
       }
     } catch (err) {
-      // Handle errors, if any
+      // handle errors, if any
       if (err instanceof Error) {
-        console.error("Error fetching product", err.message);
+        console.error("Error creating order", err.message);
       }
     }
   };
 
+  // function to update an order in the database
   const updateOrderDatabase = async (updateOrderObject: object, id: string) => {
     try {
       const res = await fetch(`/api/orders/manage-order/${id}`, {
@@ -114,18 +139,19 @@ function OrderProvider({ children }: PropsWithChildren) {
         },
         body: JSON.stringify(updateOrderObject),
       });
+
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         setViewOrderDetails(data);
       }
     } catch (err) {
       if (err instanceof Error) {
-        console.error("Error fetching product", err.message);
+        console.error("Error updating order", err.message);
       }
     }
-  }
+  };
 
+  // render the OrderContextValues.Provider with the order-related functions and state as values
   return (
     <OrderContextValues.Provider
       value={{
@@ -140,7 +166,9 @@ function OrderProvider({ children }: PropsWithChildren) {
         updateOrderDatabase,
         viewOrderDetails,
         setViewOrderDetails,
-        getUserOrdersDatabase
+        getUserOrdersDatabase,
+        isOrderLoading,
+        setIsOrderLoading,
       }}
     >
       {children}

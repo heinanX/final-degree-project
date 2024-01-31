@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSocket as orderSocket } from "../../../../contexts/order.context";
 import FormSearch from "../_sharedComponents/Form.search";
-import OrderOverview from "../OrdersOverview/Order.overview";
+import OrderOverview from "../ordersOverview/Order.overview";
 
 // Props interface for AllOrders component
 interface AllOrdersProps {

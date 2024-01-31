@@ -1,4 +1,4 @@
-import { Order } from "../../../../interfaces/order.interface"; //order interface
+import { Order } from "../../../../interfaces/order.interface";
 import formatDate from "../../../../functions/date.formatter"; //date converter function
 import { IoIosCheckbox } from "react-icons/io"; //checkbox icon
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md"; // box outline icon
@@ -10,24 +10,25 @@ interface OrderOverviewProps {
 /* COMPONENT THAT RENDERS AN OVERVIEW OF AN ORDER */
 
 const OrderOverview = ({ orderObject }: OrderOverviewProps) => {
-
   //css styling for li elements with checkboxes
   const liWithCheckboxCss =
     "flex flex-row xl:flex-col xl:justify-center items-center gap-2 xl:w-1/6";
 
   return (
     <ul className="flex flex-col text-base xl:flex-row justify-between xl:items-center gap-1 mb-2 p-2 w-full md:text-xs">
-     
       {/* 'order id' */}
       <li className="w-full xl:w-2/6 pr-2">id: {orderObject._id}</li>
 
       {/* 'payment status' */}
       <li className="w-full xl:w-1/6 pr-2">
-        status: <span className="text-green-500">{orderObject.payment_status}</span>
+        status:{" "}
+        <span className="text-green-500">{orderObject.payment_status}</span>
       </li>
 
       {/* 'order status' */}
-      <li className="w-full xl:w-1/6 pr-2">order: {orderObject.order_status}</li>
+      <li className="w-full xl:w-1/6 pr-2">
+        order: {orderObject.order_status}
+      </li>
 
       {/* 'shipped' checkbox dependent on status */}
       <li className={liWithCheckboxCss}>

@@ -4,14 +4,11 @@ export interface CategoryContext {
   getCategory: (id: string) => void;
 }
 
-
 export interface Category {
-  category: [];
+  category: string[];
 }
 
-export interface CategoryTwo {
-
-    _id: string,
-    category: string
-
+export interface CategoryModel {
+  _id: string;
+  category: string;
 }

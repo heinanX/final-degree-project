@@ -1,4 +1,6 @@
-import React from 'react'
+/* A COMPONENT FOR ACCOUNT SETTINGS
+  - still a WIP
+*/
 
 const AccountSettings = () => {
   return (

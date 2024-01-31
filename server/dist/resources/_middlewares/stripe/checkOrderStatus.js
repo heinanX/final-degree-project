@@ -15,7 +15,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRETKEY); //imports stripe
 const checkOrderStatus = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
-        console.log(req.body.session_id);
         // Retrieve Stripe Checkout session using the sessionId from the request body
         const session = yield stripe.checkout.sessions.retrieve(req.body.session_id);
         // Check if payment status of the session is "paid"

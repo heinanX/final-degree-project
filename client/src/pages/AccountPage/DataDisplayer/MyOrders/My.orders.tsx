@@ -7,9 +7,9 @@ import { useEffect } from "react";
 /* COMPONENT THAT RENDERS OUT A COMPLETE ORDER */
 
 const MyOrders = () => {
+  // Accessing orderSocket context for user orders
   const { getUserOrdersDatabase, userOrders } = orderSocket();
-  // const [disableForm, setDisableForm] = useState<boolean>(true);
-
+  // useEffect to fetch user orders on component mount
   useEffect(() => {
     getUserOrdersDatabase();
   }, []);
@@ -17,17 +17,19 @@ const MyOrders = () => {
   return (
     <div
       id="myOrders"
-      className="w-full px-4 py-2 overflow-y-auto primary-scrollbar "
+      className="w-full px-4 py-2 overflow-y-auto primary-scrollbar"
     >
-      {userOrders.length === 0 ? ( // display loader if array is empty
+      {/* Display loading message if userOrders array is empty */}
+      {userOrders.length === 0 ? (
         <p>Loading...</p>
       ) : (
-        // Map through orders if userOrders is not empty
+        // Map through userOrders if it's not empty
         userOrders.map((orders, index) => (
           <form
             key={index}
             className="w-full text-sm flex flex-col gap-2 py-6 px-2 text-gray-400 odd:bg-teal-950"
           >
+            {/* Render order id */}
             <div className="flex flex-row items-center gap-2 uppercase w-full">
               <label className="w-1/3">order id</label>
               <input
@@ -38,6 +40,7 @@ const MyOrders = () => {
               />
             </div>
 
+            {/* Render total price */}
             <div className="flex flex-row items-center gap-2 uppercase">
               <label className="w-1/3">total_price</label>
               <input
@@ -48,6 +51,7 @@ const MyOrders = () => {
               />
             </div>
 
+            {/* Conditionally render discount section if applicable */}
             {orders.discount > 0 ? (
               <div className="flex flex-row items-center gap-2 uppercase">
                 <label className="w-1/3">discount</label>
@@ -62,6 +66,7 @@ const MyOrders = () => {
               <></>
             )}
 
+            {/* Render payment status */}
             <div className="flex flex-row items-center gap-2 uppercase">
               <label className="w-1/3">payment status</label>
               <input
@@ -72,6 +77,7 @@ const MyOrders = () => {
               />
             </div>
 
+            {/* Render order date */}
             <div className="flex flex-row items-center gap-2 uppercase">
               <label className="w-1/3">date</label>
               <input
@@ -82,6 +88,7 @@ const MyOrders = () => {
               />
             </div>
 
+            {/* Render returned status with checkbox icon */}
             <div className="flex flex-row items-center justify-between gap-2 uppercase">
               <label className="w-1/3">returned</label>
               {orders.returned ? (
@@ -95,6 +102,7 @@ const MyOrders = () => {
               )}
             </div>
 
+            {/* Render shipped status with checkbox icon */}
             <div className="flex flex-row items-center justify-between gap-2 uppercase">
               <label className="w-1/3">shipped</label>
               {orders.shipped ? (

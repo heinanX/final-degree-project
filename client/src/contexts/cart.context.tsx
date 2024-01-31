@@ -6,6 +6,8 @@ import {
   useEffect,
   useState,
 } from "react";
+// importing necessary dependencies from React
+
 import {
   Addressee,
   Cart,
@@ -13,52 +15,55 @@ import {
   CartItem,
   defaultValues,
 } from "../interfaces/cart.interface";
-import { Product } from "../interfaces/product.interface";
+// importing custom types/interfaces from the cart interface file
 
+import { Product } from "../interfaces/product.interface";
+// importing product interface
+
+// creating a context to manage cart-related state
 export const CartContextValues = createContext<CartContext>(defaultValues);
 
+// custom hook to access the cart context
 export const useSocket = () => useContext(CartContextValues);
 
 //---------------------- Provider begins here
 
 function CartProvider({ children }: PropsWithChildren) {
+  // Initializing state for the cart and its total price
   const [newCart, setNewCart] = useState<Cart>({
     cart: [],
     total_price: 0,
     address: {
-      cust_name: '',
-      street: '',
-      zip_code: '',
-      city: '' 
+      cust_name: "",
+      street: "",
+      zip_code: "",
+      city: "",
     },
   });
-  //const [cartTotal, setCartTotal] = useState<number>(0);
 
-  // A FUNCTION THAT ADDS A PRODUCT TO CART BASED ON ITS TYPE (VHS, DIGITAL OR NEITHER)
+  // cunction to add a product to the cart based on its type
   const addToCart = async (product: Product, type: string) => {
     try {
-      // Check if type is true
+      // check if the product is VHS or digital
       const isVHS = type === "vhs";
       const isDigital = type === "digital";
 
-      // Check if product with the same ID and type already exists in the cart
+      // check if the product already exists in the cart
       const duplicateProduct = newCart.cart.find(
         (cartItem: CartItem) =>
           cartItem.product._id === product._id &&
           (isVHS ? cartItem.vhs : isDigital ? cartItem.digital : false)
       );
 
-      // If product already exists in cart, update its quantity
+      // if the product is already in the cart, update its quantity
       if (duplicateProduct) {
         duplicateProduct.quantity += 1;
-        isVHS
-          ? (duplicateProduct.stripe.quantity += 1)
-          : (duplicateProduct.stripe.quantity += 1);
-        isVHS
-          ? (newCart.total_price += duplicateProduct.product.vhs.price)
-          : (newCart.total_price += duplicateProduct.product.digital.price);
+        duplicateProduct.stripe.quantity += 1;
+        newCart.total_price += isVHS
+          ? duplicateProduct.product.vhs.price
+          : duplicateProduct.product.digital.price;
       } else {
-        // If product is not in cart, create a new movie object
+        // if the product is not in the cart, create a new entry
         const newRental = {
           product: product,
           quantity: 1,
@@ -72,68 +77,61 @@ function CartProvider({ children }: PropsWithChildren) {
           },
         };
 
-        // Add the new product price to total_price
+        // update the total price and add the new entry to the cart
         newCart.total_price += isVHS
           ? newRental.product.vhs.price
           : newRental.product.digital.price;
-
-        // Copy the existing cart and add the new movie to it
         newCart.cart = [...newCart.cart, newRental];
       }
 
-      // Update cart state with newCart and then store it inside cart in LS
+      // update the cart state and store it in local storage
       setNewCart({ ...newCart });
       localStorage.setItem("cart", JSON.stringify(newCart));
     } catch (err) {
-      // Handle errors, if any
+      // handle errors, if any
       if (err instanceof Error) {
-        console.error("Error fetching product", err.message);
+        console.error("Error adding product to cart", err.message);
       }
     }
   };
 
-  // A FUNCION THAT DELETES A PRODUCT INSIDE CART
+  // function to handle quantity changes in the cart
   const handleQuantity = (index: number, action: string) => {
-    const product = newCart.cart[index];
-
+    const product = newCart.cart[index]; //takes incoming index and stores product in a variable
     let updatedCart;
-    let updatedTotalPrice = newCart.total_price;
+    let updatedTotalPrice = newCart.total_price; //variable to state total price of cart
 
     switch (action) {
-      case "add":
+      case "add": //runs when customer increases an item inside cart it
         product.quantity += 1;
         product.stripe.quantity += 1;
         updatedCart = [...newCart.cart];
-        updatedTotalPrice =
-          newCart.total_price +
-          (product.vhs
+        updatedTotalPrice += //adds price to total price in cart
+          product.vhs
             ? product.product.vhs.price
-            : product.product.digital.price);
+            : product.product.digital.price;
         break;
 
-      case "sub":
+      case "sub": //runs when customer decreases an item inside cart it
         product.quantity -= 1;
         product.stripe.quantity -= 1;
         updatedCart = [...newCart.cart];
-        updatedTotalPrice =
-          newCart.total_price -
-          (product.vhs
+        updatedTotalPrice -= //subtracts price from total price in cart
+          product.vhs
             ? product.product.vhs.price
-            : product.product.digital.price);
+            : product.product.digital.price;
         break;
 
-      case "del":
-        updatedTotalPrice =
-          newCart.total_price -
-          (product.vhs
-            ? product.product.vhs.price * product.quantity
-            : product.product.digital.price * product.quantity);
-        newCart.total_price;
-        newCart.cart.splice(index, 1);
-        updatedCart = newCart.cart;
+      case "del": //runs when customer deletes an item inside cart it
+        updatedTotalPrice -= product.vhs //conditional that depending on vhs or digital product multiplies the quantity with price and subtracts it from total price in cart
+          ? product.product.vhs.price * product.quantity
+          : product.product.digital.price * product.quantity;
+        newCart.cart.splice(index, 1); //removes the product from cart
+        updatedCart = newCart.cart; //updates variable
         break;
     }
 
+    // update the cart state and store it in local storage
     if (updatedCart) {
       setNewCart({
         ...newCart,
@@ -151,19 +149,22 @@ function CartProvider({ children }: PropsWithChildren) {
     }
   };
 
+  // function to handle the checkout process
   const handleCheckout = async (addressee: Addressee) => {
     try {
+      // store the updated cart and address in local storage
       localStorage.setItem(
         "cart",
         JSON.stringify({
           ...newCart,
-          address: addressee
+          address: addressee,
         })
       );
 
+      // extract stripe-specific order details from the cart
       const stripeOrders = newCart.cart.map((item) => item.stripe);
-      console.log(stripeOrders);
 
+      // call the server to create a checkout session
       const res = await fetch("api/orders/create-checkout-session", {
         method: "POST",
         headers: {
@@ -172,47 +173,59 @@ function CartProvider({ children }: PropsWithChildren) {
         body: JSON.stringify(stripeOrders),
       });
 
-      if (!res.ok) {
-        console.log("failed creating checkout");
-      }
-
       const { url } = await res.json();
       window.location = url;
     } catch (err) {
+      // handle errors, if any
       if (err instanceof Error) {
-        console.error("Error fetching product", err.message);
+        console.error("Error during checkout", err.message);
       }
     }
   };
 
-  // A FUNCTION THAT INITIALIZES CART FROM LS
+  // function to initialize the cart from local storage
   const setInitCart = async () => {
     try {
-      // Retrieve the cart data from local storage
+      // retrieve the cart data from local storage
       const cartData = localStorage.getItem("cart");
 
-      // Check if there is existing cart data in local storage
+      // check if there is existing cart data in local storage
       if (cartData) {
-        // Parse the existing cart data into an array of CartItem objects
+        // parse the existing cart data into an array of CartItem objects
         const oldItems = JSON.parse(cartData) as Cart;
 
-        // Update the cart state with the parsed items from local storage
+        // update the cart state with the parsed items from local storage
         setNewCart(oldItems);
       } else {
-        // If there is no existing cart data, initialize local storage with an empty array
-        localStorage.setItem("cart", JSON.stringify([]));
+        // if there is no existing cart data, initialize local storage with an empty array
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            cart: [],
+            total_price: 0,
+            address: {
+              cust_name: "",
+              street: "",
+              zip_code: "",
+              city: "",
+            },
+          })
+        );
       }
     } catch (err) {
+      // handle errors, if any
       if (err instanceof Error) {
-        console.error("Error fetching product", err.message);
+        console.error("Error initializing cart", err.message);
       }
     }
   };
 
+  // useEffect hook to initialize the cart when the component mounts
   useEffect(() => {
     setInitCart();
   }, []);
 
+  // render the CartContextValues.Provider with the cart-related functions and state as values
   return (
     <CartContextValues.Provider
       value={{
@@ -221,6 +234,7 @@ function CartProvider({ children }: PropsWithChildren) {
         handleCheckout,
         newCart,
         setNewCart,
+        setInitCart,
       }}
     >
       {children}
@@ -228,4 +242,5 @@ function CartProvider({ children }: PropsWithChildren) {
   );
 }
 
+// exporting the CartProvider component as the default export
 export default CartProvider;

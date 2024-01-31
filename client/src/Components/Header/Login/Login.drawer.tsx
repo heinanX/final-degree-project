@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { useSocket as customerSocket } from "../../contexts/customer.context";
+import { useSocket as customerSocket } from "../../../contexts/customer.context";
 
 /* A COMPONENT FOR RENDERING CUSTOMER DRAWER WITH ACCOUNT OPTIONS
   - i.e My account, settings and Log out
 */
 
-const CustomerDrawer = () => {
+const LoginDrawer = () => {
   // Accessing logOut function from customerSocket
   const { logOut } = customerSocket();
 
@@ -22,7 +22,7 @@ const CustomerDrawer = () => {
   return (
     <div className="absolute top-8 right-0 w-40">
       {/* Customer drawer content */}
-      <div className="bg-white text-red-700 py-2 rounded-sm text-xs w-full">
+      <div className="bg-white text-red-700 rounded-sm text-xs w-full">
         <ul>
           {/* My account link */}
           <li>
@@ -49,4 +49,4 @@ const CustomerDrawer = () => {
   );
 };
 
-export default CustomerDrawer;
+export default LoginDrawer;

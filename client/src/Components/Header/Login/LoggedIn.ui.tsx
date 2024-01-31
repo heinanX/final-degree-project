@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaUserNinja } from "react-icons/fa";
-import CustomerDrawer from "../Customer.drawer";
+import LoginDrawer from "./Login.drawer";
 
 /* A COMPONENT FOR THE UI WHEN A USER IS LOGGED IN */
 
@@ -26,7 +26,7 @@ const LoggedInUi = () => {
       </button>
 
       {/* Rendering the customer drawer if showDrawer is true */}
-      {showDrawer ? <CustomerDrawer /> : <></>}
+      {showDrawer ? <LoginDrawer /> : <></>}
     </li>
   );
 };

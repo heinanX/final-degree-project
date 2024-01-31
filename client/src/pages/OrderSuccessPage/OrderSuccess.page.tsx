@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSocket as orderSocket } from '../../contexts/order.context';
 import { Cart } from '../../interfaces/cart.interface';
 import LoadBar from './LoadBar/LoadBar';
@@ -9,10 +9,11 @@ import OrderDetails from './OrderDetails/OrderDetails';
 const OrderSuccessPage = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [ isloading, setIsLoading ] = useState<boolean>(false);
-  const { createOrderDatabase } = orderSocket();
+  //const [ isloading, setIsLoading ] = useState<boolean>(false);
+  const { createOrderDatabase, isOrderLoading, setIsOrderLoading } = orderSocket();
 
   useEffect(()=> {
+    setIsOrderLoading(true)
     // Extract the session ID from the URL query string
     const queryString = location.search;
     const sessionId = queryString.substring(4);
@@ -26,13 +27,12 @@ const OrderSuccessPage = () => {
       console.log(cart);
       // Call function to create an order in the database
       createOrderDatabase(cart, sessionId)
-      //setTimeout(()=>{setIsLoading(false)}, 5000)
     }
   }, [])
 
   return (
-    <div className="orderSuccess flex flex-col items-center py-32 px-24 my-40 border border-teal-600">
-      {isloading ? <LoadBar /> : <OrderDetails />}
+    <div className="orderSuccess flex flex-col items-center py-32 my-40 mx-4 border border-teal-600">
+      {isOrderLoading ? <LoadBar /> : <OrderDetails />}
   </div>
   )
 }

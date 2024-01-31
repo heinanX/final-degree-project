@@ -14,36 +14,10 @@ export interface OrderContext {
   viewOrderDetails: Order | null;
   setViewOrderDetails: React.Dispatch<React.SetStateAction<Order | null>>;
   getUserOrdersDatabase: () => void;
+  isOrderLoading: boolean;
+  setIsOrderLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface Order {
-  customer: string;
-  address: OrderAddress;
-  order: OrderItem[];
-  total_price: number;
-  discount: number;
-  date: string;
-  shipped: boolean;
-  returned: boolean;
-  payment_status: string;
-  order_status: string;
-  _id: string;
-}
-
-export interface OrderItem {
-  product: string;
-  quantity: number;
-}
-export interface OrderItemWithId extends OrderItem {
-  _id: string;
-}
-
-export interface OrderAddress {
-  cust_name: string;
-  street: string;
-  zip_code: string;
-  city: string;
-}
 export const defaultValues = {
   getOrders: [],
   setGetOrders: () => {},
@@ -74,4 +48,36 @@ export const defaultValues = {
   viewOrderDetails: null,
   setViewOrderDetails: () => {},
   getUserOrdersDatabase: () => {},
+  isOrderLoading: false,
+  setIsOrderLoading: () => {}
 };
+
+export interface Order {
+  customer: string;
+  address: OrderAddress;
+  order: OrderItem[];
+  total_price: number;
+  discount: number;
+  date: string;
+  shipped: boolean;
+  returned: boolean;
+  payment_status: string;
+  order_status: string;
+  _id: string;
+}
+
+export interface OrderItem {
+  product: string;
+  quantity: number;
+}
+export interface OrderItemWithId extends OrderItem {
+  _id: string;
+}
+
+export interface OrderAddress {
+  cust_name: string;
+  street: string;
+  zip_code: string;
+  city: string;
+}
+

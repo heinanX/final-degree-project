@@ -1,10 +1,19 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 // Importing necessary dependencies from React
 
-import { CustomerContext, defaultValues } from "../interfaces/customer.interface";
+import {
+  CustomerContext,
+  defaultValues,
+} from "../interfaces/customer.interface";
 // Importing custom types/interfaces from the customer interface file
 
 import { useNavigate } from "react-router-dom";
@@ -19,9 +28,10 @@ export const useSocket = () => useContext(CustomerContextValues);
 
 function CustomerProvider({ children }: PropsWithChildren) {
   // Initializing state for customer-related information
+  const [loadingIsLoggedIn, setLoadingIsLoggedIn] = useState<boolean>(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [activeCustomer, setActiveCustomer] = useState<string>('');
+  const [activeCustomer, setActiveCustomer] = useState<string>("");
   const navigate = useNavigate();
 
   // Function to log in a customer
@@ -43,7 +53,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
         setIsLoggedIn(true);
         setIsAdmin(data.isAdmin);
         console.log(data);
-        navigate('/customer/account');
+        navigate("/customer/account");
       } else {
         alert("Incorrect email or password");
       }
@@ -110,34 +120,21 @@ function CustomerProvider({ children }: PropsWithChildren) {
       const data = await res.json();
 
       if (res.ok) {
-        if (!isLoggedIn) return setIsLoggedIn(true);
-
-        return data;
+        setIsLoggedIn(true);
+        setIsAdmin(data.isAdmin);
+        setLoadingIsLoggedIn(false);
+      } else {
+        setLoadingIsLoggedIn(false);
       }
     } catch (error) {
       console.error("Error checking login status", error);
     }
   };
 
-  // Function to fetch customer details
-  const fetchCustomerDetails = async () => {
-    try {
-      const res = await fetch("/api/customers/customer-details");
-      const data = await res.json();
-
-      setActiveCustomer(data);
-      setIsAdmin(data.isAdmin);
-
-      return data;
-    } catch (error) {
-      console.error("Error fetching customer details", error);
-    }
-  };
-
-  // useEffect hook to check login status when the component mounts
   useEffect(() => {
     checkLoginStatus();
-  }, []);
+    
+  }, [isLoggedIn]);
 
   // Render the CustomerContextValues.Provider with the customer-related functions and state as values
   return (
@@ -151,7 +148,8 @@ function CustomerProvider({ children }: PropsWithChildren) {
         logOut,
         checkLoginStatus,
         activeCustomer,
-        fetchCustomerDetails,
+        loadingIsLoggedIn,
+        setLoadingIsLoggedIn,
       }}
     >
       {children}

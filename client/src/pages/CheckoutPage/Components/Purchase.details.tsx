@@ -1,10 +1,10 @@
 import { useSocket as cartSocket } from "../../../contexts/cart.context";
 import { useSocket as customerSocket } from "../../../contexts/customer.context";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const PurchaseDetails = () => {
   const { handleCheckout,  } = cartSocket();
-  const { activeCustomer, fetchCustomerDetails } = customerSocket();
+  const { activeCustomer } = customerSocket();
   const  [customerName, setCustomerName ] = useState('');
   const  [street, setStreet ] = useState('');
   const  [zipCode, setZipCode ] = useState('');
@@ -24,9 +24,9 @@ const PurchaseDetails = () => {
     handleCheckout(addressee);
   };
 
-  useEffect(() => {
+/*   useEffect(() => {
     fetchCustomerDetails()
-  }, [])
+  }, []) */
 
   const labelCss = "text-white";
   const inputCss = "h-8 py-1 px-2 mb-2 text-black";

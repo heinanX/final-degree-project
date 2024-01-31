@@ -7,7 +7,8 @@ export interface CustomerContext {
   logOut: () => Promise<void>;
   checkLoginStatus: () => Promise<void>;
   activeCustomer: string;
-  fetchCustomerDetails: () => void;
+  loadingIsLoggedIn: boolean;
+  setLoadingIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const defaultValues = {
@@ -20,5 +21,6 @@ export const defaultValues = {
   logOut: async () => {},
   checkLoginStatus: async () => {},
   activeCustomer: "",
-  fetchCustomerDetails: () => {},
+  loadingIsLoggedIn: true,
+  setLoadingIsLoggedIn: () => {}
 };

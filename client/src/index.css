@@ -25,7 +25,7 @@ ul {
 
 .standard-btn {
   border-radius: 5px;
-  background-color: teal;
+  background-color: #00bfc3;
   color: black;
   padding: 3px 15px;
 }
@@ -38,7 +38,7 @@ ul {
 }
 
 .standard-btn:hover {
-  background-color: hotpink;
+  background-color: #047d7f;
 }
 
 .standard-input {

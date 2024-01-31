@@ -1,6 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import { PropsWithChildren, createContext, useContext, useState } from "react";
-import { OrderContext, Order, defaultValues } from "../interfaces/order.interface";
+import {
+  OrderContext,
+  Order,
+  defaultValues,
+} from "../interfaces/order.interface";
 import { Cart, CartItem } from "../interfaces/cart.interface";
 // importing custom hook from the cart context
 import { useSocket as cartSocket } from "./cart.context";
@@ -20,13 +24,14 @@ function OrderProvider({ children }: PropsWithChildren) {
   // initializing state for order-related information
   const [userOrders, setUserOrders] = useState<Order[]>([]);
   const [getOrders, setGetOrders] = useState<Order[]>([]);
+  const [isOrderLoading, setIsOrderLoading] = useState<boolean>(false);
   const [order, setOrder] = useState<Order>({
     customer: "",
     address: {
-      cust_name: '',
-      street: '',
-      zip_code: '',
-      city: ''
+      cust_name: "",
+      street: "",
+      zip_code: "",
+      city: "",
     },
     order: [],
     total_price: 0,
@@ -36,7 +41,7 @@ function OrderProvider({ children }: PropsWithChildren) {
     returned: false,
     payment_status: "",
     order_status: "",
-    _id: ''
+    _id: "",
   });
 
   // state used to store order item for the [View.single.Order] component
@@ -45,7 +50,7 @@ function OrderProvider({ children }: PropsWithChildren) {
   // function to fetch all orders from the server
   const getOrdersDatabase = async () => {
     try {
-      const res = await fetch('/api/orders');
+      const res = await fetch("/api/orders");
       const data = await res.json();
 
       if (!res.ok) throw new Error("Failed to fetch orders");
@@ -100,19 +105,20 @@ function OrderProvider({ children }: PropsWithChildren) {
       });
 
       const data = await res.json();
+      
       if (res.ok) {
-        console.log(data);
+        setIsOrderLoading(false)
         setOrder(data);
-        localStorage.removeItem('cart');
+        localStorage.removeItem("cart");
         setNewCart({
           cart: [],
           total_price: 0,
-          address:  {
-            cust_name: '',
-            street: '',
-            zip_code: '',
-            city: '' 
-          }
+          address: {
+            cust_name: "",
+            street: "",
+            zip_code: "",
+            city: "",
+          },
         });
       }
     } catch (err) {
@@ -162,6 +168,8 @@ function OrderProvider({ children }: PropsWithChildren) {
         viewOrderDetails,
         setViewOrderDetails,
         getUserOrdersDatabase,
+        isOrderLoading,
+        setIsOrderLoading,
       }}
     >
       {children}

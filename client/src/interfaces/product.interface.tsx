@@ -52,7 +52,7 @@ export interface Product {
   _id: string;
   title: string;
   description: string;
-  category: [];
+  category: string[];
   tags: [];
   content_rating: string;
   rating: number;

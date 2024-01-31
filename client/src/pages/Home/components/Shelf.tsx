@@ -16,7 +16,7 @@ interface shelfProps {
 
 const Shelf = ({ arr, category, windowSize }: shelfProps) => {
 
-  // Slice array based on window width to adjust the number of displayed items
+  // slice array based on window width to adjust the number of displayed items
   let newArr = arr.slice(0, 5);
 
   if (windowSize.width < 1100) {
@@ -45,7 +45,7 @@ const Shelf = ({ arr, category, windowSize }: shelfProps) => {
         {category}
       </div>
 
-      {/*  Maps over sliced array to render NavLink for each product */}
+      {/*  maps over sliced array to render NavLink for each product */}
       <div className="h-80 w-full flex gap-4 justify-center">
         {newArr.map((item, index) => (
           <NavLink to={`/product/${item._id}`} key={index}>

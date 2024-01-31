@@ -13,7 +13,6 @@ const PurchaseDetails = () => {
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e);
     const addressee = {
       cust_name: customerName,
       street: street,

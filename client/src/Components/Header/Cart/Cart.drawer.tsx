@@ -15,6 +15,7 @@ type Anchor = "right";
 
 /* A PRE-DEFINED COMPONENT FROM MATERIAL UI
   - cart icon is set in return along with cart indicator
+  - utilizes MUI Drawer component
 */
 
 const CartDrawer = () => {

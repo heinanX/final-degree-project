@@ -13,7 +13,7 @@ import {
 } from "../interfaces/product.interface";
 // importing custom types/interfaces from the product interface file
 
-import { CategoryTwo } from "../interfaces/category.interface";
+import { CategoryModel } from "../interfaces/category.interface";
 // importing custom types/interfaces from the category interface file
 
 import { Tags } from "../interfaces/tags.interface";
@@ -67,7 +67,7 @@ function ProductProvider({ children }: PropsWithChildren) {
 
       const categoryIds = data.category;
       const categoryData = await Promise.all(
-        categoryIds.map(async (categoryId: CategoryTwo) => {
+        categoryIds.map(async (categoryId: CategoryModel) => {
           const categoryRes = await fetch(`/api/categories/${categoryId}`);
           const category = await categoryRes.json();
           return category;
@@ -106,7 +106,6 @@ function ProductProvider({ children }: PropsWithChildren) {
       const data = await res.json();
 
       if (res.ok) {
-        console.log('Response from search', data);
         setRelatedProducts(data);
       }
     } catch (err) {
@@ -153,7 +152,6 @@ function ProductProvider({ children }: PropsWithChildren) {
       });
       const data = await res.json();
       if (res.ok) {
-        console.log('Response from updating product', data);
         setViewProductDetails(data);
         getProducts();
       }

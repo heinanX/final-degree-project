@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSocket as productSocket } from "../../../../../../contexts/product.context";
 import { Product, iProductDigital } from "../../../../../../interfaces/product.interface";
 import ProductDigitalAvailable from "./Product.Digital.available";
@@ -22,11 +21,6 @@ const ProductDigital = ({ disableForm, newDigital,setNewDigital }: ProductDigita
         [property]: e.target.value,
       }));
     }
-
-    useEffect(() => {
-      console.log(newDigital);
-      
-    },[newDigital])
 
   return (
     <div>

@@ -52,7 +52,6 @@ function CustomerProvider({ children }: PropsWithChildren) {
         const data = await res.json();
         setIsLoggedIn(true);
         setIsAdmin(data.isAdmin);
-        console.log(data);
         navigate("/customer/account");
       } else {
         alert("Incorrect email or password");
@@ -76,12 +75,8 @@ function CustomerProvider({ children }: PropsWithChildren) {
         }),
       });
 
-      const data = await res.json();
-
       if (res.ok) {
         setIsLoggedIn(true);
-        console.log(data);
-
         // Add 'customer reward' logic here
       } else {
         alert("User already exists");
@@ -101,11 +96,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
         },
         body: JSON.stringify({}),
       });
-
-      const data = await res.json();
-
       if (res.ok) {
-        console.log(data);
         setIsLoggedIn(false);
       }
     } catch (error) {

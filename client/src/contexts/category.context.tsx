@@ -44,11 +44,7 @@ function CategoryProvider({ children }: PropsWithChildren) {
   const getCategory = async (id: string) => {
     try {
       const res = await fetch(`/api/categories/${id}`);
-      console.log(res, 1);
-
       const data = await res.json();
-      console.log(data, 2);
-
       return data;
     } catch (err) {
       // handle errors, if any

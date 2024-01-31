@@ -16,7 +16,9 @@ const Home = () => {
 
   // Filtering products based on specific criteria
   const throwbacks = products.filter((product) => product.year <= 1990);
+  //@ts-expect-error: product.category is an array with string ids so the comparison is valid.
   const fantasy = products.filter((product) => product.category.some((cat) => cat === '65942dbca98e20eab412592b'));
+  
   const recentlyAdded = products.slice(0, 5);
 
   // Creating a shuffled copy of the products array

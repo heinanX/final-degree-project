@@ -24,7 +24,6 @@ const OrderSuccessPage = () => {
     if (cartData) {
       // Parse the existing cart data into an array of CartItem objects
       const cart = JSON.parse(cartData) as Cart;
-      console.log(cart);
       // Call function to create an order in the database
       createOrderDatabase(cart, sessionId)
     }

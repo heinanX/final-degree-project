@@ -7,9 +7,7 @@ export const checkOrderStatus = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    console.log(req.body.session_id);
-    
+  try {    
     // Retrieve Stripe Checkout session using the sessionId from the request body
     const session = await stripe.checkout.sessions.retrieve(req.body.session_id);
 

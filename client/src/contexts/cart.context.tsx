@@ -173,11 +173,6 @@ function CartProvider({ children }: PropsWithChildren) {
         body: JSON.stringify(stripeOrders),
       });
 
-      // if the request is successful, redirect to the checkout URL
-      if (!res.ok) {
-        console.log("Failed to create checkout session");
-      }
-
       const { url } = await res.json();
       window.location = url;
     } catch (err) {

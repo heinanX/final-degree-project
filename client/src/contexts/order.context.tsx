@@ -142,7 +142,6 @@ function OrderProvider({ children }: PropsWithChildren) {
 
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         setViewOrderDetails(data);
       }
     } catch (err) {

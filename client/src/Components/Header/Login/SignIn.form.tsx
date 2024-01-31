@@ -7,6 +7,7 @@ interface FormProps {
 }
 
  /* A COMPONENT THAT RENDERS SIGN-IN FORM */
+
 const SignInForm = ({ handleSwitch }: FormProps) => {
   // state variables for email and password
   const [custMail, setCustMail] = useState<string>("");

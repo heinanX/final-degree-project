@@ -54,7 +54,12 @@ const CartDrawer = () => {
       onKeyDown={toggleDrawer(anchor, false)}
       height={"100%"}
     >
-      <div className="w-96 h-full px-6 flex flex-col justify-between">
+      <div className="w-96 h-full px-6 flex flex-col justify-between relative">
+        <button 
+        onClick={toggleDrawer(anchor, false)}
+        className="absolute top-4 right-4 text-gray-600 font-notoSans cursor-pointer">
+x
+        </button>
         <div>
           {/* drawer title and divider */}
           <h1 className="text-2xl py-6">Cart</h1>

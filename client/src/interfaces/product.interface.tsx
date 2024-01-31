@@ -1,15 +1,22 @@
+import { Category } from "./category.interface";
+
 export interface ProductContext {
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
   getProducts: () => void;
-  getProduct: (id:string) => void;
+  getProduct: (id: string) => void;
   getMovie: Product | null;
   getProductBySearchCriteria: (id: string, criteria: string) => void;
   viewProductDetails: Product | null;
-  setViewProductDetails: React.Dispatch<React.SetStateAction<Product | null>>
-  newUpdatedProduct: object | null,
-  setNewUpdatedProduct: React.Dispatch<React.SetStateAction<object | null>>,
-  updateProduct: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>, property: string) => void
+  setViewProductDetails: React.Dispatch<React.SetStateAction<Product | null>>;
+  newUpdatedProduct: object | null;
+  setNewUpdatedProduct: React.Dispatch<React.SetStateAction<object | null>>;
+  updateProduct: (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+    property: string
+  ) => void;
   updateProductDatabase: (updateProductObject: object, id: string) => void;
   relatedProducts: Product[];
   setRelatedProducts: React.Dispatch<React.SetStateAction<Product[]>>;
@@ -26,10 +33,10 @@ export const defaultValues = {
   setViewProductDetails: () => {},
   newUpdatedProduct: null,
   setNewUpdatedProduct: () => {},
-  updateProduct:  () => {},
+  updateProduct: () => {},
   updateProductDatabase: () => {},
   relatedProducts: [],
-  setRelatedProducts: () => {}
+  setRelatedProducts: () => {},
 };
 
 export interface iProductVhs {
@@ -52,7 +59,8 @@ export interface Product {
   _id: string;
   title: string;
   description: string;
-  category: string[];
+  /* category: string[]; */
+  category: Category[];
   tags: [];
   content_rating: string;
   rating: number;

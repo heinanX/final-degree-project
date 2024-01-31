@@ -11,9 +11,9 @@ export interface OrderContext {
   createOrderDatabase: (cart: Cart, sessionId: string) => void;
   getOrdersDatabase: () => void;
   updateOrderDatabase: (updateOrderObject: object, id: string) => void;
-  viewOrderDetails: Order | null
-  setViewOrderDetails: React.Dispatch<React.SetStateAction<Order | null>>
-  getUserOrdersDatabase: () => void
+  viewOrderDetails: Order | null;
+  setViewOrderDetails: React.Dispatch<React.SetStateAction<Order | null>>;
+  getUserOrdersDatabase: () => void;
 }
 
 export interface Order {
@@ -35,11 +35,11 @@ export interface OrderItem {
   quantity: number;
 }
 export interface OrderItemWithId extends OrderItem {
-  _id: string
+  _id: string;
 }
 
 export interface OrderAddress {
-  cust_name: string,
+  cust_name: string;
   street: string;
   zip_code: string;
   city: string;
@@ -52,10 +52,10 @@ export const defaultValues = {
   order: {
     customer: "",
     address: {
-      cust_name: '',
-      street: '',
-      zip_code: '',
-      city: ''
+      cust_name: "",
+      street: "",
+      zip_code: "",
+      city: "",
     },
     order: [],
     total_price: 0,
@@ -73,5 +73,5 @@ export const defaultValues = {
   updateOrderDatabase: (updateOrderObject: object, id: string) => {},
   viewOrderDetails: null,
   setViewOrderDetails: () => {},
-  getUserOrdersDatabase: () => {}
+  getUserOrdersDatabase: () => {},
 };

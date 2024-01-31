@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-
 import { useSocket as orderSocket } from '../../contexts/order.context';
 import { Cart } from '../../interfaces/cart.interface';
 import LoadBar from './LoadBar/LoadBar';
 import OrderDetails from './OrderDetails/OrderDetails';
 
+/* ORDERSUCCESS PAGE */
 
 const OrderSuccessPage = () => {
 
@@ -17,8 +17,6 @@ const OrderSuccessPage = () => {
     const queryString = location.search;
     const sessionId = queryString.substring(4);
 
-    
-
     // Retrieve existing cart data from local storage
     const cartData = localStorage.getItem("cart");
     // Check if there is existing cart data in local storage
@@ -28,10 +26,10 @@ const OrderSuccessPage = () => {
       console.log(cart);
       // Call function to create an order in the database
       createOrderDatabase(cart, sessionId)
+      //setTimeout(()=>{setIsLoading(false)}, 5000)
     }
   }, [])
 
-  //const [ isLoading, setIsLoading ] = useState();
   return (
     <div className="orderSuccess flex flex-col items-center py-32 px-24 my-40 border border-teal-600">
       {isloading ? <LoadBar /> : <OrderDetails />}

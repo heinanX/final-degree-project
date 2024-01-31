@@ -16,15 +16,15 @@ export const defaultValues = {
   newCart: {
     cart: [],
     total_price: 0,
-    address:  {
-      cust_name: '',
-      street: '',
-      zip_code: '',
-      city: '' 
-    }
+    address: {
+      cust_name: "",
+      street: "",
+      zip_code: "",
+      city: "",
+    },
   },
   setNewCart: () => {},
-  setInitCart: () => {}
+  setInitCart: () => {},
 };
 
 export interface CartItem {
@@ -33,21 +33,20 @@ export interface CartItem {
   vhs: boolean;
   digital: boolean;
   stripe: {
-    price: string,
-    quantity: number
-  }
+    price: string;
+    quantity: number;
+  };
 }
 
 export interface Addressee {
   cust_name: string;
-  street: string,
-  zip_code: string,
-  city: string
+  street: string;
+  zip_code: string;
+  city: string;
 }
 
 export interface Cart {
-  cart: CartItem[]
-  total_price: number
-  address: Addressee
+  cart: CartItem[];
+  total_price: number;
+  address: Addressee;
 }
-

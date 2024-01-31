@@ -7,6 +7,8 @@ import ProductPage from "../pages/ProductPage/Product.page";
 import OrderSuccessPage from "../pages/OrderSuccessPage/OrderSuccess.page";
 import NotFoundPage from "../pages/NotFound.page";
 
+/* A COMPONENT FOR SETTING UP THE APPLICATION'S ROUTES */
+
 const Router = () => {
   return (
     <main className="w-full flex flex-col items-center justify-center min-h-screen">

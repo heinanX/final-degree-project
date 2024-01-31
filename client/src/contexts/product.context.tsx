@@ -11,58 +11,61 @@ import {
   ProductContext,
   defaultValues,
 } from "../interfaces/product.interface";
-import { CategoryTwo } from "../interfaces/category.interface";
-import { Tags } from "../interfaces/tags.interface";
+// importing custom types/interfaces from the product interface file
 
-export const ProductContextValues =
-  createContext<ProductContext>(defaultValues);
+import { CategoryTwo } from "../interfaces/category.interface";
+// importing custom types/interfaces from the category interface file
+
+import { Tags } from "../interfaces/tags.interface";
+// importing custom types/interfaces from the tags interface file
+
+export const ProductContextValues = createContext<ProductContext>(defaultValues);
+// creating a context to manage product-related state
 
 export const useSocket = () => useContext(ProductContextValues);
+// custom hook to access the product context
 
 //---------------------- Provider begins here
 
 function ProductProvider({ children }: PropsWithChildren) {
+  // initializing state for product-related information
   const [products, setProducts] = useState<Product[]>([]);
   const [getMovie, setgetMovie] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [viewProductDetails, setViewProductDetails] = useState<Product | null>(
     null
   );
-  // const {getCategory } = categorySocket();
 
+  
+  /*
+   * function to fetch all products from the server
+   */
   const getProducts = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/products");
       const data = await res.json();
-      if (!res.ok) throw new Error("Failed to fetch product");
+
+      if (!res.ok) throw new Error("Failed to fetch products");
       setProducts(data);
     } catch (err) {
       if (err instanceof Error) {
-        console.error(err);
+        console.error("Error fetching products", err.message);
       }
     }
   };
 
   /*
-   * Fetches a product from the database, retrieves category IDs and Tag IDs,
-   * and fetches the names of the corresponding categories and tags.
-   * Then, updates the state with the product data, tags and category names.
+   * Function to fetch a specific product from the server,
+   * along with its associated category and tag information.
    */
   const getProduct = async (id: string) => {
     try {
-      // FETCH PRODUCT FROM DATABASE
       const response = await fetch(`http://localhost:3000/api/products/${id}`);
-      console.log(response);
-
       const data = await response.json();
-      console.log(data);
 
       if (!response.ok) throw new Error("Failed to fetch product");
 
-      //SAVE CATEGORIES INTO A SEPARATE VARIABLE AND FETCH EACH CATEGORY'S NAME
       const categoryIds = data.category;
-      console.log(categoryIds);
-
       const categoryData = await Promise.all(
         categoryIds.map(async (categoryId: CategoryTwo) => {
           const categoryRes = await fetch(`/api/categories/${categoryId}`);
@@ -71,9 +74,7 @@ function ProductProvider({ children }: PropsWithChildren) {
         })
       );
 
-      //SAVE CATEGORIES INTO A SEPARATE VARIABLE AND FETCH EACH CATEGORY'S NAME
       const tagIds = data.tags;
-
       const tagData = await Promise.all(
         tagIds.map(async (tagId: Tags) => {
           const tagRes = await fetch(`/api/tags/${tagId}`);
@@ -84,38 +85,43 @@ function ProductProvider({ children }: PropsWithChildren) {
 
       setgetMovie({ ...data, category: categoryData, tags: tagData });
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching product", err);
     }
   };
 
+  /*
+   * Function to fetch related products based on a search criteria
+   */
   const getProductBySearchCriteria = async (id: string, criteria: string) => {
-try {
-  const res = await fetch(`/api/products/search`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-            [criteria]: {  $in: [id] }
-          }),
-  });
-  const data = await res.json();
-  if (res.ok) {
-    console.log('this is from the response', data);
-    setRelatedProducts(data)
-  }
-} catch (err) {
-  if (err instanceof Error) {
-    console.error(err);
-  }
-}
-  }
+    try {
+      const res = await fetch(`/api/products/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          [criteria]: { $in: [id] },
+        }),
+      });
+      const data = await res.json();
 
-  //STATE TO STORE UPDATED INFO WHEN IN EDIT MODE
+      if (res.ok) {
+        console.log('Response from search', data);
+        setRelatedProducts(data);
+      }
+    } catch (err) {
+      console.error("Error fetching related products", err);
+    }
+  };
+
+  // State to store updated product information when in edit mode
   const [newUpdatedProduct, setNewUpdatedProduct] = useState<object | null>(
     null
   );
 
+  /*
+   * Function to update product information in edit mode
+   */
   const updateProduct = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -133,6 +139,9 @@ try {
     }));
   };
 
+    /*
+   * Function to update product information in the database
+   */
   const updateProductDatabase = async (updateProductObject: object, id: string) => {
     try {
       const res = await fetch(`/api/products/edit-product/${id}`, {
@@ -144,21 +153,21 @@ try {
       });
       const data = await res.json();
       if (res.ok) {
-        console.log('this is from the response', data);
+        console.log('Response from updating product', data);
         setViewProductDetails(data);
         getProducts();
       }
     } catch (err) {
-      if (err instanceof Error) {
-        console.error("Error fetching product", err.message);
-      }
+      console.error("Error updating product", err);
     }
   };
 
+  // useEffect hook to fetch products when the component mounts
   useEffect(() => {
     getProducts();
   }, []);
 
+  // useEffect hook to fetch related products when the associated product changes
   useEffect(() => {
     if (getMovie && Array.isArray(getMovie.category) && getMovie.category.length > 0) {
       //@ts-expect-error: the array has an index of 0 as it has a length bigger than 0
@@ -166,9 +175,8 @@ try {
       getProductBySearchCriteria(firstCategory, 'category');
     }
   }, [getMovie]);
-  
-  
 
+  // Render the ProductContextValues.Provider with the product-related functions and state as values
   return (
     <ProductContextValues.Provider
       value={{

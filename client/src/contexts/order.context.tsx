@@ -6,7 +6,7 @@ import {
   defaultValues,
 } from "../interfaces/order.interface";
 import { Cart, CartItem} from "../interfaces/cart.interface";
-//import { useSocket as cartSocket } from "./cart.context";
+import { useSocket as cartSocket } from "./cart.context";
 
 export const OrderContextValues = createContext<OrderContext>(defaultValues);
 
@@ -16,7 +16,7 @@ export const useSocket = () => useContext(OrderContextValues);
 
 function OrderProvider({ children }: PropsWithChildren) {
 
-
+  const { setNewCart } = cartSocket();
   const [ userOrders, setUserOrders ] = useState<Order[]>([]);
   const [ getOrders, setGetOrders ] = useState<Order[]>([]);
   const [order, setOrder] = useState<Order>({
@@ -96,6 +96,17 @@ function OrderProvider({ children }: PropsWithChildren) {
       if (res.ok) {
         console.log(data);
         setOrder(data);
+        localStorage.removeItem('cart');
+        setNewCart({
+          cart: [],
+          total_price: 0,
+          address:  {
+            cust_name: '',
+            street: '',
+            zip_code: '',
+            city: '' 
+          }
+        })
       }
     } catch (err) {
       // Handle errors, if any

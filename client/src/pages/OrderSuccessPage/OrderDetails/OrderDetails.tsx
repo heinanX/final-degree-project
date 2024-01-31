@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { useSocket as orderSocket } from "../../../contexts/order.context";
+import { NavLink } from "react-router-dom";
 const OrderDetails = () => {
   const { order } = orderSocket();
 
@@ -34,8 +35,9 @@ const OrderDetails = () => {
       </div>
 
       <div>
+        <NavLink to={'/'}>
         <button className="standard-btn">Return to home</button>
-        <button></button>
+        </NavLink>
       </div>
     </>
   );

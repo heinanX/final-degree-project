@@ -200,7 +200,16 @@ function CartProvider({ children }: PropsWithChildren) {
         setNewCart(oldItems);
       } else {
         // If there is no existing cart data, initialize local storage with an empty array
-        localStorage.setItem("cart", JSON.stringify([]));
+        localStorage.setItem("cart", JSON.stringify({
+          cart: [],
+          total_price: 0,
+          address:  {
+            cust_name: '',
+            street: '',
+            zip_code: '',
+            city: '' 
+          }
+        }));
       }
     } catch (err) {
       if (err instanceof Error) {
@@ -210,7 +219,7 @@ function CartProvider({ children }: PropsWithChildren) {
   };
 
   useEffect(() => {
-    setInitCart();
+    setInitCart();    
   }, []);
 
   return (
@@ -221,6 +230,7 @@ function CartProvider({ children }: PropsWithChildren) {
         handleCheckout,
         newCart,
         setNewCart,
+        setInitCart
       }}
     >
       {children}

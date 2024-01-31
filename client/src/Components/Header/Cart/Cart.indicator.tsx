@@ -4,7 +4,7 @@ import { useSocket as cartSocket } from "../../../contexts/cart.context";
 /* A COMPONENT THAT RENDERS OUT THE QUANTITY OF PRODUCTS IN CART */
 
 const CartIndicator = () => {
-    // Destructures cart from cart context
+  // Destructures cart from cart context
   const { newCart } = cartSocket();
 
   // State to track total quantity in cart
@@ -12,13 +12,15 @@ const CartIndicator = () => {
 
   // Function to calculate total quantity in cart
   const calculateQuantity = () => {
-    let qty = 0; 
+    let qty = 0;
+    if (newCart.cart) {
+      // Iterating over each item in the cart and summing up the quantities
+      newCart.cart.map((item) => (qty += item.quantity));
 
-    // Iterating over each item in the cart and summing up the quantities
-    newCart.cart.map((item) => (qty += item.quantity));
-
-     // Updates state with new total quantity
-    setQuantity(qty);
+      // Updates state with new total quantity
+      setQuantity(qty);
+    }
+    return;
   };
 
   // useEffect to recalculate new quantity whenever cart changes
@@ -29,7 +31,7 @@ const CartIndicator = () => {
   // Renders a div with a p tag containing total quantity in cart
   return (
     <div id="cartIndicator" className="absolute text-sm bottom-3 left-4">
-      <p>{quantity}</p>
+      {quantity != 0 ? <p>{quantity}</p> : <></>}
     </div>
   );
 };

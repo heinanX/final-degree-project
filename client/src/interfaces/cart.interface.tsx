@@ -4,8 +4,9 @@ export interface CartContext {
   addToCart: (product: Product, type: string) => void;
   handleQuantity: (index: number, action: string) => void;
   handleCheckout: (addressee: Addressee) => void;
-  newCart: Cart
-  setNewCart: React.Dispatch<React.SetStateAction<Cart>>
+  newCart: Cart;
+  setNewCart: React.Dispatch<React.SetStateAction<Cart>>;
+  setInitCart: () => void;
 }
 
 export const defaultValues = {
@@ -22,7 +23,8 @@ export const defaultValues = {
       city: '' 
     }
   },
-  setNewCart: () => {}
+  setNewCart: () => {},
+  setInitCart: () => {}
 };
 
 export interface CartItem {

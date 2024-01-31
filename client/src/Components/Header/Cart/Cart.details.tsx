@@ -9,7 +9,8 @@ const CartDetails = () => {
   return (
     <div className=" py-8 max-h-96 overflow-y-auto primary-scrollbar">
       <ul>
-        {newCart.cart.map((item, index) => (
+
+        {newCart.cart ? (newCart.cart.map((item, index) => (
           <li key={index} className="flex items-center">
             <div className="w-1/6 pb-2">
               <img src={item.product.image} alt="" className="h-12" />
@@ -40,7 +41,7 @@ const CartDetails = () => {
               </button>
             </div>
           </li>
-        ))}
+        ))) : <></>}
       </ul>
     </div>
   );

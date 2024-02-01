@@ -107,6 +107,7 @@ function CustomerProvider({ children }: PropsWithChildren) {
         setIsLoggedIn(false);
         setIsAdmin(false);
         setActiveCustomer("")
+        window.location.href = "/";
       }
     } catch (error) {
       console.error("Logout failed", error);

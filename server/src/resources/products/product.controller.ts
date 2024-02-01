@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ProductModel } from "./product.model";
 
+// Retrieve all products
 export const getProducts = async (
   req: Request,
   res: Response,
@@ -14,6 +15,7 @@ export const getProducts = async (
   }
 };
 
+// Retrieve products based on search criteria
 export const getProductBySearchCriteria = async (
   req: Request,
   res: Response,
@@ -27,21 +29,7 @@ export const getProductBySearchCriteria = async (
   }
 };
 
-// export const getProductsByTag = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const orders = await ProductModel.find({
-//       tags: {  $in: req.params.id }
-//     });
-//     res.status(200).json(orders);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
+// Retrieve a specific product by ID
 export const getProduct = async (
   req: Request,
   res: Response,
@@ -50,15 +38,16 @@ export const getProduct = async (
   try {
     const product = await ProductModel.findOne({ _id: req.params.id });
     if (!product) {
-      return res.status(404).json({ error: 'Unknown ID' });
+      return res.status(404).json({ error: "Unknown ID" });
     }
-    
+
     res.status(200).json(product);
   } catch (error) {
     next(error);
   }
 };
 
+// Create a new product
 export const createProduct = async (
   req: Request,
   res: Response,
@@ -77,6 +66,7 @@ export const createProduct = async (
   }
 };
 
+// Edit or update a product
 export const editProduct = async (
   req: Request,
   res: Response,
@@ -97,6 +87,7 @@ export const editProduct = async (
   }
 };
 
+// Delete a product
 export const deleteProduct = async (
   req: Request,
   res: Response,

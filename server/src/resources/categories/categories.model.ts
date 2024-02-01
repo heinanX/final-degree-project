@@ -1,18 +1,22 @@
 import { Schema, model, models } from "mongoose";
-import Joi from 'joi';
+import Joi from "joi";
 
+// Define the Mongoose schema for the 'categories' collection
 const categorySchema = new Schema(
   {
-    category: { type: String, require: true }
+    // Define the 'category' field with type String and make it required
+    category: { type: String, required: true },
   },
-  { versionKey: false }
+  { versionKey: false } // Exclude the '__v' field from documents
 );
 
-export const catJoiSchema = Joi.object(
-  {
-    _id: Joi.string(),
-    category: Joi.string().required()
-  }
-);
+// Define a Joi schema for validating category data
+export const catJoiSchema = Joi.object({
+  _id: Joi.string(), // Allow for optional _id field in validation
+  category: Joi.string().required(), // Ensure 'category' is a required string
+});
 
-export const CategoryModel = models.categories || model("categories", categorySchema);
+// Create a Mongoose model for the 'categories' collection
+// If the model already exists, use the existing model
+export const CategoryModel =
+  models.categories || model("categories", categorySchema);

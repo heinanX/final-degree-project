@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { isAdmin } from "./isAdmin";
 
-/* A middleware that confirms user authorization when making requests */
+/* A MIDDLEWARE THAT CONFIRMS USER AUTHORIZATION WHEN MAKING REQUESTS */
 
 export const authorization = async (
   req: Request,

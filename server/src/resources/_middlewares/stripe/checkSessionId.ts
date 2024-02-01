@@ -10,7 +10,9 @@ export const checkSessionId = async (
 ) => {
   try {
     const sessionId = req.body.session_id;
-    const userOrders = await OrderModel.find({ customer: req.session.customer?._id });
+    const userOrders = await OrderModel.find({
+      customer: req.session.customer?._id,
+    });
     const orderWithSameSession = userOrders.find(
       (order: any) => order.session_id === sessionId
     );

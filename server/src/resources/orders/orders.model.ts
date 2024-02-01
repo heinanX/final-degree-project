@@ -1,6 +1,7 @@
 import { Schema, model, models } from "mongoose";
 import Joi from "joi";
 
+// Sub-schema for individual order items
 const subOrderSchema = new Schema(
   {
     product: {
@@ -12,8 +13,10 @@ const subOrderSchema = new Schema(
     vhs: Boolean,
     digital: Boolean
   },
-  { _id: false }
+  { _id: false } // Disable the default _id field for sub-order items
 );
+
+// Sub-schema for addresses
 const addressSchema = new Schema(
   {
     cust_name: String,
@@ -21,14 +24,15 @@ const addressSchema = new Schema(
     zip_code: String,
     city: String
   },
-  { _id: false }
+  { _id: false } // Disable the default _id field for addresses
 );
 
+// Main schema for orders
 export const orderSchema = new Schema(
   {
     customer: { type: Schema.Types.ObjectId, ref: "customers", require: true },
     address: addressSchema,
-    order: [subOrderSchema],
+    order: [subOrderSchema], // Array of sub-order items
     total_price: { type: Number, default: 0, require: true },
     discount: { type: Number, default: 0 },
     date: { type: Date, default: Date.now() },
@@ -38,9 +42,10 @@ export const orderSchema = new Schema(
     order_status: { type: String, default: "active" },
     session_id: String
   },
-  { versionKey: false }
+  { versionKey: false } // Disable the default version key
 );
 
+// Joi schema for sub-order items
 const subOrderJoiSchema = Joi.object({
   product: Joi.string(),
   quantity: Joi.number(),
@@ -48,6 +53,7 @@ const subOrderJoiSchema = Joi.object({
   digital: Joi.boolean()
 });
 
+// Joi schema for addresses
 const addressJoiSchema = Joi.object({
     cust_name: Joi.string(),
     street: Joi.string(),
@@ -55,6 +61,7 @@ const addressJoiSchema = Joi.object({
     city: Joi.string()
   });
 
+// Joi schema for marking order status
 export const markOrderJoiSchema = Joi.object({
   shipped: Joi.boolean(),
   returned: Joi.boolean(),
@@ -63,7 +70,7 @@ export const markOrderJoiSchema = Joi.object({
   address: addressJoiSchema
 });
 
-
+// Joi schema for complete orders
 export const orderJoiSchema = Joi.object({
   customer: Joi.string().required(),
   address: addressJoiSchema.required(),
@@ -78,4 +85,5 @@ export const orderJoiSchema = Joi.object({
   session_id: Joi.string()
 });
 
+// Mongoose model for orders
 export const OrderModel = models.orders || model("orders", orderSchema);

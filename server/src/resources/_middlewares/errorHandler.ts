@@ -2,11 +2,11 @@ import { Request, Response, NextFunction } from "express";
 
 //A new class that extends parent class Error
 class AppError extends Error {
-  status: number; //extends class with status property 
+  status: number; //extends class with status property
 
   constructor(message: string, status: number) {
     super(message); //initiates parent class and passes message parameter before adding custom property
-    this.status = status; //passes status parameter to status property 
+    this.status = status; //passes status parameter to status property
   }
 }
 

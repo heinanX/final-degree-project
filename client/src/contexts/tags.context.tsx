@@ -58,11 +58,9 @@ function TagProvider({ children }: PropsWithChildren) {
 
         if (createTagRes.ok) {
           const newTag = await createTagRes.json();
-          console.log(newTag);
+          return newTag;
         }
       }
-
-      console.log(collected);
     } catch (err) {
       console.error("Error fetching or creating tag", err);
     }

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useState } from "react";
 
 import AddTag from "./Add.tag";
 import AddCategory from "./Add.category";
@@ -25,19 +26,6 @@ const AddProduct = () => {
   const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
-
-  useEffect(() => {
-    console.log(frmCategories);
-  }, [
-    frmTitle,
-    frmDescription,
-    frmYear,
-    frmImage,
-    frmVhsPrice,
-    frmCategories,
-    frmVhsQuantity,
-    frmDigitalPrice,
-  ]);
 
   return (
     <form

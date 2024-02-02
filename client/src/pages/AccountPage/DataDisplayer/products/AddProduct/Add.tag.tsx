@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { useSocket as tagSocket } from "../../../../../contexts/tags.context";
 import { LuPlus } from "react-icons/lu";
@@ -18,10 +19,8 @@ const AddTag = ({ frmTags, setFrmTags }: props) => {
   //     setSelectedTag("");
   //   };
 
-  console.log(tags);
-
   const handleAddTag = () => {
-    getTag(selectedTag); // Call the getTag function here if needed
+    getTag(selectedTag);
     setFrmTags((prevTags) => [...prevTags, selectedTag]);
     setSelectedTag("");
   };
@@ -30,10 +29,10 @@ const AddTag = ({ frmTags, setFrmTags }: props) => {
     setFrmTags((prevTags) => prevTags.filter((tag) => tag !== deleteTag));
   };
 
-  useEffect(() => {
+/*   useEffect(() => {
     console.log(selectedTag);
     console.log(frmTags);
-  }, [selectedTag, frmTags]);
+  }, [selectedTag, frmTags]); */
 
   return (
     <div>

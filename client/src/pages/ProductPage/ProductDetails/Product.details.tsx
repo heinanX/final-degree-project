@@ -12,12 +12,10 @@ const ProductDetails = ({ loadedProduct}: ProductDetailsProp) => {
   const { addToCart } = cartSocket();
 
   // handle renting VHS or digital copy
-  const handleRent = (type: string, id: string) => {
+  const handleRent = (type: string) => {
     if (type === 'vhs') {
-      console.log('Renting VHS', id);
       if (loadedProduct) addToCart(loadedProduct, 'vhs');
     } else {
-      console.log('Renting Digital', id);
       if (loadedProduct) addToCart(loadedProduct, 'digital');
     }
   }
@@ -59,10 +57,10 @@ const ProductDetails = ({ loadedProduct}: ProductDetailsProp) => {
 
         {/* rent buttons */}
         <div className="flex flex-row px-4 py-6" style={{ gap: "10%" }}>
-          <button className="standard-btn" onClick={() => handleRent('vhs', loadedProduct?._id || "")}>
+          <button className="standard-btn" onClick={() => handleRent('vhs')}>
             Rent VHS {loadedProduct?.vhs.price}
           </button>
-          <button className="standard-btn" onClick={() => handleRent('digital', loadedProduct?._id || "")}>
+          <button className="standard-btn" onClick={() => handleRent('digital')}>
             Rent Digital {loadedProduct?.digital.price}
           </button>
         </div>

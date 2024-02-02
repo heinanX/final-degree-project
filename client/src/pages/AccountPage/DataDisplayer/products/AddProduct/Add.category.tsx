@@ -22,7 +22,6 @@ const AddCategory = ({ frmCategories, setFrmCategories }: props) => {
 
   const handleCatChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(e.target.value);
-    console.log(selectedCategory, "selectedCategory");
   };
 
   const handleAddCategory = () => {

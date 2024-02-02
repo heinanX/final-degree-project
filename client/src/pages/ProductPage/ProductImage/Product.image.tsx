@@ -1,15 +1,12 @@
-//import { useSocket as productSocket } from "../../../contexts/product.context";
-
 import { Product } from "../../../interfaces/product.interface";
 
-/* COMPONENT THAT RENDERS LEFT SIDE OF PRODUT PAGE
-  - it displays an image */
+/* COMPONENT THAT RENDERS IMAGE ON LEFT SIDE OF PRODUCT PAGE */
 
 interface ProperImageProp {
-  loadedProduct: void | Product | null
+  loadedProduct: void | Product | null;
 }
 
-const ProductImage = ( {loadedProduct}: ProperImageProp) => {
+const ProductImage = ({ loadedProduct }: ProperImageProp) => {
   return (
     <>
       <div className="w-1/2 flex justify-center py-4">

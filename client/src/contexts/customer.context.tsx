@@ -13,25 +13,18 @@ import {
   CustomerContext,
   defaultValues,
 } from "../interfaces/customer.interface";
-// Importing custom types/interfaces from the customer interface file
-
 import { useNavigate } from "react-router-dom";
-// Importing the useNavigate hook for navigation in React Router
-
-// Creating a context to manage customer-related state
 export const CustomerContextValues =
   createContext<CustomerContext>(defaultValues);
 
-// Custom hook to access the customer context
 export const useSocket = () => useContext(CustomerContextValues);
 
 function CustomerProvider({ children }: PropsWithChildren) {
-  // Initializing state for customer-related information
   const [loadingIsLoggedIn, setLoadingIsLoggedIn] = useState<boolean>(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [activeCustomer, setActiveCustomer] = useState<string>("");
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [showLoginDrawer, setShowLoginDrawer] = useState<boolean>(false);
+  const [showLoggedInDrawer, setShowLoggedInDrawer] = useState<boolean>(false);
   const navigate = useNavigate();
 
   // Function to log in a customer
@@ -50,8 +43,8 @@ function CustomerProvider({ children }: PropsWithChildren) {
 
       if (res.ok) {
         const data = await res.json();
-        if (showLoginDrawer) {
-          return setShowLoginDrawer(!showLoginDrawer);
+        if (showLoggedInDrawer) {
+          return setShowLoggedInDrawer(!showLoggedInDrawer);
         }
         setIsLoggedIn(true);
         setIsAdmin(data.isAdmin);
@@ -137,7 +130,6 @@ function CustomerProvider({ children }: PropsWithChildren) {
     checkLoginStatus();
   }, [isLoggedIn]);
 
-  // Render the CustomerContextValues.Provider with the customer-related functions and state as values
   return (
     <CustomerContextValues.Provider
       value={{
@@ -150,8 +142,8 @@ function CustomerProvider({ children }: PropsWithChildren) {
         checkLoginStatus,
         loadingIsLoggedIn,
         setLoadingIsLoggedIn,
-        showLoginDrawer,
-        setShowLoginDrawer,
+        showLoggedInDrawer,
+        setShowLoggedInDrawer,
         activeCustomer
       }}
     >

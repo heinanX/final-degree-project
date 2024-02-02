@@ -3,6 +3,9 @@ import { useSocket as customerSocket } from "../../../../contexts/customer.conte
 interface UserListItemsProp {
     handleDisplayComment: (component: string) => void;
 }
+
+/* LIST ITEMS THAT ARE VISIBLE TO ALL USERS */
+
 const UserListItems = ({ handleDisplayComment }: UserListItemsProp) => {
 
     const { logOut } = customerSocket();

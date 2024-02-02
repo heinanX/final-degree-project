@@ -1,6 +1,8 @@
 interface SingleOrderDiscountProps {
     discount: number;
   }
+
+  /* RENDERS COMPONENT THAT SHOWS ORDER DISCOUNT */
   
   const SingleOrderDiscount = ({ discount }: SingleOrderDiscountProps) => {
     return discount ? (

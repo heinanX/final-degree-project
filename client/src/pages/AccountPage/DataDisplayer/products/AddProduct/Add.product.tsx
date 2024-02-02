@@ -3,6 +3,10 @@ import { useEffect, useState } from "react";
 import AddTag from "./Add.tag";
 import AddCategory from "./Add.category";
 
+/* COMPONENT THAT RENDERS AN ADD PRODUCT FORM
+  - still a WIP
+*/
+
 const AddProduct = () => {
   const [frmTitle, setNewTitle] = useState("");
   const [frmDescription, setNewDescription] = useState("");

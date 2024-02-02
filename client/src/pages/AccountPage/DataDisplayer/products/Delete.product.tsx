@@ -3,6 +3,8 @@ import { useSocket as productSocket } from "../../../../contexts/product.context
 import { Product } from "../../../../interfaces/product.interface";
 import { FaRegTrashCan } from "react-icons/fa6";
 
+/* A COMPONENT THAT RENDERS THE OPTION TO FETCH A PRODUCT AND THEN DELETE IT*/
+
 const DeleteProduct = () => {
 
   const { getProductById, deleteProductDatabase} = productSocket();

@@ -19,7 +19,6 @@ const SingleOrderAddress = ({
   setNewCity,
 }: SingleOrderAddressProps) => {
 
-  // determine css for editable input fields based on disableForm status
   const changeTextcolor = disableForm ? "" : "text-white";
 
   return (
@@ -30,9 +29,9 @@ const SingleOrderAddress = ({
         {/* STREET INPUT */}
         <input
           type="text"
-          disabled={disableForm} //based on state status [when set to true] form is disabled
-          defaultValue={address.street} //default value from order
-          onChange={(e) => setNewStreet(e.target.value)} //onchange that resets state with new value
+          disabled={disableForm}
+          defaultValue={address.street}
+          onChange={(e) => setNewStreet(e.target.value)}
           className={`w-full standard-form-darkmode ${changeTextcolor}`} //classes
         />
         

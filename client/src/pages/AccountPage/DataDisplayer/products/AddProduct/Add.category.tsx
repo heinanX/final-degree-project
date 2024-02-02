@@ -7,6 +7,10 @@ interface props {
   setFrmCategories: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
+/* COMPONENT THAT ADDS A CATEGORY TO ADD PRODUCT FORM
+  - still a WIP
+*/
+
 const AddCategory = ({ frmCategories, setFrmCategories }: props) => {
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const {getCategories, categories} = categorySocket();

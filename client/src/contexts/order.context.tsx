@@ -6,22 +6,15 @@ import {
   defaultValues,
 } from "../interfaces/order.interface";
 import { Cart, CartItem } from "../interfaces/cart.interface";
-// importing custom hook from the cart context
 import { useSocket as cartSocket } from "./cart.context";
 
-// creating a context to manage order-related state
 export const OrderContextValues = createContext<OrderContext>(defaultValues);
-
-// custom hook to access the order context
 export const useSocket = () => useContext(OrderContextValues);
 
 //---------------------- Provider begins here
 
 function OrderProvider({ children }: PropsWithChildren) {
-  // accessing the setNewCart function from the cart context
   const { setNewCart } = cartSocket();
-
-  // initializing state for order-related information
   const [userOrders, setUserOrders] = useState<Order[]>([]);
   const [getOrders, setGetOrders] = useState<Order[]>([]);
   const [isOrderLoading, setIsOrderLoading] = useState<boolean>(false);
@@ -44,7 +37,6 @@ function OrderProvider({ children }: PropsWithChildren) {
     _id: "",
   });
 
-  // state used to store order item for the [View.single.Order] component
   const [viewOrderDetails, setViewOrderDetails] = useState<Order | null>(null);
 
   // function to fetch all orders from the server
@@ -122,7 +114,6 @@ function OrderProvider({ children }: PropsWithChildren) {
         });
       }
     } catch (err) {
-      // handle errors, if any
       if (err instanceof Error) {
         console.error("Error creating order", err.message);
       }
@@ -151,7 +142,6 @@ function OrderProvider({ children }: PropsWithChildren) {
     }
   };
 
-  // render the OrderContextValues.Provider with the order-related functions and state as values
   return (
     <OrderContextValues.Provider
       value={{

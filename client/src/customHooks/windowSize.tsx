@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+/* CUSTOM HOOK THAT LISTENS TO THE SIZE OF THE WINDOW */
+
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -14,13 +16,11 @@ const useWindowSize = () => {
   };
 
   useEffect(() => {
-    // Event listener for window resize
     window.addEventListener('resize', handleResize);
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []); // Empty dependency array means this effect runs once after initial render
+  }, []);
 
   return windowSize;
 };

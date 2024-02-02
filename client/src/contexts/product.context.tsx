@@ -11,25 +11,17 @@ import {
   ProductContext,
   defaultValues,
 } from "../interfaces/product.interface";
-// importing custom types/interfaces from the product interface file
 
 import { CategoryModel } from "../interfaces/category.interface";
-// importing custom types/interfaces from the category interface file
-
 import { Tags } from "../interfaces/tags.interface";
-// importing custom types/interfaces from the tags interface file
-
 export const ProductContextValues =
   createContext<ProductContext>(defaultValues);
-// creating a context to manage product-related state
-
 export const useSocket = () => useContext(ProductContextValues);
-// custom hook to access the product context
+
 
 //---------------------- Provider begins here
 
 function ProductProvider({ children }: PropsWithChildren) {
-  // initializing state for product-related information
   const [products, setProducts] = useState<Product[]>([]);
   const [productToRelate, setProductToRelate] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
@@ -37,9 +29,8 @@ function ProductProvider({ children }: PropsWithChildren) {
     null
   );
 
-  /*
-   * function to fetch all products from the server
-   */
+  // function to fetch all products from the server
+  
   const getProducts = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/products");
@@ -114,14 +105,12 @@ function ProductProvider({ children }: PropsWithChildren) {
     }
   };
 
-  // State to store updated product information when in edit mode
   const [newUpdatedProduct, setNewUpdatedProduct] = useState<object | null>(
     null
   );
 
-  /*
-   * Function to update product information in edit mode
-   */
+  // Function to update product information in edit mode
+
   const updateProduct = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -139,9 +128,8 @@ function ProductProvider({ children }: PropsWithChildren) {
     }));
   };
 
-  /*
-   * Function to update product information in the database
-   */
+  // Function to update product information in the database
+
   const updateProductDatabase = async (
     updateProductObject: object,
     id: string
@@ -178,12 +166,10 @@ function ProductProvider({ children }: PropsWithChildren) {
     }
   };
 
-  // useEffect hook to fetch products when the component mounts
   useEffect(() => {
     getProducts();
   }, []);
 
-  // useEffect hook to fetch related products when the associated product changes
   useEffect(() => {
     if (
       productToRelate &&
@@ -196,7 +182,6 @@ function ProductProvider({ children }: PropsWithChildren) {
     }
   }, [productToRelate]);
 
-  // Render the ProductContextValues.Provider with the product-related functions and state as values
   return (
     <ProductContextValues.Provider
       value={{

@@ -12,6 +12,8 @@ interface dataDisplayerProps {
   displayComponent: string;
 }
 
+/* COMPONENT THAT RENDERS OUT DIFFERENT DATA DEPENDENT ON VALUE OF DISPLAYCOMPONENT */
+
 const DataDisplayer = ({ displayComponent }: dataDisplayerProps) => {
   const { viewOrderDetails } = orderSocket();
   const { viewProductDetails } = productSocket();

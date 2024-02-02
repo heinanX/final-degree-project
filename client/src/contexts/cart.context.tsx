@@ -6,7 +6,6 @@ import {
   useEffect,
   useState,
 } from "react";
-// importing necessary dependencies from React
 
 import {
   Addressee,
@@ -15,21 +14,14 @@ import {
   CartItem,
   defaultValues,
 } from "../interfaces/cart.interface";
-// importing custom types/interfaces from the cart interface file
 
 import { Product } from "../interfaces/product.interface";
-// importing product interface
-
-// creating a context to manage cart-related state
 export const CartContextValues = createContext<CartContext>(defaultValues);
-
-// custom hook to access the cart context
 export const useSocket = () => useContext(CartContextValues);
 
 //---------------------- Provider begins here
 
 function CartProvider({ children }: PropsWithChildren) {
-  // Initializing state for the cart and its total price
   const [newCart, setNewCart] = useState<Cart>({
     cart: [],
     total_price: 0,
@@ -41,10 +33,9 @@ function CartProvider({ children }: PropsWithChildren) {
     },
   });
 
-  // cunction to add a product to the cart based on its type
+  // function to add a product to the cart based on its type
   const addToCart = async (product: Product, type: string) => {
     try {
-      // check if the product is VHS or digital
       const isVHS = type === "vhs";
       const isDigital = type === "digital";
 
@@ -97,37 +88,37 @@ function CartProvider({ children }: PropsWithChildren) {
 
   // function to handle quantity changes in the cart
   const handleQuantity = (index: number, action: string) => {
-    const product = newCart.cart[index]; //takes incoming index and stores product in a variable
+    const product = newCart.cart[index];
     let updatedCart;
-    let updatedTotalPrice = newCart.total_price; //variable to state total price of cart
+    let updatedTotalPrice = newCart.total_price;
 
     switch (action) {
       case "add": //runs when customer increases an item inside cart it
         product.quantity += 1;
         product.stripe.quantity += 1;
         updatedCart = [...newCart.cart];
-        updatedTotalPrice += //adds price to total price in cart
+        updatedTotalPrice +=
           product.vhs
             ? product.product.vhs.price
             : product.product.digital.price;
         break;
 
-      case "sub": //runs when customer decreases an item inside cart it
+      case "sub":
         product.quantity -= 1;
         product.stripe.quantity -= 1;
         updatedCart = [...newCart.cart];
-        updatedTotalPrice -= //subtracts price from total price in cart
+        updatedTotalPrice -=
           product.vhs
             ? product.product.vhs.price
             : product.product.digital.price;
         break;
 
-      case "del": //runs when customer deletes an item inside cart it
-        updatedTotalPrice -= product.vhs //conditional that depending on vhs or digital product multiplies the quantity with price and subtracts it from total price in cart
+      case "del":
+        updatedTotalPrice -= product.vhs
           ? product.product.vhs.price * product.quantity
           : product.product.digital.price * product.quantity;
-        newCart.cart.splice(index, 1); //removes the product from cart
-        updatedCart = newCart.cart; //updates variable
+        newCart.cart.splice(index, 1);
+        updatedCart = newCart.cart;
         break;
     }
 
@@ -152,7 +143,6 @@ function CartProvider({ children }: PropsWithChildren) {
   // function to handle the checkout process
   const handleCheckout = async (addressee: Addressee) => {
     try {
-      // store the updated cart and address in local storage
       localStorage.setItem(
         "cart",
         JSON.stringify({
@@ -161,10 +151,7 @@ function CartProvider({ children }: PropsWithChildren) {
         })
       );
 
-      // extract stripe-specific order details from the cart
       const stripeOrders = newCart.cart.map((item) => item.stripe);
-
-      // call the server to create a checkout session
       const res = await fetch("api/orders/create-checkout-session", {
         method: "POST",
         headers: {
@@ -176,7 +163,6 @@ function CartProvider({ children }: PropsWithChildren) {
       const { url } = await res.json();
       window.location = url;
     } catch (err) {
-      // handle errors, if any
       if (err instanceof Error) {
         console.error("Error during checkout", err.message);
       }
@@ -186,18 +172,12 @@ function CartProvider({ children }: PropsWithChildren) {
   // function to initialize the cart from local storage
   const setInitCart = async () => {
     try {
-      // retrieve the cart data from local storage
       const cartData = localStorage.getItem("cart");
-
-      // check if there is existing cart data in local storage
       if (cartData) {
-        // parse the existing cart data into an array of CartItem objects
         const oldItems = JSON.parse(cartData) as Cart;
 
-        // update the cart state with the parsed items from local storage
         setNewCart(oldItems);
       } else {
-        // if there is no existing cart data, initialize local storage with an empty array
         localStorage.setItem(
           "cart",
           JSON.stringify({
@@ -213,19 +193,16 @@ function CartProvider({ children }: PropsWithChildren) {
         );
       }
     } catch (err) {
-      // handle errors, if any
       if (err instanceof Error) {
         console.error("Error initializing cart", err.message);
       }
     }
   };
 
-  // useEffect hook to initialize the cart when the component mounts
   useEffect(() => {
     setInitCart();
   }, []);
 
-  // render the CartContextValues.Provider with the cart-related functions and state as values
   return (
     <CartContextValues.Provider
       value={{
@@ -242,5 +219,4 @@ function CartProvider({ children }: PropsWithChildren) {
   );
 }
 
-// exporting the CartProvider component as the default export
 export default CartProvider;

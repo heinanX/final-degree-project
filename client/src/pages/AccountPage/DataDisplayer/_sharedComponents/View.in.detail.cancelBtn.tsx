@@ -2,22 +2,17 @@ import { useSocket as productSocket } from "../../../../contexts/product.context
 import { useSocket as orderSocket } from "../../../../contexts/order.context";
 import { IoIosReturnLeft } from "react-icons/io";
 
-// This component renders a cancel button for returning from detailed views of products or orders.
+/* A COMPONENT THAT RENDERS A CANCEL BUTTON FOR RETURNING FROM DETAILED VIEWS OF PRODUCTS OR ORDERS */
+
 const ViewInDetailCancelBtn = () => {
-  // Accessing productSocket for product-related state and functions
   const { viewProductDetails, setViewProductDetails } = productSocket();
-  
-  // Accessing orderSocket for order-related state and functions
   const { setViewOrderDetails } = orderSocket();
 
   // Function to handle the cancellation and return to the previous view
   const setDetails = () => {
-    // Check if currently viewing product details or order details
     if (viewProductDetails) {
-      // If viewing product details, reset product details state
       setViewProductDetails(null);
     } else {
-      // If viewing order details, reset order details state
       setViewOrderDetails(null);
     }
   };

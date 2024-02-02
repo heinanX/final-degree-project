@@ -1,24 +1,24 @@
 import { useState } from "react";
-import formatDate from "../../../../functions/date.formatter";
-import { Order } from "../../../../interfaces/order.interface";
-import SingleOrderProducts from "./components/order/Single.order.products";
-import SingleOrderReturned from "./components/order/Single.order.returned";
-import SingleOrderShipped from "./components/order/Single.order.shipped";
-import SingleOrderDiscount from "./components/order/Single.order.discount";
-import SingleOrderAddress from "./components/order/Single.order.address";
-import { useSocket as orderSocket } from "../../../../contexts/order.context";
-import EditForm from "../_sharedComponents/Edit.form";
-import ViewInDetailCancelBtn from "../_sharedComponents/View.in.detail.cancelBtn";
+import formatDate from "../../../../../functions/date.formatter";
+import { Order } from "../../../../../interfaces/order.interface";
+import SingleOrderProducts from "./order/Single.order.products";
+import SingleOrderReturned from "./order/Single.order.returned";
+import SingleOrderShipped from "./order/Single.order.shipped";
+import SingleOrderDiscount from "./order/Single.order.discount";
+import SingleOrderAddress from "./order/Single.order.address";
+import { useSocket as orderSocket } from "../../../../../contexts/order.context";
+import EditForm from "../../_sharedComponents/Edit.form";
+import ViewInDetailCancelBtn from "../../_sharedComponents/View.in.detail.cancelBtn";
 
 
-interface ViewSingleOrderProps {
+interface ViewInDetailOrderProps {
   disableForm: boolean;
   setDisableForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 /* COMPONENT THAT RENDERS OUT A COMPLETE ORDER */
 
-const ViewSingleOrder = ({disableForm, setDisableForm}: ViewSingleOrderProps) => {
+const ViewInDetailOrder = ({disableForm, setDisableForm}: ViewInDetailOrderProps) => {
 
   const { viewOrderDetails, updateOrderDatabase } = orderSocket();
   const [newShipped, setNewShipped] = useState<boolean>((viewOrderDetails as Order).shipped);
@@ -32,7 +32,6 @@ const ViewSingleOrder = ({disableForm, setDisableForm}: ViewSingleOrderProps) =>
     e.preventDefault();
     setDisableForm(true);
 
-    // Construct an object with updated order details
     const updateOrderObject: object = {
       shipped: newShipped,
       returned: newReturned,
@@ -165,4 +164,4 @@ const ViewSingleOrder = ({disableForm, setDisableForm}: ViewSingleOrderProps) =>
   );
 };
 
-export default ViewSingleOrder;
+export default ViewInDetailOrder;

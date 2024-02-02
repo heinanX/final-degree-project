@@ -24,20 +24,20 @@ const ProductDetails = ({ loadedProduct}: ProductDetailsProp) => {
 
   return (
     <>
-      {/* movie details */}
       <div className="w-1/2 flex flex-col justify-center p-4 ">
         {/* movie title */}
         <h1 data-info="Movie-title" className="text-5xl uppercase tracking-wide">
           {loadedProduct?.title}
         </h1>
 
-        {/* movie information */}
         <ul className="flex flex-col gap-4 text-xl">
           <div className="flex flex-row gap-8 pt-4">
+
             {/* movie rating */}
             <li data-info="Movie-rating" className="text-xs flex items-center justify-center">
               <button className="bg-teal-500 p-1 rounded">{loadedProduct?.content_rating}</button>
             </li>
+            
             {/* movie year */}
             <li data-info="Movie-year">
               {loadedProduct?.year}
@@ -59,11 +59,9 @@ const ProductDetails = ({ loadedProduct}: ProductDetailsProp) => {
 
         {/* rent buttons */}
         <div className="flex flex-row px-4 py-6" style={{ gap: "10%" }}>
-          {/* rent VHS button */}
           <button className="standard-btn" onClick={() => handleRent('vhs', loadedProduct?._id || "")}>
             Rent VHS {loadedProduct?.vhs.price}
           </button>
-          {/* rent digital button */}
           <button className="standard-btn" onClick={() => handleRent('digital', loadedProduct?._id || "")}>
             Rent Digital {loadedProduct?.digital.price}
           </button>
@@ -72,7 +70,6 @@ const ProductDetails = ({ loadedProduct}: ProductDetailsProp) => {
         {/* movie actors/tags */}
         <div>
           <p>Actors:</p>
-          {/* display movie tags */}
           {loadedProduct?.tags.map((tag: Tags, index) => (
             <p data-info="movie-tags" key={index} className="text-xl">
               {capitalizeLetters(tag.tag)}

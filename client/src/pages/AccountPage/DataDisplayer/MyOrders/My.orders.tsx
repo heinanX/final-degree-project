@@ -7,9 +7,9 @@ import { useEffect } from "react";
 /* COMPONENT THAT RENDERS OUT A COMPLETE ORDER */
 
 const MyOrders = () => {
-  // Accessing orderSocket context for user orders
+
   const { getUserOrdersDatabase, userOrders } = orderSocket();
-  // useEffect to fetch user orders on component mount
+
   useEffect(() => {
     getUserOrdersDatabase();
   }, []);
@@ -19,11 +19,9 @@ const MyOrders = () => {
       id="myOrders"
       className="w-full px-4 py-2 overflow-y-auto primary-scrollbar"
     >
-      {/* Display loading message if userOrders array is empty */}
       {userOrders.length === 0 ? (
         <p>Loading...</p>
       ) : (
-        // Map through userOrders if it's not empty
         userOrders.map((orders, index) => (
           <form
             key={index}
@@ -51,7 +49,6 @@ const MyOrders = () => {
               />
             </div>
 
-            {/* Conditionally render discount section if applicable */}
             {orders.discount > 0 ? (
               <div className="flex flex-row items-center gap-2 uppercase">
                 <label className="w-1/3">discount</label>

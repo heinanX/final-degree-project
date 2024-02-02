@@ -1,6 +1,8 @@
 import { useSocket as cartSocket } from "../../contexts/cart.context";
 import "../../scrollbar.css";
 
+/* COMPONENT THAT RENDERS OUT OVERVIEW OF CART */
+
 const CheckoutDetails = () => {
   const { newCart } = cartSocket();
   return (

@@ -8,8 +8,8 @@ export interface CustomerContext {
   checkLoginStatus: () => Promise<void>;
   loadingIsLoggedIn: boolean;
   setLoadingIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  showLoginDrawer: boolean;
-  setShowLoginDrawer: React.Dispatch<React.SetStateAction<boolean>>;
+  showLoggedInDrawer: boolean;
+  setShowLoggedInDrawer: React.Dispatch<React.SetStateAction<boolean>>;
   activeCustomer: string;
 }
 
@@ -25,7 +25,7 @@ export const defaultValues = {
   checkLoginStatus: async () => {},
   loadingIsLoggedIn: true,
   setLoadingIsLoggedIn: () => {},
-  showLoginDrawer: false,
-  setShowLoginDrawer: () => {},
+  showLoggedInDrawer: false,
+  setShowLoggedInDrawer: () => {},
   activeCustomer: ""
 };

@@ -20,32 +20,28 @@ const AccountPage = () => {
     isLoggedIn,
     isAdmin,
     loadingIsLoggedIn,
-    showLoginDrawer,
-    setShowLoginDrawer,
+    showLoggedInDrawer,
+    setShowLoggedInDrawer,
   } = customerSocket();
 
   // Function to handle changing the displayed component
   const handleDisplayComment = (component: string) => {
     if (viewOrderDetails || viewProductDetails) {
-      // Close order and product details if they are open
       setViewOrderDetails(null);
       setViewProductDetails(null);
     }
-    // Set the new component to be displayed
     setDistplayComponent(component);
   };
 
-  // Effect to check if the user is logged in and redirect if not
   useEffect(() => {
     if (!loadingIsLoggedIn && !isLoggedIn) {
       window.location.href = "/customer/login";
     }
   }, [loadingIsLoggedIn]);
 
-   // Effect that closes login drawer upon component load
   useEffect(() => {
-    if (showLoginDrawer) {
-      setShowLoginDrawer(!showLoginDrawer);
+    if (showLoggedInDrawer) {
+      setShowLoggedInDrawer(!showLoggedInDrawer);
     }
   },[]);
 

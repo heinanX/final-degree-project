@@ -5,13 +5,12 @@ import { useSocket as customerSocket } from "../../../contexts/customer.context"
   - i.e My account, settings and Log out
 */
 
-const LoginDrawer = () => {
-  // Accessing logOut function from customerSocket
-  const { logOut, setShowLoginDrawer } = customerSocket();
+const LoggedInDrawer = () => {
+  const { logOut, setShowLoggedInDrawer } = customerSocket();
 
   // Function to handle logout
   const handleLogout = () => {
-    setShowLoginDrawer(false)
+    setShowLoggedInDrawer(false)
     logOut();
   };
 
@@ -25,17 +24,14 @@ const LoginDrawer = () => {
       {/* Customer drawer content */}
       <div className="bg-white text-red-700 rounded-sm text-xs w-full">
         <ul>
-          {/* My account link */}
           <li>
             <NavLink to="/customer/account">
               <button className={btnStyle}>My account</button>
             </NavLink>
           </li>
-          {/* Settings button */}
           <li className={liStyle}>
             <button className={btnStyle}>Settings</button>
           </li>
-          {/* Logout button */}
           <li className={liStyle}>
             <button
               className={`${btnStyle} last:border-none`}
@@ -50,4 +46,4 @@ const LoginDrawer = () => {
   );
 };
 
-export default LoginDrawer;
+export default LoggedInDrawer;

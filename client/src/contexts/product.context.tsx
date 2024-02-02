@@ -31,7 +31,7 @@ export const useSocket = () => useContext(ProductContextValues);
 function ProductProvider({ children }: PropsWithChildren) {
   // initializing state for product-related information
   const [products, setProducts] = useState<Product[]>([]);
-  const [getMovie, setgetMovie] = useState<Product | null>(null);
+  const [productToRelate, setProductToRelate] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [viewProductDetails, setViewProductDetails] = useState<Product | null>(
     null
@@ -83,8 +83,8 @@ function ProductProvider({ children }: PropsWithChildren) {
         })
       );
 
-      setgetMovie({ ...data, category: categoryData, tags: tagData });
-      return data;
+      setProductToRelate({ ...data, category: categoryData, tags: tagData });
+      return {...data, category: categoryData, tags: tagData};
     } catch (err) {
       console.error("Error fetching product", err);
     }
@@ -186,15 +186,15 @@ function ProductProvider({ children }: PropsWithChildren) {
   // useEffect hook to fetch related products when the associated product changes
   useEffect(() => {
     if (
-      getMovie &&
-      Array.isArray(getMovie.category) &&
-      getMovie.category.length > 0
+      productToRelate &&
+      Array.isArray(productToRelate.category) &&
+      productToRelate.category.length > 0
     ) {
       //@ts-expect-error: the array has an index of 0 as it has a length bigger than 0
-      const firstCategory = getMovie.category[0]._id;
+      const firstCategory = productToRelate.category[0]._id;
       getProductBySearchCriteria(firstCategory, "category");
     }
-  }, [getMovie]);
+  }, [productToRelate]);
 
   // Render the ProductContextValues.Provider with the product-related functions and state as values
   return (
@@ -204,7 +204,7 @@ function ProductProvider({ children }: PropsWithChildren) {
         setProducts,
         getProducts,
         getProductById,
-        getMovie,
+        productToRelate,
         getProductBySearchCriteria,
         viewProductDetails,
         setViewProductDetails,

@@ -3,7 +3,7 @@ GET http://localhost:3000/api/customers
 
 
 ### // GET ONE CUSTOMER
-GET http://localhost:3000/api/customers/65bcb48dc64afdfd02708ed3
+GET http://localhost:3000/api/customers/65bcdb5602ea55780a630c35
 
 
 ### // CHECKS FOR ACTIVE USER
@@ -15,7 +15,7 @@ POST http://localhost:3000/api/customers/create
 Content-Type: application/json
 
 {
-    "mail": "newUser@yahoo.com",
+    "mail": "newUser123@yahoo.com",
     "password": "12345"
 }
 
@@ -40,12 +40,17 @@ Content-Type: application/json
 
 
 ### // EDIT CUSTOMER
-POST http://localhost:3000/api/customers/edit-customer/65bcb7a312e7e115e56d9eb9
+POST http://localhost:3000/api/customers/edit-customer/65bcdb5602ea55780a630c35
 Content-Type: application/json
 
 {
-    "mail": "newuser123@yahoo.com",
-    "username": "jusdyTrudy"
+    "address": [{
+        "_id": "line1",
+        "street": "street",
+        "zip": "zip",
+        "city": "city"
+    }],
+    "username": "earl-pearl"
 }
 
 
@@ -54,4 +59,4 @@ POST http://localhost:3000/api/customers/logout
 
 
 ### // DELETE CUSTOMER
-DELETE http://localhost:3000/api/customers/delete/65a2a68e50d7dda54e90e32f
+DELETE http://localhost:3000/api/customers/delete/65bcdc0602ea55780a630c3b

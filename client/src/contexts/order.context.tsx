@@ -65,7 +65,7 @@ function OrderProvider({ children }: PropsWithChildren) {
   // function to fetch user-specific orders from the server
   const getUserOrdersDatabase = async () => {
     try {
-      const res = await fetch(`/api/orders/user-orders`);
+      const res = await fetch(`/api/orders/user-orders/key`);
       const data = await res.json();
 
       if (!res.ok) throw new Error("Failed to fetch user orders");

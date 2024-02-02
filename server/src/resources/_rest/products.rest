@@ -2,11 +2,7 @@ GET http://localhost:3000/api/products
 
 ###
 
-GET http://localhost:3000/api/products/65982502e138d6b4a7377d66
-
-###
-
-GET http://localhost:3000/api/products/category/6593efdfa62dd39fcfa68fc2
+GET http://localhost:3000/api/products/65a2b315719aaaf33cdf52f4
 
 ###
 
@@ -14,7 +10,7 @@ POST http://localhost:3000/api/products/create
 Content-Type: application/json
 
 {
-    "title": "newMovie",
+    "title": "newMovie22",
     "description": "rickityehfakajfasl dsai fkwoa owa aw ",
     "category": ["6593ee75ad4bf20a16e96bc1", "6593efd0a62dd39fcfa68fbf"],
     "tags": ["65a2cd1b6f8b84b920cdc6e9", "65a2cd9a6f8b84b920cdc6f0", "65a2cdb06f8b84b920cdc6f3"],
@@ -36,19 +32,20 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/api/products/edit-product/65bcbc74d239ea267afcaa5c
+PUT http://localhost:3000/api/products/edit-product/65bce0b996c13f81ce44170e
 Content-Type: application/json
 
 {
-    "vhs": {
-    "price": 29,
-    "available": true,
-    "quantity": 6,
-    "inStock": 6,
-    "stripe_prod_id": "prod_PUI4slB7t91ttI"
-    }
+"vhs": {
+        "price": 249,
+        "available": true,
+        "quantity": 7,
+        "inStock": 6,
+        "stripe_prod_id": "prod_PMvEWoHeQ9PcEO"
+    },
+    "title": "newMovie44"
 }
 
 ###
 
-DELETE http://localhost:3000/api/products/delete/65bcbc74d239ea267afcaa5c
+DELETE http://localhost:3000/api/products/delete/65bce0b996c13f81ce44170e

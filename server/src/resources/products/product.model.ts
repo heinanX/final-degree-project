@@ -37,14 +37,14 @@ const vhsJoiSchema = Joi.object({
   quantity: Joi.number().required(),
   inStock: Joi.number().required(),
   stripe_price_id: Joi.string(),
-  stripe_prod_id: String,
+  stripe_prod_id: Joi.string(),
 });
 
 const digitalJoiSchema = Joi.object({
   price: Joi.number().required(),
   available: Joi.boolean().required(),
   stripe_price_id: Joi.string(),
-  stripe_prod_id: String,
+  stripe_prod_id:  Joi.string(),
 });
 
 export const productJoiSchema = Joi.object({
@@ -60,20 +60,20 @@ export const productJoiSchema = Joi.object({
   digital: digitalJoiSchema.required(),
 });
 
-const vhsUpdateJoiSchema = Joi.object({
-  price: Joi.number(),
-  available: Joi.boolean(),
-  quantity: Joi.number(),
-  inStock: Joi.number(),
+const updateVhsJoiSchema = Joi.object({
+  price: Joi.number().required(),
+  available: Joi.boolean().required(),
+  quantity: Joi.number().required(),
+  inStock: Joi.number().required(),
   stripe_price_id: Joi.string(),
-  stripe_prod_id: String,
+  stripe_prod_id: Joi.string().required(),
 });
 
-const digitalUpdateJoiSchema = Joi.object({
-  price: Joi.number(),
-  available: Joi.boolean(),
+const updateDigitalJoiSchema = Joi.object({
+  price: Joi.number().required(),
+  available: Joi.boolean().required(),
   stripe_price_id: Joi.string(),
-  stripe_prod_id: String,
+  stripe_prod_id:  Joi.string().required(),
 });
 
 export const updateProductJoiSchema = Joi.object({
@@ -85,8 +85,8 @@ export const updateProductJoiSchema = Joi.object({
   rating: Joi.number(),
   year: Joi.number(),
   image: Joi.string(),
-  vhs: vhsUpdateJoiSchema,
-  digital: digitalUpdateJoiSchema,
+  vhs: updateVhsJoiSchema,
+  digital: updateDigitalJoiSchema
 });
 
 export const ProductModel = models.products || model("products", productSchema);

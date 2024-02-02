@@ -2,7 +2,7 @@ GET http://localhost:3000/api/categories
 
 ###
 
-GET http://localhost:3000/api/categories/6593f55592952be70faf9abd
+GET http://localhost:3000/api/categories/6593ede7ad4bf20a16e96bbc
 
 ###
 
@@ -10,9 +10,9 @@ POST http://localhost:3000/api/categories/create
 Content-Type: application/json
 
 {
-    "category": "animation"
+    "category": "newcat"
 }
 
 ###
 
-DELETE http://localhost:3000/api/categories/6593f55592952be70faf9abd
+DELETE http://localhost:3000/api/categories/65bcdc4f02ea55780a630c44

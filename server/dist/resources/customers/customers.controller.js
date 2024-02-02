@@ -21,6 +21,7 @@ const customers_model_1 = require("./customers.model");
  */
 const getCustomers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log('i got here too');
         const customers = yield customers_model_1.CustomerModel.find();
         res.status(200).json(customers);
     }

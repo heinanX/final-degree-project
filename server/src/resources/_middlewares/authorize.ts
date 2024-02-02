@@ -1,29 +1,33 @@
 import { NextFunction, Request, Response } from "express";
-import { isAdmin } from "./isAdmin";
 
-/* A MIDDLEWARE THAT CONFIRMS USER AUTHORIZATION WHEN MAKING REQUESTS */
+/* A MIDDLEWARE THAT CONFIRMS USER AUTHORIZATION WHEN MAKING REQUESTS
+ * if Admin, allow all access,
+ * if session customer id equals requested resource allaw access
+ */
 
-export const authorization = async (
+export const authorize = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const customerId = req.params.id;
+    const sessionCustomerIsAdmin = req.session?.customer?.isAdmin;
     const sessionCustomerId = req.session?.customer?._id;
+    const paramsCustomerId = req.params.id;
+    const paramsKey = req.params.key;
+    console.log(sessionCustomerIsAdmin);
+    
 
-    // ALLOW ACCESS IF USER IS FETCHING OWN DATA
-    if (customerId && sessionCustomerId && customerId === sessionCustomerId) {
+    if (sessionCustomerIsAdmin) {
+      console.log('im in here');
+      
       return next();
     }
 
-    // ALLOW ACCESS IF USER IS FETCHING OWN DATA
-    if (sessionCustomerId) {
+    if (sessionCustomerId === paramsCustomerId || paramsKey) {
       return next();
     }
-
-    // CHECK IF USER IS ADMIN
-    return isAdmin(req, res, next);
+    return res.status(403).json({ error: "Unauthorized access" });
   } catch (error) {
     next(error);
   }

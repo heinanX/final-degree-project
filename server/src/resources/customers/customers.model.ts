@@ -25,10 +25,10 @@ const customerSchema = new Schema(
 );
 
 const addressJoiSchema = Joi.object({
-  _id: String,
-  street: String,
-  zip: String,
-  city: String,
+  _id: Joi.string(),
+  street: Joi.string(),
+  zip: Joi.string(),
+  city: Joi.string(),
 });
 
 export const customerJoiSchema = Joi.object({

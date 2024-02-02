@@ -13,6 +13,8 @@ export const getCustomers = async (
   next: NextFunction
 ) => {
   try {
+    console.log('i got here too');
+    
     const customers = await CustomerModel.find();
     res.status(200).json(customers);
   } catch (error) {

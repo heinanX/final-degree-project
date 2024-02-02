@@ -37,13 +37,13 @@ const vhsJoiSchema = joi_1.default.object({
     quantity: joi_1.default.number().required(),
     inStock: joi_1.default.number().required(),
     stripe_price_id: joi_1.default.string(),
-    stripe_prod_id: String,
+    stripe_prod_id: joi_1.default.string(),
 });
 const digitalJoiSchema = joi_1.default.object({
     price: joi_1.default.number().required(),
     available: joi_1.default.boolean().required(),
     stripe_price_id: joi_1.default.string(),
-    stripe_prod_id: String,
+    stripe_prod_id: joi_1.default.string(),
 });
 exports.productJoiSchema = joi_1.default.object({
     title: joi_1.default.string().required(),
@@ -57,19 +57,19 @@ exports.productJoiSchema = joi_1.default.object({
     vhs: vhsJoiSchema.required(),
     digital: digitalJoiSchema.required(),
 });
-const vhsUpdateJoiSchema = joi_1.default.object({
-    price: joi_1.default.number(),
-    available: joi_1.default.boolean(),
-    quantity: joi_1.default.number(),
-    inStock: joi_1.default.number(),
+const updateVhsJoiSchema = joi_1.default.object({
+    price: joi_1.default.number().required(),
+    available: joi_1.default.boolean().required(),
+    quantity: joi_1.default.number().required(),
+    inStock: joi_1.default.number().required(),
     stripe_price_id: joi_1.default.string(),
-    stripe_prod_id: String,
+    stripe_prod_id: joi_1.default.string().required(),
 });
-const digitalUpdateJoiSchema = joi_1.default.object({
-    price: joi_1.default.number(),
-    available: joi_1.default.boolean(),
+const updateDigitalJoiSchema = joi_1.default.object({
+    price: joi_1.default.number().required(),
+    available: joi_1.default.boolean().required(),
     stripe_price_id: joi_1.default.string(),
-    stripe_prod_id: String,
+    stripe_prod_id: joi_1.default.string().required(),
 });
 exports.updateProductJoiSchema = joi_1.default.object({
     title: joi_1.default.string(),
@@ -80,7 +80,7 @@ exports.updateProductJoiSchema = joi_1.default.object({
     rating: joi_1.default.number(),
     year: joi_1.default.number(),
     image: joi_1.default.string(),
-    vhs: vhsUpdateJoiSchema,
-    digital: digitalUpdateJoiSchema,
+    vhs: updateVhsJoiSchema,
+    digital: updateDigitalJoiSchema
 });
 exports.ProductModel = mongoose_1.models.products || (0, mongoose_1.model)("products", productSchema);

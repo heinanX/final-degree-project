@@ -9,27 +9,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authorization = void 0;
-const isAdmin_1 = require("./isAdmin");
-/* A MIDDLEWARE THAT CONFIRMS USER AUTHORIZATION WHEN MAKING REQUESTS */
-const authorization = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+exports.authorize = void 0;
+/* A MIDDLEWARE THAT CONFIRMS USER AUTHORIZATION WHEN MAKING REQUESTS
+ * if Admin, allow all access,
+ * if session customer id equals requested resource allaw access
+ */
+const authorize = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b, _c, _d;
     try {
-        const customerId = req.params.id;
-        const sessionCustomerId = (_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b._id;
-        // ALLOW ACCESS IF USER IS FETCHING OWN DATA
-        if (customerId && sessionCustomerId && customerId === sessionCustomerId) {
+        const sessionCustomerIsAdmin = (_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b.isAdmin;
+        const sessionCustomerId = (_d = (_c = req.session) === null || _c === void 0 ? void 0 : _c.customer) === null || _d === void 0 ? void 0 : _d._id;
+        const paramsCustomerId = req.params.id;
+        const paramsKey = req.params.key;
+        console.log(sessionCustomerIsAdmin);
+        if (sessionCustomerIsAdmin) {
+            console.log('im in here');
             return next();
         }
-        // ALLOW ACCESS IF USER IS FETCHING OWN DATA
-        if (sessionCustomerId) {
+        if (sessionCustomerId === paramsCustomerId || paramsKey) {
             return next();
         }
-        // CHECK IF USER IS ADMIN
-        return (0, isAdmin_1.isAdmin)(req, res, next);
+        return res.status(403).json({ error: "Unauthorized access" });
     }
     catch (error) {
         next(error);
     }
 });
-exports.authorization = authorization;
+exports.authorize = authorize;

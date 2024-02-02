@@ -25,10 +25,10 @@ const customerSchema = new mongoose_1.Schema({
     stripe_id: String,
 }, { versionKey: false });
 const addressJoiSchema = joi_1.default.object({
-    _id: String,
-    street: String,
-    zip: String,
-    city: String,
+    _id: joi_1.default.string(),
+    street: joi_1.default.string(),
+    zip: joi_1.default.string(),
+    city: joi_1.default.string(),
 });
 exports.customerJoiSchema = joi_1.default.object({
     _id: joi_1.default.string(),

@@ -19,7 +19,8 @@ import { CategoryModel } from "../interfaces/category.interface";
 import { Tags } from "../interfaces/tags.interface";
 // importing custom types/interfaces from the tags interface file
 
-export const ProductContextValues = createContext<ProductContext>(defaultValues);
+export const ProductContextValues =
+  createContext<ProductContext>(defaultValues);
 // creating a context to manage product-related state
 
 export const useSocket = () => useContext(ProductContextValues);
@@ -36,7 +37,6 @@ function ProductProvider({ children }: PropsWithChildren) {
     null
   );
 
-  
   /*
    * function to fetch all products from the server
    */
@@ -58,7 +58,7 @@ function ProductProvider({ children }: PropsWithChildren) {
    * Function to fetch a specific product from the server,
    * along with its associated category and tag information.
    */
-  const getProduct = async (id: string) => {
+  const getProductById = async (id: string) => {
     try {
       const response = await fetch(`http://localhost:3000/api/products/${id}`);
       const data = await response.json();
@@ -84,6 +84,7 @@ function ProductProvider({ children }: PropsWithChildren) {
       );
 
       setgetMovie({ ...data, category: categoryData, tags: tagData });
+      return data;
     } catch (err) {
       console.error("Error fetching product", err);
     }
@@ -138,13 +139,16 @@ function ProductProvider({ children }: PropsWithChildren) {
     }));
   };
 
-    /*
+  /*
    * Function to update product information in the database
    */
-  const updateProductDatabase = async (updateProductObject: object, id: string) => {
+  const updateProductDatabase = async (
+    updateProductObject: object,
+    id: string
+  ) => {
     try {
       const res = await fetch(`/api/products/edit-product/${id}`, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -160,6 +164,20 @@ function ProductProvider({ children }: PropsWithChildren) {
     }
   };
 
+  const deleteProductDatabase = async (id: string) => {
+    try {
+      const res = await fetch(`/api/products/delete/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        return data;
+      }
+    } catch (err) {
+      console.error("Error updating product", err);
+    }
+  };
+
   // useEffect hook to fetch products when the component mounts
   useEffect(() => {
     getProducts();
@@ -167,10 +185,14 @@ function ProductProvider({ children }: PropsWithChildren) {
 
   // useEffect hook to fetch related products when the associated product changes
   useEffect(() => {
-    if (getMovie && Array.isArray(getMovie.category) && getMovie.category.length > 0) {
+    if (
+      getMovie &&
+      Array.isArray(getMovie.category) &&
+      getMovie.category.length > 0
+    ) {
       //@ts-expect-error: the array has an index of 0 as it has a length bigger than 0
-      const firstCategory = getMovie.category[0]._id
-      getProductBySearchCriteria(firstCategory, 'category');
+      const firstCategory = getMovie.category[0]._id;
+      getProductBySearchCriteria(firstCategory, "category");
     }
   }, [getMovie]);
 
@@ -181,7 +203,7 @@ function ProductProvider({ children }: PropsWithChildren) {
         products,
         setProducts,
         getProducts,
-        getProduct,
+        getProductById,
         getMovie,
         getProductBySearchCriteria,
         viewProductDetails,
@@ -192,6 +214,7 @@ function ProductProvider({ children }: PropsWithChildren) {
         updateProductDatabase,
         relatedProducts,
         setRelatedProducts,
+        deleteProductDatabase,
       }}
     >
       {children}

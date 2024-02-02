@@ -1,9 +1,9 @@
-import { useSocket as customerSocket } from "../../../contexts/customer.context";
+import { useSocket as customerSocket } from "../../../../contexts/customer.context";
 
-interface ListItemsProp {
+interface UserListItemsProp {
     handleDisplayComment: (component: string) => void;
 }
-const ListItems = ({ handleDisplayComment }: ListItemsProp) => {
+const UserListItems = ({ handleDisplayComment }: UserListItemsProp) => {
 
     const { logOut } = customerSocket();
     
@@ -18,4 +18,4 @@ const ListItems = ({ handleDisplayComment }: ListItemsProp) => {
   );
 };
 
-export default ListItems;
+export default UserListItems;

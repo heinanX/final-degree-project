@@ -7,6 +7,8 @@ interface props {
   setFrmTags: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
+/* THIS FUNCTION IS NOT YET CONNECTED AND IS STILL A WIP */
+
 const AddTag = ({ frmTags, setFrmTags }: props) => {
   const [selectedTag, setSelectedTag] = useState<string>("");
   const { getTag, tags } = tagSocket();

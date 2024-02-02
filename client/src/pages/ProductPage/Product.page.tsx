@@ -10,7 +10,7 @@ import useWindowSize from "../../customHooks/windowSize";
 
 const ProductPage = () => {
   const [loadProduct, setLoadProduct] = useState(true);
-  const { getProduct, getMovie, relatedProducts } = productSocket();
+  const { getProductById, getMovie, relatedProducts } = productSocket();
   const { id } = useParams();
   const windowSize = useWindowSize();
 
@@ -18,7 +18,7 @@ const ProductPage = () => {
   useEffect(() => {
     if (id) {
       setLoadProduct(true);
-      getProduct(id);
+      getProductById(id);
       window.scrollTo(0, 0);
     }
   }, [id]);

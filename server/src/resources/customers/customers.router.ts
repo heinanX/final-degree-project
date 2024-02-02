@@ -5,7 +5,6 @@ import {
   deleteCustomer,
   editCustomer,
   getCustomerById,
-  //getCustomerDetails,
   getCustomers,
   login,
   logout,
@@ -22,7 +21,6 @@ import { authenticateLogin } from '../_middlewares/authenticateLogin';
 export const customerRouter = Router();
 
 customerRouter.get('/active', authenticateLogin, activeLogin);
-//customerRouter.get('/customer-details', getCustomerDetails);
 customerRouter.get('/', authorize, getCustomers);
 customerRouter.get('/:id', authorize, getCustomerById);
 customerRouter.post('/create', validate(customerJoiSchema), formatData, createStripeCus, createCustomer);

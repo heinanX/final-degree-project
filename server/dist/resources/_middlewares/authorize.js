@@ -21,9 +21,7 @@ const authorize = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         const sessionCustomerId = (_d = (_c = req.session) === null || _c === void 0 ? void 0 : _c.customer) === null || _d === void 0 ? void 0 : _d._id;
         const paramsCustomerId = req.params.id;
         const paramsKey = req.params.key;
-        console.log(sessionCustomerIsAdmin);
         if (sessionCustomerIsAdmin) {
-            console.log('im in here');
             return next();
         }
         if (sessionCustomerId === paramsCustomerId || paramsKey) {

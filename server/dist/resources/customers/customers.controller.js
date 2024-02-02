@@ -21,7 +21,6 @@ const customers_model_1 = require("./customers.model");
  */
 const getCustomers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log('i got here too');
         const customers = yield customers_model_1.CustomerModel.find();
         res.status(200).json(customers);
     }
@@ -44,18 +43,6 @@ const getCustomerById = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.getCustomerById = getCustomerById;
-// export const getCustomerDetails = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const customer = req.session.customer?.mail;
-//     res.status(200).json(customer);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 const createCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const customer = new customers_model_1.CustomerModel(req.body);

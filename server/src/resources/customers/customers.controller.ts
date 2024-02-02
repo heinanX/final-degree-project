@@ -12,9 +12,7 @@ export const getCustomers = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    console.log('i got here too');
-    
+  try {    
     const customers = await CustomerModel.find();
     res.status(200).json(customers);
   } catch (error) {
@@ -38,19 +36,6 @@ export const getCustomerById = async (
     next(error);
   }
 };
-
-// export const getCustomerDetails = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const customer = req.session.customer?.mail;
-//     res.status(200).json(customer);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 
 export const createCustomer = async (
   req: Request,

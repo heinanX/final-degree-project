@@ -15,12 +15,8 @@ export const authorize = async (
     const sessionCustomerId = req.session?.customer?._id;
     const paramsCustomerId = req.params.id;
     const paramsKey = req.params.key;
-    console.log(sessionCustomerIsAdmin);
-    
 
     if (sessionCustomerIsAdmin) {
-      console.log('im in here');
-      
       return next();
     }
 

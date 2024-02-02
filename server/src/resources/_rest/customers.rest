@@ -34,7 +34,7 @@ POST http://localhost:3000/api/customers/login
 Content-Type: application/json
 
 {
-"mail": "newUser1@yahoo.com",
+"mail": "admin@admin.com",
 "password": "12345"
 }
 

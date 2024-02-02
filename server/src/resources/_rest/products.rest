@@ -40,9 +40,15 @@ PUT http://localhost:3000/api/products/edit-product/65bcbc74d239ea267afcaa5c
 Content-Type: application/json
 
 {
-    "title": "Back to the future"
+    "vhs": {
+    "price": 29,
+    "available": true,
+    "quantity": 6,
+    "inStock": 6,
+    "stripe_prod_id": "prod_PUI4slB7t91ttI"
+    }
 }
 
 ###
 
-DELETE http://localhost:3000/api/products/delete/65a2a4c22e6f0dfd126eb6ba
+DELETE http://localhost:3000/api/products/delete/65bcbc74d239ea267afcaa5c

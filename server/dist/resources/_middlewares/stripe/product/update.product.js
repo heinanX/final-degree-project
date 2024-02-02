@@ -19,17 +19,17 @@ const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 const updateStripeProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const existingProduct = yield product_model_1.ProductModel.findById({ _id: req.params.id });
-        if (req.body.title) {
-            req.body.title = req.body.title.toLowerCase();
-        }
         if (!existingProduct) {
             return res.status(409).json("Product not found");
         }
+        if (req.body.title) {
+            req.body.title = req.body.title.toLowerCase();
+        }
         if (req.body.vhs) {
             const newPrice = yield stripe.prices.create({
-                currency: 'sek',
+                currency: "sek",
                 unit_amount: req.body.vhs.price * 100,
-                product: existingProduct.vhs.stripe_prod_id
+                product: existingProduct.vhs.stripe_prod_id,
             });
             yield stripe.products.update(existingProduct.vhs.stripe_prod_id, {
                 default_price: newPrice.id,
@@ -37,11 +37,13 @@ const updateStripeProduct = (req, res, next) => __awaiter(void 0, void 0, void 0
             req.body.vhs.stripe_price_id = newPrice.id;
         }
         if (req.body.digital) {
-            console.log('im in here');
             const newPrice = yield stripe.prices.create({
-                currency: 'sek',
+                currency: "sek",
                 unit_amount: req.body.digital.price * 100,
-                product: existingProduct.digital.stripe_prod_id
+                product: existingProduct.digital.stripe_prod_id,
+            });
+            yield stripe.products.update(existingProduct.digital.stripe_prod_id, {
+                default_price: newPrice.id,
             });
             req.body.digital.stripe_price_id = newPrice.id;
         }

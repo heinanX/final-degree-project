@@ -3,7 +3,7 @@ import AdminDashboard from "./Dashboard/AdminDashboard/Admin.dashboard";
 import AdminListItems from "./Dashboard/AdminListItems/Admin.list.items";
 import DataDisplayer from "./DataDisplayer/DataDisplayer";
 import UserDashboard from "./Dashboard/UserDashboard/UserDashboard";
-import ListItems from "./ListItems/List.items";
+import UserListItems from "./Dashboard/UserListItems/User.list.items";
 import { useSocket as orderSocket } from "../../contexts/order.context";
 import { useSocket as productSocket } from "../../contexts/product.context";
 import { useSocket as customerSocket } from "../../contexts/customer.context";
@@ -20,32 +20,28 @@ const AccountPage = () => {
     isLoggedIn,
     isAdmin,
     loadingIsLoggedIn,
-    showLoginDrawer,
-    setShowLoginDrawer,
+    showLoggedInDrawer,
+    setShowLoggedInDrawer,
   } = customerSocket();
 
   // Function to handle changing the displayed component
   const handleDisplayComment = (component: string) => {
     if (viewOrderDetails || viewProductDetails) {
-      // Close order and product details if they are open
       setViewOrderDetails(null);
       setViewProductDetails(null);
     }
-    // Set the new component to be displayed
     setDistplayComponent(component);
   };
 
-  // Effect to check if the user is logged in and redirect if not
   useEffect(() => {
     if (!loadingIsLoggedIn && !isLoggedIn) {
       window.location.href = "/customer/login";
     }
   }, [loadingIsLoggedIn]);
 
-   // Effect that closes login drawer upon component load
   useEffect(() => {
-    if (showLoginDrawer) {
-      setShowLoginDrawer(!showLoginDrawer);
+    if (showLoggedInDrawer) {
+      setShowLoggedInDrawer(!showLoggedInDrawer);
     }
   },[]);
 
@@ -62,7 +58,7 @@ const AccountPage = () => {
               {/* Display appropriate dashboard based on user type */}
               {isAdmin ? <AdminDashboard /> : <UserDashboard />}
               <ul className="account-page-ul pb-20">
-                <ListItems handleDisplayComment={handleDisplayComment} />
+                <UserListItems handleDisplayComment={handleDisplayComment} />
                 {/* Display additional list items for admin */}
                 {isAdmin ? (
                   <AdminListItems handleDisplayComment={handleDisplayComment} />
@@ -73,7 +69,6 @@ const AccountPage = () => {
             </div>
 
             {/* right side content */}
-            {/* <DataDisplayer displayComponent={displayComponent} /> */}
             <DataDisplayer displayComponent={displayComponent} />
           </div>
         </div>

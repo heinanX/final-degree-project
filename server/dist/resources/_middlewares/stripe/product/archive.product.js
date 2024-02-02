@@ -12,8 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.archiveStripeProduct = void 0;
 const product_model_1 = require("../../../products/product.model");
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
-/* A middleware that checks for a product in database.
-If found, the product is archived (i.e. inactivated) in stripe, it then passes to the next function. */
+/* A MIDDLEWARE THAT LOOKS FOR A PRODUCT IN DATABASE
+ * if found, the product is archived (i.e. inactivated) in stripe,
+ * it then passes to the next function.
+ */
 const archiveStripeProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const existingProduct = yield product_model_1.ProductModel.findById({ _id: req.params.id });
@@ -21,16 +23,14 @@ const archiveStripeProduct = (req, res, next) => __awaiter(void 0, void 0, void 
             return res.status(409).json("Product not found");
         }
         else {
-            /* LOGIC THAT ARCHIVES A VHS PRODUCT IN STRIPE */
             if (existingProduct.vhs.stripe_prod_id) {
                 yield stripe.products.update(existingProduct.vhs.stripe_prod_id, {
-                    active: false
+                    active: false,
                 });
             }
-            /* LOGIC THAT ARCHIVES A DIGITAL PRODUCT IN STRIPE */
             if (existingProduct.digital.stripe_prod_id) {
                 yield stripe.products.update(existingProduct.digital.stripe_prod_id, {
-                    active: false
+                    active: false,
                 });
             }
             next();

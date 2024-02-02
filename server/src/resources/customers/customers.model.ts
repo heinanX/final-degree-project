@@ -1,9 +1,11 @@
 import { Schema, model, models } from "mongoose";
 import Joi from "joi";
 
+/* DEFINES SCHEMA FOR CUSTOMER MODEL AND JOI SCHEMA FOR VALIDATION */
+
 const customerSchema = new Schema(
   {
-    username: String,
+    username: { type: String, default: "" },
     mail: { type: String, require: true },
     password: { type: String, require: true },
     joinDate: { type: Date, default: Date.now() },
@@ -22,14 +24,12 @@ const customerSchema = new Schema(
   { versionKey: false }
 );
 
-const addressJoiSchema = Joi.object(
-  {
-    _id: String,
-    street: String,
-    zip: String,
-    city: String,
-  }
-);
+const addressJoiSchema = Joi.object({
+  _id: Joi.string(),
+  street: Joi.string(),
+  zip: Joi.string(),
+  city: Joi.string(),
+});
 
 export const customerJoiSchema = Joi.object({
   _id: Joi.string(),
@@ -48,6 +48,7 @@ export const updateCustomerJoiSchema = Joi.object({
   password: Joi.string(),
   isAdmin: Joi.boolean(),
   address: Joi.array().items(addressJoiSchema),
+  username: Joi.string()
 });
 
 export const CustomerModel =

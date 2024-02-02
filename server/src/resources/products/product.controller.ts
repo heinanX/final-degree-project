@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { ProductModel } from "./product.model";
 
+/* CRUD OPERATIONS FOR PRODUCT
+ *  getProducts, getProductBySearchCriteria, getProductById, createProduct, deleteProduct
+ */
+
 export const getProducts = async (
   req: Request,
   res: Response,
@@ -27,22 +31,7 @@ export const getProductBySearchCriteria = async (
   }
 };
 
-// export const getProductsByTag = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const orders = await ProductModel.find({
-//       tags: {  $in: req.params.id }
-//     });
-//     res.status(200).json(orders);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-export const getProduct = async (
+export const getProductById = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -50,9 +39,8 @@ export const getProduct = async (
   try {
     const product = await ProductModel.findOne({ _id: req.params.id });
     if (!product) {
-      return res.status(404).json({ error: 'Unknown ID' });
+      return res.status(404).json({ error: "Unknown ID" });
     }
-    
     res.status(200).json(product);
   } catch (error) {
     next(error);
@@ -65,8 +53,8 @@ export const createProduct = async (
   next: NextFunction
 ) => {
   try {
-    const checkProduct = await ProductModel.findOne({ title: req.body.title });
-    if (!checkProduct) {
+    const existingProduct = await ProductModel.findOne({ title: req.body.title });
+    if (!existingProduct) {
       const newProduct = await ProductModel.create(req.body);
       res.status(201).json(newProduct);
     } else {
@@ -84,10 +72,10 @@ export const editProduct = async (
 ) => {
   try {
     const incomingData = req.body;
-    const product: string = req.params.id;
+    const productId: string = req.params.id;
 
     const updatedProduct = await ProductModel.findByIdAndUpdate(
-      product,
+      productId,
       incomingData,
       { new: true }
     );

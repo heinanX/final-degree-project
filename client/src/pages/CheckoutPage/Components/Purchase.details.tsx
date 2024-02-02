@@ -2,6 +2,8 @@ import { useSocket as cartSocket } from "../../../contexts/cart.context";
 import { useSocket as customerSocket } from "../../../contexts/customer.context";
 import { useState } from "react";
 
+/* COMPONENT RENDERS OUT ADDRESS FORM FOR CHECKOUT */
+
 const PurchaseDetails = () => {
   const { handleCheckout,  } = cartSocket();
   const { activeCustomer } = customerSocket();

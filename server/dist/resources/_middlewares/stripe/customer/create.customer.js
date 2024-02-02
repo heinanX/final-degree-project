@@ -12,8 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createStripeCus = void 0;
 const customers_model_1 = require("../../../customers/customers.model");
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
-/* A middleware that checks for pre-existing customer in database,
-if not found, a customer is created in stripe where its customer id is passed on to the next function */
+/* A MIDDLEWARE THAT CHECKS FOR PRE-EXISTING CUSTOMER IN DATABASE,
+ * if not found, a customer is created in stripe,
+ * its customer id is then passed on to the next function
+ */
 const createStripeCus = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { mail } = req.body;

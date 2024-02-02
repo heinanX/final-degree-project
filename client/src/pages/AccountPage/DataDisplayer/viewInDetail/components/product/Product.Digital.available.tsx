@@ -27,20 +27,17 @@ const ProductDigitalAvailable = ({
 
   /* function that sets content of checkbox [available] based on current state */
   const editCheckbox = () => {
-    let checkboxContent; //initiates a variable
+    let checkboxContent;
 
     if (disableForm) {
-      // if form is not in edit mode display styled icons
 
       if (available) {
-        //if available is true display ticked box
         checkboxContent = (
           <span className="text-base text-yellow-400">
             <IoIosCheckbox />
           </span>
         );
       } else {
-        //else display empty box
         checkboxContent = (
           <span className="text-base text-yellow-400">
             <MdOutlineCheckBoxOutlineBlank />
@@ -56,7 +53,7 @@ const ProductDigitalAvailable = ({
         />
       );
     }
-    return <>{checkboxContent}</>; //returns component
+    return <>{checkboxContent}</>;
   };
 
   return (

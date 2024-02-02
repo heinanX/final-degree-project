@@ -4,8 +4,8 @@ export interface ProductContext {
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
   getProducts: () => void;
-  getProduct: (id: string) => void;
-  getMovie: Product | null;
+  getProductById: (id: string) => void;
+  productToRelate: Product | null;
   getProductBySearchCriteria: (id: string, criteria: string) => void;
   viewProductDetails: Product | null;
   setViewProductDetails: React.Dispatch<React.SetStateAction<Product | null>>;
@@ -20,14 +20,15 @@ export interface ProductContext {
   updateProductDatabase: (updateProductObject: object, id: string) => void;
   relatedProducts: Product[];
   setRelatedProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  deleteProductDatabase: (id: string) => void;
 }
 
 export const defaultValues = {
   products: [],
   setProducts: () => {},
   getProducts: () => {},
-  getProduct: () => {},
-  getMovie: null,
+  getProductById: () => {},
+  productToRelate: null,
   getProductBySearchCriteria: () => {},
   viewProductDetails: null,
   setViewProductDetails: () => {},
@@ -37,6 +38,7 @@ export const defaultValues = {
   updateProductDatabase: () => {},
   relatedProducts: [],
   setRelatedProducts: () => {},
+  deleteProductDatabase: () => {},
 };
 
 export interface iProductVhs {

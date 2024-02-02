@@ -3,9 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductModel = exports.productJoiSchema = void 0;
+exports.ProductModel = exports.updateProductJoiSchema = exports.productJoiSchema = void 0;
 const mongoose_1 = require("mongoose");
 const joi_1 = __importDefault(require("joi"));
+/* DEFINES SCHEMA FOR PRODUCT MODEL AND JOI SCHEMA FOR VALIDATION */
 const productSchema = new mongoose_1.Schema({
     title: { type: String, require: true },
     description: { type: String, require: true },
@@ -21,14 +22,14 @@ const productSchema = new mongoose_1.Schema({
         quantity: Number,
         inStock: Number,
         stripe_price_id: String,
-        stripe_prod_id: String
+        stripe_prod_id: String,
     },
     digital: {
         price: Number,
         available: Boolean,
         stripe_price_id: String,
-        stripe_prod_id: String
-    }
+        stripe_prod_id: String,
+    },
 }, { versionKey: false });
 const vhsJoiSchema = joi_1.default.object({
     price: joi_1.default.number().required(),
@@ -36,13 +37,13 @@ const vhsJoiSchema = joi_1.default.object({
     quantity: joi_1.default.number().required(),
     inStock: joi_1.default.number().required(),
     stripe_price_id: joi_1.default.string(),
-    stripe_prod_id: String
+    stripe_prod_id: joi_1.default.string(),
 });
 const digitalJoiSchema = joi_1.default.object({
     price: joi_1.default.number().required(),
     available: joi_1.default.boolean().required(),
     stripe_price_id: joi_1.default.string(),
-    stripe_prod_id: String
+    stripe_prod_id: joi_1.default.string(),
 });
 exports.productJoiSchema = joi_1.default.object({
     title: joi_1.default.string().required(),
@@ -54,6 +55,32 @@ exports.productJoiSchema = joi_1.default.object({
     year: joi_1.default.number().required(),
     image: joi_1.default.string(),
     vhs: vhsJoiSchema.required(),
-    digital: digitalJoiSchema.required()
+    digital: digitalJoiSchema.required(),
+});
+const updateVhsJoiSchema = joi_1.default.object({
+    price: joi_1.default.number().required(),
+    available: joi_1.default.boolean().required(),
+    quantity: joi_1.default.number().required(),
+    inStock: joi_1.default.number().required(),
+    stripe_price_id: joi_1.default.string(),
+    stripe_prod_id: joi_1.default.string().required(),
+});
+const updateDigitalJoiSchema = joi_1.default.object({
+    price: joi_1.default.number().required(),
+    available: joi_1.default.boolean().required(),
+    stripe_price_id: joi_1.default.string(),
+    stripe_prod_id: joi_1.default.string().required(),
+});
+exports.updateProductJoiSchema = joi_1.default.object({
+    title: joi_1.default.string(),
+    description: joi_1.default.string(),
+    category: joi_1.default.array().items(joi_1.default.string()).min(1),
+    tags: joi_1.default.array().items(joi_1.default.string()).min(1),
+    content_rating: joi_1.default.string(),
+    rating: joi_1.default.number(),
+    year: joi_1.default.number(),
+    image: joi_1.default.string(),
+    vhs: updateVhsJoiSchema,
+    digital: updateDigitalJoiSchema
 });
 exports.ProductModel = mongoose_1.models.products || (0, mongoose_1.model)("products", productSchema);

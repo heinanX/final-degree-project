@@ -32,20 +32,17 @@ const ProductVhsAvailable = ({
 
   /* function that sets content of checkbox [available] based on current state */
   const setCheckbox = () => {
-    let checkboxContent; //initiates a variable
+    let checkboxContent;
 
     if (disableForm) {
-      // if form is not in edit mode display styled icons
 
       if (available) {
-        //if available is true display ticked box
         checkboxContent = (
           <span className="text-base text-yellow-400">
             <IoIosCheckbox />
           </span>
         );
       } else {
-        //else display empty box
         checkboxContent = (
           <span className="text-base text-yellow-400">
             <MdOutlineCheckBoxOutlineBlank />
@@ -53,7 +50,6 @@ const ProductVhsAvailable = ({
         );
       }
     } else {
-      //else (when form is in edit mode)
       checkboxContent = (
         <input
           type="checkbox"
@@ -62,7 +58,7 @@ const ProductVhsAvailable = ({
         />
       );
     }
-    return <>{checkboxContent}</>; //returns component
+    return <>{checkboxContent}</>;
   };
 
   return (

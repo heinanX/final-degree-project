@@ -2,11 +2,11 @@ GET http://localhost:3000/api/orders
 
 ###
 
-GET http://localhost:3000/api/orders/user-orders/6596c71ee62bf4f20da2ebcf
+GET http://localhost:3000/api/orders/user-orders
 
 ###
 
-GET http://localhost:3000/api/orders/659bdf345234d267f4f1bcf0
+GET http://localhost:3000/api/orders/65b2b07ca27f0db6a29d942a
 
 ###
 
@@ -36,11 +36,11 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/api/orders/manage-order/65a2a5bd50d7dda54e90e324
+PUT http://localhost:3000/api/orders/manage-order/65b9854eebac6edeb0c59be7
 Content-Type: application/json
 
 {
-    "payment_status": "paid"
+    "shipped": true
 }
 
 ###

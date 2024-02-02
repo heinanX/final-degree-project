@@ -58,7 +58,6 @@ const MovieLibraryPage = () => {
           </div>
         </>
       ) : (
-        // Display a message when no products are available
         <p>No products available</p>
       )}
     </div>

@@ -7,7 +7,6 @@ import {
 } from "react";
 
 import { TagContext, Tag, Tags } from "../interfaces/tags.interface";
-// importing custom types/interfaces from the tags interface file
 
 const defaultValues = {
   tags: [],
@@ -15,13 +14,9 @@ const defaultValues = {
   getTags: () => {},
   getTag: () => {},
 };
-// default values for the tag context, including empty arrays and placeholder functions
 
 export const TagContextValues = createContext<TagContext>(defaultValues);
-// creating a context to manage tag-related state
-
 export const useSocket = () => useContext(TagContextValues);
-// custom hook to access the tag context
 
 //---------------------- Provider begins here
 
@@ -29,9 +24,8 @@ function TagProvider({ children }: PropsWithChildren) {
   // initializing state for tag-related information
   const [tags, setTags] = useState<Tag[]>([]);
 
-  /*
-   * function to fetch all tags from the server
-   */
+  // function to fetch all tags from the server
+
   const getTags = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/tags");
@@ -43,9 +37,7 @@ function TagProvider({ children }: PropsWithChildren) {
     }
   };
 
-  /*
-   * function to fetch a specific tag or create it if it doesn't exist
-   */
+  // function to fetch a specific tag or create it if it doesn't exist
   const getTag = async (tag: string) => {
     try {
       const res = await fetch("http://localhost:3000/api/tags");
@@ -66,17 +58,14 @@ function TagProvider({ children }: PropsWithChildren) {
 
         if (createTagRes.ok) {
           const newTag = await createTagRes.json();
-          console.log(newTag);
+          return newTag;
         }
       }
-
-      console.log(collected);
     } catch (err) {
       console.error("Error fetching or creating tag", err);
     }
   };
 
-  // Render the TagContextValues.Provider with the tag-related functions and state as values
   return (
     <TagContextValues.Provider
       value={{

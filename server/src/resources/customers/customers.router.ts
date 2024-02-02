@@ -1,23 +1,30 @@
 import { Router } from 'express';
-import { activeLogin, createCustomer, deleteCustomer, editCustomer, getCustomer, getCustomerDetails, getCustomers, login, logout } from './customers.controller';
-import { isAdmin } from '../_middlewares/isAdmin';
+import {
+  activeLogin,
+  createCustomer,
+  deleteCustomer,
+  editCustomer,
+  getCustomerById,
+  getCustomers,
+  login,
+  logout,
+} from './customers.controller';
 import { validate } from '../_middlewares/validate.schema';
 import { customerJoiSchema, updateCustomerJoiSchema } from './customers.model';
 import { formatData } from '../_middlewares/format.data';
 import { createStripeCus } from '../_middlewares/stripe/customer/create.customer';
 import { deleteStripeCus } from '../_middlewares/stripe/customer/delete.customer';
 import { updateStripeCustomer } from '../_middlewares/stripe/customer/update.customer';
-import { authorization } from '../_middlewares/authorize';
+import { authorize } from '../_middlewares/authorize';
 import { authenticateLogin } from '../_middlewares/authenticateLogin';
 
 export const customerRouter = Router();
 
 customerRouter.get('/active', authenticateLogin, activeLogin);
-customerRouter.get('/customer-details', getCustomerDetails);
-customerRouter.get('/', isAdmin, getCustomers);
-customerRouter.get('/:id', authorization, getCustomer);
+customerRouter.get('/', authorize, getCustomers);
+customerRouter.get('/:id', authorize, getCustomerById);
 customerRouter.post('/create', validate(customerJoiSchema), formatData, createStripeCus, createCustomer);
-customerRouter.post('/login', login);
+customerRouter.post('/login', formatData, login);
 customerRouter.post('/logout', logout);
-customerRouter.post('/edit-customer/:id', authorization, validate(updateCustomerJoiSchema), updateStripeCustomer, editCustomer);
-customerRouter.delete('/delete/:id', authorization, deleteStripeCus, deleteCustomer);
+customerRouter.post('/edit-customer/:id', formatData, authorize, validate(updateCustomerJoiSchema), updateStripeCustomer, editCustomer);
+customerRouter.delete('/delete/:id', authorize, deleteStripeCus, deleteCustomer);

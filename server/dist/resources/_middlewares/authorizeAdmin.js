@@ -9,22 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatData = void 0;
-/*  MIDDLEWARE TO FORMAT DATA TO LOWERCASE BEFORE PROCESSING IT */
-const formatData = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.body.mail) {
-        req.body.mail = req.body.mail.toLowerCase();
-        return next();
+exports.authorizeAdmin = void 0;
+/* MIDDLEWARE TO CHECK IF THE USER IS AN ADMIN BEFORE GRANTING ACCESS */
+const authorizeAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    if ((_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b.isAdmin) {
+        next();
     }
-    if (req.body.title) {
-        req.body.title = req.body.title.toLowerCase();
-        return next();
+    else {
+        res.status(403).json(`Access denied. Must be Admin.`);
     }
-    // If none of the specific properties are found, convert the entire request body to lowercase
-    const stringifiedData = JSON.stringify(req.body);
-    const format = stringifiedData.toLowerCase();
-    const formattedData = JSON.parse(format);
-    req.body = formattedData;
-    next();
 });
-exports.formatData = formatData;
+exports.authorizeAdmin = authorizeAdmin;

@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 
-export const isAdmin = async (
+/* MIDDLEWARE TO CHECK IF THE USER IS AN ADMIN BEFORE GRANTING ACCESS */
+
+export const authorizeAdmin = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  
-
   if (req.session?.customer?.isAdmin) {
     next();
   } else {

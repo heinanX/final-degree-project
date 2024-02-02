@@ -5,6 +5,8 @@ interface ProductCategoriesProps {
   disableForm: boolean;
 }
 
+/* COMPONENT THAT RENDERS CATEGORIES INSIDE PRODUCT FORM */
+
 const ProductCategories = ({ disableForm }: ProductCategoriesProps) => {
   const { viewProductDetails } = productSocket();
 
@@ -18,6 +20,7 @@ const ProductCategories = ({ disableForm }: ProductCategoriesProps) => {
             key={index}
             type="text"
             disabled={disableForm}
+            //@ts-expect-error: it is a string 
             defaultValue={category}
             className="standard-form-darkmode"
           />

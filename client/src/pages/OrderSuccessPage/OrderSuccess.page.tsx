@@ -8,8 +8,6 @@ import OrderDetails from './OrderDetails/OrderDetails';
 
 const OrderSuccessPage = () => {
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //const [ isloading, setIsLoading ] = useState<boolean>(false);
   const { createOrderDatabase, isOrderLoading, setIsOrderLoading } = orderSocket();
 
   useEffect(()=> {
@@ -18,13 +16,9 @@ const OrderSuccessPage = () => {
     const queryString = location.search;
     const sessionId = queryString.substring(4);
 
-    // Retrieve existing cart data from local storage
     const cartData = localStorage.getItem("cart");
-    // Check if there is existing cart data in local storage
     if (cartData) {
-      // Parse the existing cart data into an array of CartItem objects
       const cart = JSON.parse(cartData) as Cart;
-      // Call function to create an order in the database
       createOrderDatabase(cart, sessionId)
     }
   }, [])

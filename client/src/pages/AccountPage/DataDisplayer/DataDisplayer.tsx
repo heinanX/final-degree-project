@@ -1,6 +1,6 @@
 import AccountSettings from "./AccountSettings/Account.settings";
 import AddProduct from "./products/AddProduct/Add.product";
-import AllOrders from "./Orders/All.orders";
+import AllOrders from "./orders/All.orders";
 import AllProducts from "./products/All.products";
 import DeleteProduct from "./products/Delete.product";
 import MyOrders from "./MyOrders/My.orders";
@@ -11,6 +11,8 @@ import ViewInDetail from "./viewInDetail/View.in.detail";
 interface dataDisplayerProps {
   displayComponent: string;
 }
+
+/* COMPONENT THAT RENDERS OUT DIFFERENT DATA DEPENDENT ON VALUE OF DISPLAYCOMPONENT */
 
 const DataDisplayer = ({ displayComponent }: dataDisplayerProps) => {
   const { viewOrderDetails } = orderSocket();

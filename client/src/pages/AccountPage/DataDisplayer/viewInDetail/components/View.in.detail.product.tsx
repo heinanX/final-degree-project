@@ -13,6 +13,8 @@ interface ViewInDetailProductProps {
   setDisableForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+/* COMPONENT THAT RENDERS A FORM WITH A SPECIFIED PRODUCT'S DETAILS */
+
 const ViewInDetailProduct = ({
   disableForm,
   setDisableForm,

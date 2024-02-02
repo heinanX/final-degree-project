@@ -12,9 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCustomer = exports.editCustomer = exports.logout = exports.activeLogin = exports.login = exports.createCustomer = exports.getCustomerDetails = exports.getCustomer = exports.getCustomers = void 0;
+exports.deleteCustomer = exports.editCustomer = exports.logout = exports.activeLogin = exports.login = exports.createCustomer = exports.getCustomerById = exports.getCustomers = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const customers_model_1 = require("./customers.model");
+/* CRUD OPERATIONS FOR ORDER AND FUNCTIONS ASSOCIATED WITH LOGIN
+ *  getCustomers, getCustomerById, createCustomer, login
+ *  activeLogin, logout, editCustomer , deleteCustomer
+ */
 const getCustomers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const customers = yield customers_model_1.CustomerModel.find();
@@ -25,31 +29,20 @@ const getCustomers = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.getCustomers = getCustomers;
-const getCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const getCustomerById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const customer = yield customers_model_1.CustomerModel.findOne({ _id: req.params.id });
-        if (!customer) {
-            return res.status(404).json({ error: 'Unknown Customer ID' });
+        const existingCustomer = yield customers_model_1.CustomerModel.findOne({ _id: req.params.id });
+        if (!existingCustomer) {
+            return res.status(404).json({ error: "Unknown Customer ID" });
         }
-        customer.password = 'hidden';
-        res.status(200).json(customer);
+        existingCustomer.password = "hidden";
+        res.status(200).json(existingCustomer);
     }
     catch (error) {
         next(error);
     }
 });
-exports.getCustomer = getCustomer;
-const getCustomerDetails = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    try {
-        const customer = (_a = req.session.customer) === null || _a === void 0 ? void 0 : _a.mail;
-        res.status(200).json(customer);
-    }
-    catch (error) {
-        next(error);
-    }
-});
-exports.getCustomerDetails = getCustomerDetails;
+exports.getCustomerById = getCustomerById;
 const createCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const customer = new customers_model_1.CustomerModel(req.body);
@@ -66,17 +59,17 @@ const createCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.createCustomer = createCustomer;
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b, _c;
+    var _a, _b;
     try {
         const existingCustomer = yield customers_model_1.CustomerModel.findOne({
             mail: req.body.mail,
         }).select("+password");
         if (!existingCustomer ||
             !(yield bcrypt_1.default.compare(req.body.password, existingCustomer.password))) {
-            return res.status(401).json("wrong mail or password");
+            return res.status(401).json("Wrong mail or password");
         }
-        if ((_c = (_b = req.session) === null || _b === void 0 ? void 0 : _b.customer) === null || _c === void 0 ? void 0 : _c._id) {
-            return res.status(200).json("customer already logged in");
+        if ((_b = (_a = req.session) === null || _a === void 0 ? void 0 : _a.customer) === null || _b === void 0 ? void 0 : _b._id) {
+            return res.status(200).json("Customer already logged in");
         }
         const customer = existingCustomer.toJSON();
         delete customer.password;
@@ -89,11 +82,11 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.login = login;
 const activeLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d, _e, _f, _g;
+    var _c, _d, _e, _f;
     try {
         const activeLoginRes = {
-            mail: (_e = (_d = req.session) === null || _d === void 0 ? void 0 : _d.customer) === null || _e === void 0 ? void 0 : _e.mail,
-            isAdmin: (_g = (_f = req.session) === null || _f === void 0 ? void 0 : _f.customer) === null || _g === void 0 ? void 0 : _g.isAdmin
+            mail: (_d = (_c = req.session) === null || _c === void 0 ? void 0 : _c.customer) === null || _d === void 0 ? void 0 : _d.mail,
+            isAdmin: (_f = (_e = req.session) === null || _e === void 0 ? void 0 : _e.customer) === null || _f === void 0 ? void 0 : _f.isAdmin,
         };
         res.status(200).json(activeLoginRes);
     }
@@ -105,7 +98,7 @@ exports.activeLogin = activeLogin;
 const logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         req.session.customer = undefined;
-        res.status(200).json("customer has logged out");
+        res.status(200).json("Customer has logged out");
     }
     catch (error) {
         next(error);
@@ -127,7 +120,7 @@ exports.editCustomer = editCustomer;
 const deleteCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield customers_model_1.CustomerModel.findByIdAndDelete({ _id: req.params.id });
-        res.status(200).json("customer deleted");
+        res.status(200).json("Customer deleted");
     }
     catch (error) {
         next(error);

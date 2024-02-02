@@ -12,25 +12,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateStripeCustomer = void 0;
 const customers_model_1 = require("../../../customers/customers.model");
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
-/* A middleware that checks for a customer in database.
-If found, the customer information is updated in stripe, it then passes to the next function. */
+/* A MIDDLEWARE THAT LOOKS FOR A CUSTOMER IN DATABASE
+ * if found, customer information is updated in stripe,
+ * it then passes to the next function.
+ */
 const updateStripeCustomer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const customer = yield customers_model_1.CustomerModel.findById({ _id: req.params.id });
-        if (!customer) {
+        const existingCustomer = yield customers_model_1.CustomerModel.findById({ _id: req.params.id });
+        if (!existingCustomer) {
             return res.status(409).json("customer not found");
         }
         else {
-            /* IF CUSTOMER USERNAME IS UPDATED OR SET, IT IS UPDATED IN STRIPE */
             if (req.body.username) {
-                yield stripe.customers.update(customer.stripe_id, {
-                    name: req.body.username
+                yield stripe.customers.update(existingCustomer.stripe_id, {
+                    name: req.body.username,
                 });
             }
-            /* IF CUSTOMER EMAIL IS UPDATED, IT IS UPDATED IN STRIPE */
             if (req.body.mail) {
-                yield stripe.customers.update(customer.stripe_id, {
-                    email: req.body.mail
+                yield stripe.customers.update(existingCustomer.stripe_id, {
+                    email: req.body.mail,
                 });
             }
             next();

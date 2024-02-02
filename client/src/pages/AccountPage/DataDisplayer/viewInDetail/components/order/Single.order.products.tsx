@@ -4,6 +4,8 @@ interface SingleOrderProductsProps {
     singleOrder: OrderItem[];
   }
 
+  /* COMPONENT THAT RENDERS INFORMATION INSIDE A SINGLE ORDER OF ORDER */
+
 const SingleOrderProducts = ({singleOrder}:SingleOrderProductsProps) => {
   return (
     <div className="flex flex-col sm:flex-row gap-2 uppercase w-full">

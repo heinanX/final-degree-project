@@ -11,35 +11,26 @@ import {
   ProductContext,
   defaultValues,
 } from "../interfaces/product.interface";
-// importing custom types/interfaces from the product interface file
 
 import { CategoryModel } from "../interfaces/category.interface";
-// importing custom types/interfaces from the category interface file
-
 import { Tags } from "../interfaces/tags.interface";
-// importing custom types/interfaces from the tags interface file
-
-export const ProductContextValues = createContext<ProductContext>(defaultValues);
-// creating a context to manage product-related state
-
+export const ProductContextValues =
+  createContext<ProductContext>(defaultValues);
 export const useSocket = () => useContext(ProductContextValues);
-// custom hook to access the product context
+
 
 //---------------------- Provider begins here
 
 function ProductProvider({ children }: PropsWithChildren) {
-  // initializing state for product-related information
   const [products, setProducts] = useState<Product[]>([]);
-  const [getMovie, setgetMovie] = useState<Product | null>(null);
+  const [productToRelate, setProductToRelate] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [viewProductDetails, setViewProductDetails] = useState<Product | null>(
     null
   );
 
+  // function to fetch all products from the server
   
-  /*
-   * function to fetch all products from the server
-   */
   const getProducts = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/products");
@@ -58,7 +49,7 @@ function ProductProvider({ children }: PropsWithChildren) {
    * Function to fetch a specific product from the server,
    * along with its associated category and tag information.
    */
-  const getProduct = async (id: string) => {
+  const getProductById = async (id: string) => {
     try {
       const response = await fetch(`http://localhost:3000/api/products/${id}`);
       const data = await response.json();
@@ -83,7 +74,8 @@ function ProductProvider({ children }: PropsWithChildren) {
         })
       );
 
-      setgetMovie({ ...data, category: categoryData, tags: tagData });
+      setProductToRelate({ ...data, category: categoryData, tags: tagData });
+      return {...data, category: categoryData, tags: tagData};
     } catch (err) {
       console.error("Error fetching product", err);
     }
@@ -113,14 +105,12 @@ function ProductProvider({ children }: PropsWithChildren) {
     }
   };
 
-  // State to store updated product information when in edit mode
   const [newUpdatedProduct, setNewUpdatedProduct] = useState<object | null>(
     null
   );
 
-  /*
-   * Function to update product information in edit mode
-   */
+  // Function to update product information in edit mode
+
   const updateProduct = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -138,13 +128,15 @@ function ProductProvider({ children }: PropsWithChildren) {
     }));
   };
 
-    /*
-   * Function to update product information in the database
-   */
-  const updateProductDatabase = async (updateProductObject: object, id: string) => {
+  // Function to update product information in the database
+
+  const updateProductDatabase = async (
+    updateProductObject: object,
+    id: string
+  ) => {
     try {
       const res = await fetch(`/api/products/edit-product/${id}`, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -160,29 +152,44 @@ function ProductProvider({ children }: PropsWithChildren) {
     }
   };
 
-  // useEffect hook to fetch products when the component mounts
+  const deleteProductDatabase = async (id: string) => {
+    try {
+      const res = await fetch(`/api/products/delete/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        return data;
+      }
+    } catch (err) {
+      console.error("Error updating product", err);
+    }
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
 
-  // useEffect hook to fetch related products when the associated product changes
   useEffect(() => {
-    if (getMovie && Array.isArray(getMovie.category) && getMovie.category.length > 0) {
+    if (
+      productToRelate &&
+      Array.isArray(productToRelate.category) &&
+      productToRelate.category.length > 0
+    ) {
       //@ts-expect-error: the array has an index of 0 as it has a length bigger than 0
-      const firstCategory = getMovie.category[0]._id
-      getProductBySearchCriteria(firstCategory, 'category');
+      const firstCategory = productToRelate.category[0]._id;
+      getProductBySearchCriteria(firstCategory, "category");
     }
-  }, [getMovie]);
+  }, [productToRelate]);
 
-  // Render the ProductContextValues.Provider with the product-related functions and state as values
   return (
     <ProductContextValues.Provider
       value={{
         products,
         setProducts,
         getProducts,
-        getProduct,
-        getMovie,
+        getProductById,
+        productToRelate,
         getProductBySearchCriteria,
         viewProductDetails,
         setViewProductDetails,
@@ -192,6 +199,7 @@ function ProductProvider({ children }: PropsWithChildren) {
         updateProductDatabase,
         relatedProducts,
         setRelatedProducts,
+        deleteProductDatabase,
       }}
     >
       {children}

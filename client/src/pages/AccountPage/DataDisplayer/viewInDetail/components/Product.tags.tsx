@@ -5,6 +5,8 @@ interface ProductTagsProps {
   disableForm: boolean;
 }
 
+/* COMPONENT THAT RENDERS TAGS INSIDE PRODUCT FORM */
+
 const ProductTags = ({ disableForm }: ProductTagsProps) => {
   const { viewProductDetails } = productSocket();
 

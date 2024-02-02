@@ -1,7 +1,6 @@
 /* FUNCTION THAT FORMATS A DATE STRING INTO MM-DD-YY */
 
 const formatDate = (dateString: string): string => {
-  // Accepts a date string as an argument
 
   // Options for formatting the date using the Intl.DateTimeFormat API
   const options: Intl.DateTimeFormatOptions = {
@@ -14,5 +13,4 @@ const formatDate = (dateString: string): string => {
   return new Date(dateString).toLocaleDateString("en-US", options);
 };
 
-// Exports the formatDate function as the default export
 export default formatDate;

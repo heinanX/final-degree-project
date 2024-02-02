@@ -1,14 +1,13 @@
 import { useState } from "react";
 import capitalizeLetters from "../../../../functions/capitalizeLetters";
 
-// props interface for FormSearch component
 interface FormSearchProps {
   setShowState: React.Dispatch<React.SetStateAction<boolean>>;
   displayComponent: string;
 }
 
 /* A COMPONENT THAT RENDERS A SEARCH FORM FOR WHEN AN ADMIN WANT TO LOOK UP AN ORDER BY OBJECT ID
-  - still under development
+  - still a WIP
 */
 
 const FormSearch = ({ setShowState, displayComponent }: FormSearchProps) => {

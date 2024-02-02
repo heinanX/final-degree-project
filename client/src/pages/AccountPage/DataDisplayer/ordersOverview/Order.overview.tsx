@@ -1,7 +1,7 @@
 import { Order } from "../../../../interfaces/order.interface";
-import formatDate from "../../../../functions/date.formatter"; //date converter function
-import { IoIosCheckbox } from "react-icons/io"; //checkbox icon
-import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md"; // box outline icon
+import formatDate from "../../../../functions/date.formatter";
+import { IoIosCheckbox } from "react-icons/io";
+import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 
 interface OrderOverviewProps {
   orderObject: Order;
@@ -10,7 +10,7 @@ interface OrderOverviewProps {
 /* COMPONENT THAT RENDERS AN OVERVIEW OF AN ORDER */
 
 const OrderOverview = ({ orderObject }: OrderOverviewProps) => {
-  //css styling for li elements with checkboxes
+
   const liWithCheckboxCss =
     "flex flex-row xl:flex-col xl:justify-center items-center gap-2 xl:w-1/6";
 

@@ -2,11 +2,7 @@ GET http://localhost:3000/api/products
 
 ###
 
-GET http://localhost:3000/api/products/65982502e138d6b4a7377d66
-
-###
-
-GET http://localhost:3000/api/products/category/6593efdfa62dd39fcfa68fc2
+GET http://localhost:3000/api/products/65a2b315719aaaf33cdf52f4
 
 ###
 
@@ -14,8 +10,8 @@ POST http://localhost:3000/api/products/create
 Content-Type: application/json
 
 {
-    "title": "The Proposal",
-    "description": "rick",
+    "title": "newMovie22",
+    "description": "rickityehfakajfasl dsai fkwoa owa aw ",
     "category": ["6593ee75ad4bf20a16e96bc1", "6593efd0a62dd39fcfa68fbf"],
     "tags": ["65a2cd1b6f8b84b920cdc6e9", "65a2cd9a6f8b84b920cdc6f0", "65a2cdb06f8b84b920cdc6f3"],
     "content_rating": "PG-13",
@@ -36,27 +32,20 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/api/products/edit-product/65a2a0c4b4ff867e76bc6b57
+PUT http://localhost:3000/api/products/edit-product/65bce0b996c13f81ce44170e
 Content-Type: application/json
 
 {
-    "title": "Back to the future",
-    "description": "we're back in the future ",
-    "category": ["6593ee75ad4bf20a16e96bc1"],
-    "tags": ["659424b2d79e7cd5a3489d7f"],
-    "year": 1990,
-    "vhs": {
-        "price": 39,
+"vhs": {
+        "price": 249,
         "available": true,
-        "quantity": 5,
-        "inStock": 5
+        "quantity": 7,
+        "inStock": 6,
+        "stripe_prod_id": "prod_PMvEWoHeQ9PcEO"
     },
-    "digital": {
-        "price": 39,
-        "available": true
-    }
+    "title": "newMovie44"
 }
 
 ###
 
-DELETE http://localhost:3000/api/products/delete/65a2a4c22e6f0dfd126eb6ba
+DELETE http://localhost:3000/api/products/delete/65bce0b996c13f81ce44170e

@@ -17,17 +17,17 @@ const SingleOrderShipped = ({
 
   /* FUNCTION THAT SETS CONTENT OF CHECKBOX [SHIPPED] BASED ON CURRENT STATE */
   const editCheckbox = () => {
-    let checkboxContent; //initiates a variable
+    let checkboxContent;
 
-    if (disableForm) { // if form is not in edit mode display styled icons
+    if (disableForm) {
       
-      if (shipped) { //if shipped is true display ticked box
+      if (shipped) {
         checkboxContent = (
           <span className="text-base text-yellow-400">
             <IoIosCheckbox />
           </span>
         );
-      } else { //else display empty box
+      } else {
         checkboxContent = (
           <span className="text-base text-yellow-400">
             <MdOutlineCheckBoxOutlineBlank />
@@ -43,11 +43,11 @@ const SingleOrderShipped = ({
             type="checkbox"
           />
         );
-      } else { //if not ticked, it may be managed
+      } else {
         checkboxContent = <input type="checkbox" onChange={ ()=> setNewShipped(!newShipped)} />;
       }
     }
-    return <>{checkboxContent}</>; //returns component
+    return <>{checkboxContent}</>;
   };
 
   return (

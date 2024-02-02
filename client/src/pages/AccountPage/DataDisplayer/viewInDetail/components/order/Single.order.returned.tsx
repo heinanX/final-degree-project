@@ -16,32 +16,32 @@ const SingleOrderReturned = ({
   setNewReturned,
 }: SingleOrderReturnedProps) => {
   const editCheckbox = () => {
-    let checkboxContent; //initiates a variable that content is stored inside 
+    let checkboxContent;
 
-    if (disableForm) { //if form is not in edit mode display styled icons
+    if (disableForm) {
 
-      if (returned) { //if returned is true display ticked box,
+      if (returned) {
         checkboxContent = (
           <span className="text-base text-yellow-400">
             <IoIosCheckbox />
           </span>
         );
-      } else {  //else display empty box
+      } else {
         checkboxContent = (
           <span className="text-base text-yellow-400">
             <MdOutlineCheckBoxOutlineBlank />
           </span>
         );
       }
-    } else {  //else (when form is in edit mode)
-      if (returned) { //if returned is true it can't be undone
+    } else {
+      if (returned) {
         checkboxContent = (
           <input
             checked={returned}
             type="checkbox"
           />
         );
-      } else { //if not ticked, it may be managed
+      } else {
         checkboxContent = (
           <input
             type="checkbox"
@@ -50,7 +50,7 @@ const SingleOrderReturned = ({
         );
       }
     }
-    return <>{checkboxContent}</>; //returns content
+    return <>{checkboxContent}</>;
   };
 
   return (

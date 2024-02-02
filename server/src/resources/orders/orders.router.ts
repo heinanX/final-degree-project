@@ -1,20 +1,18 @@
 import { Router } from 'express';
-import { createCheckoutSession, createOrderDB, deleteOrder,getOrder, getOrders, getUserOrders, manageOrder } from './orders.controller';
-import { isAdmin } from '../_middlewares/isAdmin';
+import { createCheckoutSession, createOrderDB, deleteOrder, getOrderById, getOrders, getUserOrders, manageOrder } from './orders.controller';
 import { validate } from '../_middlewares/validate.schema';
 import { markOrderJoiSchema, orderJoiSchema } from './orders.model';
-import { formatData } from '../_middlewares/format.data';
-import { authorization } from '../_middlewares/authorize';
+import { authorize } from '../_middlewares/authorize';
 import { authenticateLogin } from '../_middlewares/authenticateLogin';
 import { checkOrderStatus } from '../_middlewares/stripe/checkOrderStatus';
 import { checkSessionId } from '../_middlewares/stripe/checkSessionId';
 
 export const orderRouter = Router();
 
-orderRouter.get('/', isAdmin, getOrders);
-orderRouter.get('/user-orders', authorization, getUserOrders);
-orderRouter.get('/:id', getOrder);
-orderRouter.post('/create', authenticateLogin, checkSessionId,checkOrderStatus, validate(orderJoiSchema), createOrderDB);
-orderRouter.post('/create-checkout-session', authenticateLogin, createCheckoutSession)
-orderRouter.put('/manage-order/:id', validate(markOrderJoiSchema), manageOrder);
-orderRouter.delete('/delete/:id', isAdmin, deleteOrder);
+orderRouter.get('/', authorize, getOrders);
+orderRouter.get('/user-orders/:key', authorize, getUserOrders);
+orderRouter.get('/:id', getOrderById);
+orderRouter.post('/create', authenticateLogin, checkSessionId, checkOrderStatus, validate(orderJoiSchema), createOrderDB);
+orderRouter.post('/create-checkout-session', authenticateLogin, createCheckoutSession);
+orderRouter.put('/manage-order/:id', authorize, validate(markOrderJoiSchema), manageOrder);
+orderRouter.delete('/delete/:id', authorize, deleteOrder);

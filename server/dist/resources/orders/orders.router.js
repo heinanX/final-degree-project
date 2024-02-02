@@ -13,7 +13,7 @@ const checkSessionId_1 = require("../_middlewares/stripe/checkSessionId");
 exports.orderRouter = (0, express_1.Router)();
 exports.orderRouter.get('/', isAdmin_1.isAdmin, orders_controller_1.getOrders);
 exports.orderRouter.get('/user-orders', authorize_1.authorization, orders_controller_1.getUserOrders);
-exports.orderRouter.get('/:id', orders_controller_1.getOrder);
+exports.orderRouter.get('/:id', orders_controller_1.getOrderById);
 exports.orderRouter.post('/create', authenticateLogin_1.authenticateLogin, checkSessionId_1.checkSessionId, checkOrderStatus_1.checkOrderStatus, (0, validate_schema_1.validate)(orders_model_1.orderJoiSchema), orders_controller_1.createOrderDB);
 exports.orderRouter.post('/create-checkout-session', authenticateLogin_1.authenticateLogin, orders_controller_1.createCheckoutSession);
 exports.orderRouter.put('/manage-order/:id', (0, validate_schema_1.validate)(orders_model_1.markOrderJoiSchema), orders_controller_1.manageOrder);

@@ -18,7 +18,7 @@ const authenticateLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, 
         next();
     }
     else {
-        // else respond with an unauthorized status 
+        // else respond with an unauthorized status
         res.status(401).json({ message: `No user in session` });
     }
 });

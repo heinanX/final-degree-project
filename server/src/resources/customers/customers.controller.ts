@@ -2,7 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { CustomerModel } from "./customers.model";
 
-// Get all customers
+/* CRUD OPERATIONS FOR ORDER AND FUNCTIONS ASSOCIATED WITH LOGIN
+ *  getCustomers, getCustomerById, createCustomer, login
+ *  activeLogin, logout, editCustomer , deleteCustomer 
+ */
+
 export const getCustomers = async (
   req: Request,
   res: Response,
@@ -16,39 +20,36 @@ export const getCustomers = async (
   }
 };
 
-// Get a specific customer by ID
-export const getCustomer = async (
+export const getCustomerById = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const customer = await CustomerModel.findOne({ _id: req.params.id });
-    if (!customer) {
+    const existingCustomer = await CustomerModel.findOne({ _id: req.params.id });
+    if (!existingCustomer) {
       return res.status(404).json({ error: "Unknown Customer ID" });
     }
-    customer.password = "hidden"; // Hide the password in the response
-    res.status(200).json(customer);
+    existingCustomer.password = "hidden";
+    res.status(200).json(existingCustomer);
   } catch (error) {
     next(error);
   }
 };
 
-// Get details of the currently logged-in customer
-export const getCustomerDetails = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const customer = req.session.customer?.mail;
-    res.status(200).json(customer);
-  } catch (error) {
-    next(error);
-  }
-};
+// export const getCustomerDetails = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const customer = req.session.customer?.mail;
+//     res.status(200).json(customer);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
-// Create a new customer
 export const createCustomer = async (
   req: Request,
   res: Response,
@@ -60,16 +61,15 @@ export const createCustomer = async (
     await customer.save();
 
     const jsonCust = customer.toJSON();
-    delete jsonCust.password; // Hide the password in the response
+    delete jsonCust.password;
 
-    req.session.customer = jsonCust; // Store customer data in the session
+    req.session.customer = jsonCust;
     res.status(201).json({ mail: jsonCust.mail, isAdmin: jsonCust.isAdmin });
   } catch (error) {
     next(error);
   }
 };
 
-// Log in a customer
 export const login = async (
   req: Request,
   res: Response,
@@ -92,8 +92,8 @@ export const login = async (
     }
 
     const customer = existingCustomer.toJSON();
-    delete customer.password; // Hide the password in the response
-    req.session.customer = customer; // Store customer data in the session
+    delete customer.password;
+    req.session.customer = customer;
 
     res.status(200).json({ mail: customer.mail, isAdmin: customer.isAdmin });
   } catch (error) {
@@ -101,7 +101,6 @@ export const login = async (
   }
 };
 
-// Get details of the currently active login
 export const activeLogin = async (
   req: Request,
   res: Response,
@@ -118,21 +117,19 @@ export const activeLogin = async (
   }
 };
 
-// Log out the currently logged-in customer
 export const logout = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    req.session.customer = undefined; // Clear customer data from the session
+    req.session.customer = undefined;
     res.status(200).json("Customer has logged out");
   } catch (error) {
     next(error);
   }
 };
 
-// Edit customer details
 export const editCustomer = async (
   req: Request,
   res: Response,
@@ -154,7 +151,6 @@ export const editCustomer = async (
   }
 };
 
-// Delete a customer by ID
 export const deleteCustomer = async (
   req: Request,
   res: Response,

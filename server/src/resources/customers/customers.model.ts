@@ -1,14 +1,15 @@
 import { Schema, model, models } from "mongoose";
 import Joi from "joi";
 
-// Define the customer schema
+/* DEFINES SCHEMA FOR CUSTOMER MODEL AND JOI SCHEMA FOR VALIDATION */
+
 const customerSchema = new Schema(
   {
-    username: String,
-    mail: { type: String, require: true }, // Email is required
-    password: { type: String, require: true }, // Password is required
-    joinDate: { type: Date, default: Date.now() }, // Default join date to the current date
-    isAdmin: { type: Boolean, require: true, default: false }, // Default to non-admin
+    username: { type: String, default: "" },
+    mail: { type: String, require: true },
+    password: { type: String, require: true },
+    joinDate: { type: Date, default: Date.now() },
+    isAdmin: { type: Boolean, require: true, default: false },
     address: [
       {
         _id: String,
@@ -17,13 +18,12 @@ const customerSchema = new Schema(
         city: String,
       },
     ],
-    orders: [{ type: Schema.Types.ObjectId, ref: "customers" }], // Reference to orders
+    orders: [{ type: Schema.Types.ObjectId, ref: "customers" }],
     stripe_id: String,
   },
-  { versionKey: false } // Exclude version key from the schema
+  { versionKey: false }
 );
 
-// Define the address Joi schema for validation
 const addressJoiSchema = Joi.object({
   _id: String,
   street: String,
@@ -31,12 +31,11 @@ const addressJoiSchema = Joi.object({
   city: String,
 });
 
-// Define the customer Joi schema for validation
 export const customerJoiSchema = Joi.object({
   _id: Joi.string(),
   username: Joi.string(),
-  mail: Joi.string().email({ minDomainSegments: 2 }).required(), // Email is required and should be a valid email
-  password: Joi.string().required(), // Password is required
+  mail: Joi.string().email({ minDomainSegments: 2 }).required(),
+  password: Joi.string().required(),
   joinDate: Joi.date(),
   isAdmin: Joi.boolean(),
   address: Joi.array().items(addressJoiSchema),
@@ -44,14 +43,13 @@ export const customerJoiSchema = Joi.object({
   stripe_id: Joi.string(),
 });
 
-// Define the update customer Joi schema for validation
 export const updateCustomerJoiSchema = Joi.object({
-  mail: Joi.string().email({ minDomainSegments: 2 }), // Email should be a valid email
+  mail: Joi.string().email({ minDomainSegments: 2 }),
   password: Joi.string(),
   isAdmin: Joi.boolean(),
   address: Joi.array().items(addressJoiSchema),
+  username: Joi.string()
 });
 
-// Define the Customer model using the schema
 export const CustomerModel =
   models.customers || model("customers", customerSchema);

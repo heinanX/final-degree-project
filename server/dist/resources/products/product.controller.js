@@ -9,8 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProduct = exports.editProduct = exports.createProduct = exports.getProduct = exports.getProductBySearchCriteria = exports.getProducts = void 0;
+exports.deleteProduct = exports.editProduct = exports.createProduct = exports.getProductById = exports.getProductBySearchCriteria = exports.getProducts = void 0;
 const product_model_1 = require("./product.model");
+/* CRUD OPERATIONS FOR PRODUCT
+ *  getProducts, getProductBySearchCriteria, getProductById, createProduct, deleteProduct
+ */
 const getProducts = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const products = yield product_model_1.ProductModel.find();
@@ -31,25 +34,11 @@ const getProductBySearchCriteria = (req, res, next) => __awaiter(void 0, void 0,
     }
 });
 exports.getProductBySearchCriteria = getProductBySearchCriteria;
-// export const getProductsByTag = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const orders = await ProductModel.find({
-//       tags: {  $in: req.params.id }
-//     });
-//     res.status(200).json(orders);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-const getProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const getProductById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const product = yield product_model_1.ProductModel.findOne({ _id: req.params.id });
         if (!product) {
-            return res.status(404).json({ error: 'Unknown ID' });
+            return res.status(404).json({ error: "Unknown ID" });
         }
         res.status(200).json(product);
     }
@@ -57,11 +46,11 @@ const getProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         next(error);
     }
 });
-exports.getProduct = getProduct;
+exports.getProductById = getProductById;
 const createProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const checkProduct = yield product_model_1.ProductModel.findOne({ title: req.body.title });
-        if (!checkProduct) {
+        const existingProduct = yield product_model_1.ProductModel.findOne({ title: req.body.title });
+        if (!existingProduct) {
             const newProduct = yield product_model_1.ProductModel.create(req.body);
             res.status(201).json(newProduct);
         }
@@ -77,8 +66,8 @@ exports.createProduct = createProduct;
 const editProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const incomingData = req.body;
-        const product = req.params.id;
-        const updatedProduct = yield product_model_1.ProductModel.findByIdAndUpdate(product, incomingData, { new: true });
+        const productId = req.params.id;
+        const updatedProduct = yield product_model_1.ProductModel.findByIdAndUpdate(productId, incomingData, { new: true });
         res.status(200).json(updatedProduct);
     }
     catch (error) {

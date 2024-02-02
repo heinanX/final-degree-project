@@ -6,11 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryModel = exports.catJoiSchema = void 0;
 const mongoose_1 = require("mongoose");
 const joi_1 = __importDefault(require("joi"));
+/* DEFINES SCHEMA FOR CATEGORIES MODEL AND JOI SCHEMA FOR VALIDATION */
 const categorySchema = new mongoose_1.Schema({
-    category: { type: String, require: true }
+    category: { type: String, required: true },
 }, { versionKey: false });
 exports.catJoiSchema = joi_1.default.object({
     _id: joi_1.default.string(),
-    category: joi_1.default.string().required()
+    category: joi_1.default.string().required(),
 });
 exports.CategoryModel = mongoose_1.models.categories || (0, mongoose_1.model)("categories", categorySchema);

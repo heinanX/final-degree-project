@@ -1,7 +1,8 @@
 import { Schema, model, models } from "mongoose";
 import Joi from "joi";
 
-// Define the product schema for MongoDB
+/* DEFINES SCHEMA FOR PRODUCT MODEL AND JOI SCHEMA FOR VALIDATION */
+
 const productSchema = new Schema(
   {
     title: { type: String, require: true },
@@ -30,7 +31,6 @@ const productSchema = new Schema(
   { versionKey: false }
 );
 
-// Define the Joi schema for VHS details
 const vhsJoiSchema = Joi.object({
   price: Joi.number().required(),
   available: Joi.boolean().required(),
@@ -40,7 +40,6 @@ const vhsJoiSchema = Joi.object({
   stripe_prod_id: String,
 });
 
-// Define the Joi schema for digital product details
 const digitalJoiSchema = Joi.object({
   price: Joi.number().required(),
   available: Joi.boolean().required(),
@@ -48,7 +47,6 @@ const digitalJoiSchema = Joi.object({
   stripe_prod_id: String,
 });
 
-// Define the overall Joi schema for the entire product
 export const productJoiSchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().required(),
@@ -62,5 +60,33 @@ export const productJoiSchema = Joi.object({
   digital: digitalJoiSchema.required(),
 });
 
-// Define the Mongoose model for products
+const vhsUpdateJoiSchema = Joi.object({
+  price: Joi.number(),
+  available: Joi.boolean(),
+  quantity: Joi.number(),
+  inStock: Joi.number(),
+  stripe_price_id: Joi.string(),
+  stripe_prod_id: String,
+});
+
+const digitalUpdateJoiSchema = Joi.object({
+  price: Joi.number(),
+  available: Joi.boolean(),
+  stripe_price_id: Joi.string(),
+  stripe_prod_id: String,
+});
+
+export const updateProductJoiSchema = Joi.object({
+  title: Joi.string(),
+  description: Joi.string(),
+  category: Joi.array().items(Joi.string()).min(1),
+  tags: Joi.array().items(Joi.string()).min(1),
+  content_rating: Joi.string(),
+  rating: Joi.number(),
+  year: Joi.number(),
+  image: Joi.string(),
+  vhs: vhsUpdateJoiSchema,
+  digital: digitalUpdateJoiSchema,
+});
+
 export const ProductModel = models.products || model("products", productSchema);

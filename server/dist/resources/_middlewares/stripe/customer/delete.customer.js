@@ -16,9 +16,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 if found, customer is deleted in stripe, if not found it moves on to next */
 const deleteStripeCus = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const customer = yield customers_model_1.CustomerModel.findOne({ _id: req.params.id });
-        if (customer) {
-            yield stripe.customers.del(customer.stripe_id);
+        const existingCustomer = yield customers_model_1.CustomerModel.findOne({ _id: req.params.id });
+        if (existingCustomer) {
+            yield stripe.customers.del(existingCustomer.stripe_id);
         }
         else {
             return res.status(409).json("customer not found");

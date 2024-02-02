@@ -1,7 +1,8 @@
 import { Schema, model, models } from "mongoose";
 import Joi from "joi";
 
-// Sub-schema for individual order items
+/* DEFINES SCHEMA FOR ORDER MODEL AND JOI SCHEMA FOR VALIDATION */
+
 const subOrderSchema = new Schema(
   {
     product: {
@@ -11,23 +12,21 @@ const subOrderSchema = new Schema(
     },
     quantity: Number,
     vhs: Boolean,
-    digital: Boolean
+    digital: Boolean,
   },
-  { _id: false } // Disable the default _id field for sub-order items
+  { _id: false }
 );
 
-// Sub-schema for addresses
 const addressSchema = new Schema(
   {
     cust_name: String,
     street: String,
     zip_code: String,
-    city: String
+    city: String,
   },
-  { _id: false } // Disable the default _id field for addresses
+  { _id: false }
 );
 
-// Main schema for orders
 export const orderSchema = new Schema(
   {
     customer: { type: Schema.Types.ObjectId, ref: "customers", require: true },
@@ -40,37 +39,33 @@ export const orderSchema = new Schema(
     returned: { type: Boolean, default: false },
     payment_status: { type: String, default: "pending" },
     order_status: { type: String, default: "active" },
-    session_id: String
+    session_id: String,
   },
-  { versionKey: false } // Disable the default version key
+  { versionKey: false }
 );
 
-// Joi schema for sub-order items
 const subOrderJoiSchema = Joi.object({
   product: Joi.string(),
   quantity: Joi.number(),
   vhs: Joi.boolean(),
-  digital: Joi.boolean()
+  digital: Joi.boolean(),
 });
 
-// Joi schema for addresses
 const addressJoiSchema = Joi.object({
-    cust_name: Joi.string(),
-    street: Joi.string(),
-    zip_code: Joi.string(),
-    city: Joi.string()
-  });
+  cust_name: Joi.string(),
+  street: Joi.string(),
+  zip_code: Joi.string(),
+  city: Joi.string(),
+});
 
-// Joi schema for marking order status
 export const markOrderJoiSchema = Joi.object({
   shipped: Joi.boolean(),
   returned: Joi.boolean(),
   payment_status: Joi.string(),
   order_status: Joi.string(),
-  address: addressJoiSchema
+  address: addressJoiSchema,
 });
 
-// Joi schema for complete orders
 export const orderJoiSchema = Joi.object({
   customer: Joi.string().required(),
   address: addressJoiSchema.required(),
@@ -82,8 +77,7 @@ export const orderJoiSchema = Joi.object({
   returned: Joi.boolean(),
   payment_status: Joi.string(),
   order_status: Joi.string(),
-  session_id: Joi.string()
+  session_id: Joi.string(),
 });
 
-// Mongoose model for orders
 export const OrderModel = models.orders || model("orders", orderSchema);

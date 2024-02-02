@@ -4,8 +4,8 @@ import {
   createCustomer,
   deleteCustomer,
   editCustomer,
-  getCustomer,
-  getCustomerDetails,
+  getCustomerById,
+  //getCustomerDetails,
   getCustomers,
   login,
   logout,
@@ -20,32 +20,14 @@ import { updateStripeCustomer } from '../_middlewares/stripe/customer/update.cus
 import { authorization } from '../_middlewares/authorize';
 import { authenticateLogin } from '../_middlewares/authenticateLogin';
 
-// Create a router for handling customer-related routes
 export const customerRouter = Router();
 
-// Route to get active customer login status
 customerRouter.get('/active', authenticateLogin, activeLogin);
-
-// Route to get customer details
-customerRouter.get('/customer-details', getCustomerDetails);
-
-// Route to get all customers (only accessible to admin)
+//customerRouter.get('/customer-details', getCustomerDetails);
 customerRouter.get('/', isAdmin, getCustomers);
-
-// Route to get a specific customer by ID (requires authorization)
-customerRouter.get('/:id', authorization, getCustomer);
-
-// Route to create a new customer
+customerRouter.get('/:id', authorization, getCustomerById);
 customerRouter.post('/create', validate(customerJoiSchema), formatData, createStripeCus, createCustomer);
-
-// Route to log in a customer
-customerRouter.post('/login', login);
-
-// Route to log out a customer
+customerRouter.post('/login', formatData, login);
 customerRouter.post('/logout', logout);
-
-// Route to edit a customer's details (requires authorization)
-customerRouter.post('/edit-customer/:id', authorization, validate(updateCustomerJoiSchema), updateStripeCustomer, editCustomer);
-
-// Route to delete a customer (requires authorization)
+customerRouter.post('/edit-customer/:id', formatData, authorization, validate(updateCustomerJoiSchema), updateStripeCustomer, editCustomer);
 customerRouter.delete('/delete/:id', authorization, deleteStripeCus, deleteCustomer);

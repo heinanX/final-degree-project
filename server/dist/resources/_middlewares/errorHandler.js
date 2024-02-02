@@ -5,7 +5,7 @@ exports.errorHandler = exports.notFound = void 0;
 class AppError extends Error {
     constructor(message, status) {
         super(message); //initiates parent class and passes message parameter before adding custom property
-        this.status = status; //passes status parameter to status property 
+        this.status = status; //passes status parameter to status property
     }
 }
 //When a client requests a resource that does not exist, this middleware is called.

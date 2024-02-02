@@ -11,6 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCat = exports.createCat = exports.getCat = exports.getCats = void 0;
 const categories_model_1 = require("./categories.model");
+/* CRUD OPERATIONS FOR CATEGORIES REFERRED TO AS CAT
+ *  getCats, getCat, createCat, deleteCat
+ */
 const getCats = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const categories = yield categories_model_1.CategoryModel.find();
@@ -25,7 +28,7 @@ const getCat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const category = yield categories_model_1.CategoryModel.findOne({ _id: req.params.id });
         if (!category) {
-            return res.status(404).json({ error: 'Unknown ID' });
+            return res.status(404).json({ error: "Unknown ID" });
         }
         res.status(200).json(category);
     }
@@ -36,13 +39,13 @@ const getCat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
 exports.getCat = getCat;
 const createCat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const checkCat = yield categories_model_1.CategoryModel.findOne(req.body);
-        if (!checkCat) {
+        const existingCat = yield categories_model_1.CategoryModel.findOne(req.body);
+        if (!existingCat) {
             const newCategory = yield categories_model_1.CategoryModel.create(req.body);
             res.status(201).json(newCategory);
         }
         else {
-            res.status(404).json(req.body.category + ' already created');
+            res.status(404).json(req.body.category + " already created");
         }
     }
     catch (error) {
@@ -53,7 +56,7 @@ exports.createCat = createCat;
 const deleteCat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield categories_model_1.CategoryModel.findByIdAndDelete({ _id: req.params.id });
-        res.status(200).json('category deleted');
+        res.status(200).json("category deleted");
     }
     catch (error) {
         next(error);

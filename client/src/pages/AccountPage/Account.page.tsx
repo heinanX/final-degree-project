@@ -73,7 +73,6 @@ const AccountPage = () => {
             </div>
 
             {/* right side content */}
-            {/* <DataDisplayer displayComponent={displayComponent} /> */}
             <DataDisplayer displayComponent={displayComponent} />
           </div>
         </div>

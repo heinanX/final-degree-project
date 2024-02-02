@@ -12,38 +12,48 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateStripeProduct = void 0;
 const product_model_1 = require("../../../products/product.model");
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
-/* A middleware that checks for a product in database.
-If found, the product is updated in stripe, it then passes to the next function. */
+/* A MIDDLEWARE THAT LOOKS FOR A PRODUCT IN DATABASE
+ * if found, the product is updated in stripe,
+ * it then passes to the next function.
+ */
 const updateStripeProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const product = yield product_model_1.ProductModel.findById({ _id: req.params.id });
-        if (!product) {
+        const existingProduct = yield product_model_1.ProductModel.findById({ _id: req.params.id });
+        if (req.body.title) {
+            req.body.title = req.body.title.toLowerCase();
+        }
+        if (!existingProduct) {
             return res.status(409).json("Product not found");
         }
-        else {
-            /* IF PRICE FOR VHS PRODUCT IS UPDATED, IT IS UPDATED IN STRIPE */
-            if (req.body.vhs.price) {
-                yield stripe.products.update(product.vhs.stripe_prod_id, {
-                    default_price: req.body.vhs.price * 100,
-                });
-            }
-            /* IF PRICE FOR DIGITAL PRODUCT IS UPDATED, IT IS UPDATED IN STRIPE */
-            if (req.body.digital.price) {
-                yield stripe.products.update(product.digital.stripe_prod_id, {
-                    default_price: req.body.digital.price * 100,
-                });
-            }
-            /* IF TITLE IS UPDATED, IT IS UPDATED IN STRIPE VHS AND DIGITAL PRODUCT */
-            if (req.body.title) {
-                yield stripe.products.update(product.vhs.stripe_prod_id, {
-                    name: req.body.title,
-                });
-                yield stripe.products.update(product.digital.stripe_prod_id, {
-                    name: req.body.title + " - digital",
-                });
-            }
-            next();
+        if (req.body.vhs) {
+            const newPrice = yield stripe.prices.create({
+                currency: 'sek',
+                unit_amount: req.body.vhs.price * 100,
+                product: existingProduct.vhs.stripe_prod_id
+            });
+            yield stripe.products.update(existingProduct.vhs.stripe_prod_id, {
+                default_price: newPrice.id,
+            });
+            req.body.vhs.stripe_price_id = newPrice.id;
         }
+        if (req.body.digital) {
+            console.log('im in here');
+            const newPrice = yield stripe.prices.create({
+                currency: 'sek',
+                unit_amount: req.body.digital.price * 100,
+                product: existingProduct.digital.stripe_prod_id
+            });
+            req.body.digital.stripe_price_id = newPrice.id;
+        }
+        if (req.body.title) {
+            yield stripe.products.update(existingProduct.vhs.stripe_prod_id, {
+                name: req.body.title,
+            });
+            yield stripe.products.update(existingProduct.digital.stripe_prod_id, {
+                name: req.body.title + " - digital",
+            });
+        }
+        next();
     }
     catch (error) {
         next(error);

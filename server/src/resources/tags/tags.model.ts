@@ -1,7 +1,8 @@
-import { Schema, model, models } from 'mongoose';
-import Joi from 'joi';
+import { Schema, model, models } from "mongoose";
+import Joi from "joi";
 
-// Define the schema for tags
+/* DEFINES SCHEMA FOR TAG MODEL AND JOI SCHEMA FOR VALIDATION */
+
 const tagSchema = new Schema(
   {
     tag: { type: String, require: true },
@@ -9,11 +10,9 @@ const tagSchema = new Schema(
   { versionKey: false }
 );
 
-// Define the Joi schema for validating tag data
 export const tagJoiSchema = Joi.object({
   _id: Joi.string(),
   tag: Joi.string().required(),
 });
 
-// Create the TagModel using the tagSchema
-export const TagModel = models.tags || model('tags', tagSchema);
+export const TagModel = models.tags || model("tags", tagSchema);

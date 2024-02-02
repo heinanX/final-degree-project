@@ -17,7 +17,9 @@ const checkSessionId = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     var _a;
     try {
         const sessionId = req.body.session_id;
-        const userOrders = yield orders_model_1.OrderModel.find({ customer: (_a = req.session.customer) === null || _a === void 0 ? void 0 : _a._id });
+        const userOrders = yield orders_model_1.OrderModel.find({
+            customer: (_a = req.session.customer) === null || _a === void 0 ? void 0 : _a._id,
+        });
         const orderWithSameSession = userOrders.find((order) => order.session_id === sessionId);
         if (!orderWithSameSession) {
             next();
@@ -27,7 +29,6 @@ const checkSessionId = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         }
     }
     catch (error) {
-        // If an error occurs, pass it to the next middleware for error handling
         next(error);
     }
 });

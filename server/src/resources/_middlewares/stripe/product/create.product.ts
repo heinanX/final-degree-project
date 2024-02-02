@@ -2,9 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import { ProductModel } from "../../../products/product.model";
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 
-/* A middleware that checks for a pre-existing product in database, If not found,
-a product is created in stripe, followed by a price. The price is then added to the product.
-Each ID [of product and price] is passed on in the 'req' to the next function where we save the product in local db */
+/* A  MIDDLEWARE THAT CHECKS FOR A PRE-EXISTING PRODUCT INSIDE DATABASE,
+if not found, a product is created in stripe, followed by a price.
+The price is then added to the product. Each ID [of product and price]
+is passed on in the 'req' to the next function where it's saved inside the product in local db */
 
 export const createStripeProduct = async (
   req: Request,
@@ -18,7 +19,6 @@ export const createStripeProduct = async (
       return res.status(409).json("Movie already available");
     } else {
 
-      /* LOGIC THAT CREATES A VHS PRODUCT IN STRIPE */
       if (req.body.vhs.price) {
         const stripeProduct = await stripe.products.create({
           name: req.body.title,
@@ -29,12 +29,10 @@ export const createStripeProduct = async (
         expand: ['default_price']
     });
 
-        /* IDS OF PRODUCT AND PRICE ARE SAVED IN VARIABLES */
         req.body.vhs.stripe_prod_id = stripeProduct.id;
         req.body.vhs.stripe_price_id = stripeProduct.default_price.id;
       }
 
-      /* LOGIC THAT CREATES A DIGITAL PRODUCT IN STRIPE */
       if (req.body.digital.price) {
         const stripeProduct = await stripe.products.create({
           name: req.body.title + " - digital",
@@ -45,7 +43,6 @@ export const createStripeProduct = async (
         expand: ['default_price']
         });
 
-        /* IDS OF PRODUCT AND PRICE ARE SAVED IN VARIABLES */
         req.body.digital.stripe_prod_id = stripeProduct.id;
         req.body.digital.stripe_price_id = stripeProduct.default_price.id;
       }

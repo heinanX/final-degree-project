@@ -2,8 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import { ProductModel } from "../../../products/product.model";
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 
-/* A middleware that checks for a product in database.
-If found, the product is archived (i.e. inactivated) in stripe, it then passes to the next function. */
+/* A MIDDLEWARE THAT LOOKS FOR A PRODUCT IN DATABASE
+ * if found, the product is archived (i.e. inactivated) in stripe,
+ * it then passes to the next function.
+ */
 
 export const archiveStripeProduct = async (
   req: Request,
@@ -16,26 +18,17 @@ export const archiveStripeProduct = async (
     if (!existingProduct) {
       return res.status(409).json("Product not found");
     } else {
-        
-      /* LOGIC THAT ARCHIVES A VHS PRODUCT IN STRIPE */
       if (existingProduct.vhs.stripe_prod_id) {
-        await stripe.products.update(
-            existingProduct.vhs.stripe_prod_id,
-            {
-                active: false
-            }
-        );
+        await stripe.products.update(existingProduct.vhs.stripe_prod_id, {
+          active: false,
+        });
       }
 
-      /* LOGIC THAT ARCHIVES A DIGITAL PRODUCT IN STRIPE */
       if (existingProduct.digital.stripe_prod_id) {
-        await stripe.products.update(
-            existingProduct.digital.stripe_prod_id,
-            {
-                active: false
-            }
-        );
-    }
+        await stripe.products.update(existingProduct.digital.stripe_prod_id, {
+          active: false,
+        });
+      }
       next();
     }
   } catch (error) {

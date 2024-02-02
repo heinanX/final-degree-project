@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderModel = exports.orderJoiSchema = exports.markOrderJoiSchema = exports.orderSchema = void 0;
 const mongoose_1 = require("mongoose");
 const joi_1 = __importDefault(require("joi"));
+/* DEFINES SCHEMA FOR ORDER MODEL AND JOI SCHEMA FOR VALIDATION */
 const subOrderSchema = new mongoose_1.Schema({
     product: {
         type: mongoose_1.Schema.Types.ObjectId,
@@ -14,18 +15,18 @@ const subOrderSchema = new mongoose_1.Schema({
     },
     quantity: Number,
     vhs: Boolean,
-    digital: Boolean
+    digital: Boolean,
 }, { _id: false });
 const addressSchema = new mongoose_1.Schema({
     cust_name: String,
     street: String,
     zip_code: String,
-    city: String
+    city: String,
 }, { _id: false });
 exports.orderSchema = new mongoose_1.Schema({
     customer: { type: mongoose_1.Schema.Types.ObjectId, ref: "customers", require: true },
     address: addressSchema,
-    order: [subOrderSchema],
+    order: [subOrderSchema], // Array of sub-order items
     total_price: { type: Number, default: 0, require: true },
     discount: { type: Number, default: 0 },
     date: { type: Date, default: Date.now() },
@@ -33,26 +34,26 @@ exports.orderSchema = new mongoose_1.Schema({
     returned: { type: Boolean, default: false },
     payment_status: { type: String, default: "pending" },
     order_status: { type: String, default: "active" },
-    session_id: String
+    session_id: String,
 }, { versionKey: false });
 const subOrderJoiSchema = joi_1.default.object({
     product: joi_1.default.string(),
     quantity: joi_1.default.number(),
     vhs: joi_1.default.boolean(),
-    digital: joi_1.default.boolean()
+    digital: joi_1.default.boolean(),
 });
 const addressJoiSchema = joi_1.default.object({
     cust_name: joi_1.default.string(),
     street: joi_1.default.string(),
     zip_code: joi_1.default.string(),
-    city: joi_1.default.string()
+    city: joi_1.default.string(),
 });
 exports.markOrderJoiSchema = joi_1.default.object({
     shipped: joi_1.default.boolean(),
     returned: joi_1.default.boolean(),
     payment_status: joi_1.default.string(),
     order_status: joi_1.default.string(),
-    address: addressJoiSchema
+    address: addressJoiSchema,
 });
 exports.orderJoiSchema = joi_1.default.object({
     customer: joi_1.default.string().required(),
@@ -65,6 +66,6 @@ exports.orderJoiSchema = joi_1.default.object({
     returned: joi_1.default.boolean(),
     payment_status: joi_1.default.string(),
     order_status: joi_1.default.string(),
-    session_id: joi_1.default.string()
+    session_id: joi_1.default.string(),
 });
 exports.OrderModel = mongoose_1.models.orders || (0, mongoose_1.model)("orders", exports.orderSchema);

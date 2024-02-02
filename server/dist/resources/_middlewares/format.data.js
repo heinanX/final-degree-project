@@ -10,16 +10,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formatData = void 0;
+/*  MIDDLEWARE TO FORMAT DATA TO LOWERCASE BEFORE PROCESSING IT */
 const formatData = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.body.mail) {
         req.body.mail = req.body.mail.toLowerCase();
         return next();
     }
-    if (req.body.title && req.body.description) {
+    if (req.body.title) {
         req.body.title = req.body.title.toLowerCase();
-        //req.body.description = req.body.description.toLowerCase();
         return next();
     }
+    // If none of the specific properties are found, convert the entire request body to lowercase
     const stringifiedData = JSON.stringify(req.body);
     const format = stringifiedData.toLowerCase();
     const formattedData = JSON.parse(format);

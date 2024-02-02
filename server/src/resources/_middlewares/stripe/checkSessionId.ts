@@ -23,7 +23,6 @@ export const checkSessionId = async (
       return res.status(200).json(orderWithSameSession);
     }
   } catch (error) {
-    // If an error occurs, pass it to the next middleware for error handling
     next(error);
   }
 };

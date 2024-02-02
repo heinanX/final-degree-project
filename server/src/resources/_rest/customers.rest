@@ -3,7 +3,7 @@ GET http://localhost:3000/api/customers
 
 
 ### // GET ONE CUSTOMER
-GET http://localhost:3000/api/customers/659bdad5f6b637fbe232607b
+GET http://localhost:3000/api/customers/65bcb48dc64afdfd02708ed3
 
 
 ### // CHECKS FOR ACTIVE USER
@@ -15,7 +15,7 @@ POST http://localhost:3000/api/customers/create
 Content-Type: application/json
 
 {
-    "mail": "june@user.com",
+    "mail": "newUser@yahoo.com",
     "password": "12345"
 }
 
@@ -25,7 +25,7 @@ POST http://localhost:3000/api/customers/login
 Content-Type: application/json
 
 {
-"mail": "user@user.com",
+"mail": "newuser@yahoo.com",
 "password": "12345"
 }
 
@@ -34,22 +34,18 @@ POST http://localhost:3000/api/customers/login
 Content-Type: application/json
 
 {
-"mail": "admin@admin.com",
+"mail": "newUser1@yahoo.com",
 "password": "12345"
 }
 
 
 ### // EDIT CUSTOMER
-POST http://localhost:3000/api/customers/edit-customer/6596c71ee62bf4f20da2ebcf
+POST http://localhost:3000/api/customers/edit-customer/65bcb7a312e7e115e56d9eb9
 Content-Type: application/json
 
 {
-    "address": [{
-        "_id": "line1",
-        "street": "Road 120",
-        "zip": 1234,
-        "city": "sollentuna"
-    }]
+    "mail": "newuser123@yahoo.com",
+    "username": "jusdyTrudy"
 }
 
 

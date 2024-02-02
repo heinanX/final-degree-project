@@ -6,8 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomerModel = exports.updateCustomerJoiSchema = exports.customerJoiSchema = void 0;
 const mongoose_1 = require("mongoose");
 const joi_1 = __importDefault(require("joi"));
+/* DEFINES SCHEMA FOR CUSTOMER MODEL AND JOI SCHEMA FOR VALIDATION */
 const customerSchema = new mongoose_1.Schema({
-    username: String,
+    username: { type: String, default: "" },
     mail: { type: String, require: true },
     password: { type: String, require: true },
     joinDate: { type: Date, default: Date.now() },
@@ -45,5 +46,6 @@ exports.updateCustomerJoiSchema = joi_1.default.object({
     password: joi_1.default.string(),
     isAdmin: joi_1.default.boolean(),
     address: joi_1.default.array().items(addressJoiSchema),
+    username: joi_1.default.string()
 });
 exports.CustomerModel = mongoose_1.models.customers || (0, mongoose_1.model)("customers", customerSchema);

@@ -12,9 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createStripeProduct = void 0;
 const product_model_1 = require("../../../products/product.model");
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
-/* A middleware that checks for a pre-existing product in database, If not found,
-a product is created in stripe, followed by a price. The price is then added to the product.
-Each ID [of product and price] is passed on in the 'req' to the next function where we save the product in local db */
+/* A  MIDDLEWARE THAT CHECKS FOR A PRE-EXISTING PRODUCT INSIDE DATABASE,
+if not found, a product is created in stripe, followed by a price.
+The price is then added to the product. Each ID [of product and price]
+is passed on in the 'req' to the next function where it's saved inside the product in local db */
 const createStripeProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const existingProduct = yield product_model_1.ProductModel.findOne({ title: req.body.title });
@@ -22,7 +23,6 @@ const createStripeProduct = (req, res, next) => __awaiter(void 0, void 0, void 0
             return res.status(409).json("Movie already available");
         }
         else {
-            /* LOGIC THAT CREATES A VHS PRODUCT IN STRIPE */
             if (req.body.vhs.price) {
                 const stripeProduct = yield stripe.products.create({
                     name: req.body.title,
@@ -32,11 +32,9 @@ const createStripeProduct = (req, res, next) => __awaiter(void 0, void 0, void 0
                     },
                     expand: ['default_price']
                 });
-                /* IDS OF PRODUCT AND PRICE ARE SAVED IN VARIABLES */
                 req.body.vhs.stripe_prod_id = stripeProduct.id;
                 req.body.vhs.stripe_price_id = stripeProduct.default_price.id;
             }
-            /* LOGIC THAT CREATES A DIGITAL PRODUCT IN STRIPE */
             if (req.body.digital.price) {
                 const stripeProduct = yield stripe.products.create({
                     name: req.body.title + " - digital",
@@ -46,7 +44,6 @@ const createStripeProduct = (req, res, next) => __awaiter(void 0, void 0, void 0
                     },
                     expand: ['default_price']
                 });
-                /* IDS OF PRODUCT AND PRICE ARE SAVED IN VARIABLES */
                 req.body.digital.stripe_prod_id = stripeProduct.id;
                 req.body.digital.stripe_price_id = stripeProduct.default_price.id;
             }
